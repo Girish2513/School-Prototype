@@ -1,0 +1,399 @@
+/* --- General Styles & Resets --- */
+:root {
+    --dark-brown: #4A2D23;
+    --gold-accent: #FFD700;
+    --professional-orange: rgba(230, 84, 33); /* The new brand color */
+    --school-name-blue: rgba(108, 190, 236); /* Color for the school name */
+    --light-text: #f0f0f0;
+    --white: #FFFFFF;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    color: var(--light-text);
+    overflow-x: hidden;
+    background-color: var(--dark-brown);
+}
+
+/* --- Keyframes for Background Rotation --- */
+@keyframes rotate-background {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* --- Hero Section Background --- */
+.hero-section {
+    min-height: 100vh;
+    width: 100%;
+    position: relative;
+    overflow: hidden; /* IMPORTANT: This contains the ::before pseudo-element */
+    display: flex;
+    flex-direction: column;
+    padding: 20px 5%;
+    padding-top: 120px;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: url('images/background.png') no-repeat center center/cover;
+    z-index: 0;
+    animation: rotate-background 80s linear infinite;
+}
+
+.hero-section::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+}
+
+/* --- Header & Navigation --- */
+.main-header {
+    position: fixed;
+    z-index: 100;
+    top: 20px;
+    left: 5%;
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: transparent;
+    border: none;
+    border-radius: 8px; /* Added border-radius */
+    /* More specific transitions to prevent conflicts */
+    transition: top 1s ease-in-out, 
+                left 1s ease-in-out, 
+                width 1s ease-in-out,
+                justify-content 1s ease-in-out,
+                background-color 0.4s ease, /* Added for scroll effect */
+                box-shadow 0.4s ease; /* Added for scroll effect */
+}
+
+/* NEW: Style for the header when user scrolls down */
+.main-header.scrolled {
+    background-color: rgba(42, 27, 22, 0.9);
+    backdrop-filter: blur(5px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+
+
+.header-left {
+    display: flex;
+    align-items: center;
+    transition: flex-direction 1s ease-in-out;
+}
+
+.logo {
+    height: 60px;
+    margin-right: 20px;
+    margin-bottom: 0;
+transition: height 1s ease-in-out, 
+            margin-right 1s ease-in-out,
+            margin-bottom 1s ease-in-out;
+}
+
+.school-name {
+    font-size: 2rem;
+    font-weight: 700;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.6);
+    transition: font-size 1s ease-in-out;
+    /* The base color is now on the h1 wrapper */
+    color: var(--school-name-blue);
+}
+
+.shiny-effect-text {
+    position: relative; /* Needed for the shine to overlay correctly */
+}
+
+.main-nav {
+    transition: opacity 0.5s ease-out 1s, transform 0.5s ease-out 1s;
+}
+
+/* --- Main Hero Content --- */
+.hero-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+    flex-grow: 1;
+    width: 100%;
+    gap: 60px;
+}
+
+.hero-text {
+    transition: opacity 0.6s ease-out 1.2s, transform 0.6s ease-out 1.2s;
+}
+
+/* --- Intro Animation State --- */
+.intro-state .main-header {
+    top: 50%;
+    left: 50%;
+    width: auto;
+    justify-content: center;
+    /* This transform now correctly centers and scales the header */
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 1; /* Ensure it's always visible */
+}
+
+.intro-state .main-nav {
+    opacity: 0;
+    transform: translateY(-30px);
+    position: absolute;
+}
+
+.intro-state .hero-text,
+.intro-state .hero-video { /* Hide video during intro */
+    opacity: 0;
+    transform: translateX(-100px);
+}
+
+.intro-state .header-left {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.intro-state .logo {
+    margin-right: 0;
+    margin-bottom: 12px;
+    height: 150px;
+}
+
+.intro-state .school-name, .intro-state .shiny-effect-text {
+    font-size: 2.2rem;
+}
+
+/* --- Navigation Styles --- */
+.main-nav ul {
+    display: flex;
+    list-style: none;
+}
+
+.main-nav ul li a {
+    padding: 10px 20px;
+    font-weight: 600;
+    color: var(--light-text);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    border-radius: 5px;
+    position: relative;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+}
+
+.main-nav ul li a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background-color: var(--gold-accent);
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: width 0.3s ease-in-out;
+}
+
+.main-nav ul li a:hover {
+    color: var(--gold-accent);
+}
+
+.main-nav ul li a:hover::after {
+    width: 80%;
+}
+
+/* --- Other Content Styles --- */
+.hero-text {
+    flex-shrink: 0; 
+    max-width: 600px; 
+    text-align: left; 
+}
+
+.hero-text h2 {
+    font-size: 4rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 25px;
+    color: var(--white);
+    text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+}
+
+.hero-text p {
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin-left: 0; 
+    margin-right: 0; 
+    margin-bottom: 40px;
+    color: #e0e0e0;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+}
+
+/* --- Keyframes for Button Glow --- */
+@keyframes pulse-glow {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 5px rgba(230, 84, 33, 0.4), 0 0 10px rgba(230, 84, 33, 0.3);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 15px rgba(230, 84, 33, 0.7), 0 0 25px rgba(230, 84, 33, 0.5);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 5px rgba(230, 84, 33, 0.4), 0 0 10px rgba(230, 84, 33, 0.3);
+    }
+}
+
+.cta-button {
+    background-image: linear-gradient(45deg, var(--professional-orange), #E66A44);
+    color: var(--white);
+    padding: 15px 35px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    text-decoration: none;
+    border: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: pulse-glow 2.5s infinite ease-in-out;
+}
+
+.cta-button:hover {
+    transform: translateY(-3px) scale(1.07); /* Combine transforms */
+    box-shadow: 0 0 20px rgba(230, 84, 33, 0.8), 0 0 35px rgba(230, 84, 33, 0.6);
+}
+
+/* --- Hero Video Styles --- */
+.hero-video {
+    flex-grow: 1; 
+    min-width: 300px; 
+    z-index: 2;
+    transition: opacity 0.6s ease-out 1.4s, transform 0.6s ease-out 1.4s;
+}
+
+.hero-video video {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+/* --- About Us Section --- */
+.about-section {
+    background-color: rgba(236, 234, 244);
+    color: #333; /* Dark text for readability on a light background */
+    padding: 100px 5%;
+}
+
+.about-section .container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.about-section h2 {
+    text-align: center;
+    font-size: 2.8rem;
+    color: var(--dark-brown);
+    margin-bottom: 60px;
+}
+
+.highlight-blue {
+    color: var(--school-name-blue);
+}
+
+.about-content {
+    display: flex;
+    align-items: flex-start; /* MODIFIED: Aligns items to the top */
+    gap: 60px;
+}
+
+.about-text {
+    flex: 1; 
+    font-size: 1.1rem;
+    line-height: 1.7;
+}
+
+.about-text p {
+    margin-bottom: 20px;
+}
+
+.about-image {
+    flex: 1;
+}
+
+.about-image img {
+    width: 100%;
+    height: auto;
+}
+
+/* --- Media Queries --- */
+@media (max-width: 992px) {
+    .hero-content {
+        gap: 30px; /* Reduce gap on smaller screens */
+    }
+    .hero-text h2 {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-section {
+        padding-top: 100px;
+    }
+    .school-name {
+        font-size: 1.5rem;
+    }
+    .logo {
+        height: 50px;
+    }
+    .main-nav {
+        display: none;
+    }
+    .hero-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    .hero-text {
+       text-align: center; /* Center text on mobile */
+    }
+    .hero-text p {
+        margin-left: auto; /* Re-center paragraph on mobile */
+        margin-right: auto;
+    }
+    .hero-text h2 {
+        font-size: 2.5rem;
+    }
+    .hero-video {
+        margin-top: 40px; /* Add space between text and video on mobile */
+        width: 90%;
+    }
+
+    /* About Section Responsive */
+    .about-content {
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .about-section h2 {
+        font-size: 2.2rem;
+        margin-bottom: 40px;
+    }
+}

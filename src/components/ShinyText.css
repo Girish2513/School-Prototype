@@ -1,0 +1,27 @@
+.shiny-text {
+  color: transparent; /* This MUST be transparent for the background clip to work */
+  background: linear-gradient(
+    120deg,
+    rgba(173, 216, 230, 0) 40%, /* Transparent light blue */
+    rgba(98, 188, 233,100) 80%, /* Opaque light blue for the shine */
+    rgba(173, 216, 230, 0) 60%  /* Transparent light blue */
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  display: inline-block;
+  animation: shine 5s linear infinite;
+}
+
+@keyframes shine {
+  0% {
+    background-position: 100%;
+  }
+  100% {
+    background-position: -100%;
+  }
+}
+
+.shiny-text.disabled {
+  animation: none;
+}
