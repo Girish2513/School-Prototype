@@ -2,9 +2,9 @@
   color: transparent; /* This MUST be transparent for the background clip to work */
   background: linear-gradient(
     120deg,
-    rgba(173, 216, 230, 0) 40%, /* Transparent light blue */
-    rgba(98, 188, 233,100) 80%, /* Opaque light blue for the shine */
-    rgba(173, 216, 230, 0) 60%  /* Transparent light blue */
+    rgba(173, 216, 230, 0) 40%,
+    rgba(98, 188, 233,1) 80%,
+    rgba(173, 216, 230, 0) 60%
   );
   background-size: 200% 100%;
   -webkit-background-clip: text;
@@ -24,4 +24,7 @@
 
 .shiny-text.disabled {
   animation: none;
+  /* When disabled, remove the gradient and inherit the parent's color */
+  background: none;
+  color: inherit;
 }

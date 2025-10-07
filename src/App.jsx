@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import About from './components/About';
+import Footer from './components/Footer';
 
 function App() {
   // State to manage the intro animation class
@@ -45,10 +46,11 @@ function App() {
     // We apply the intro class to a wrapper div, since we can't directly manipulate the <body> tag in React
     <div className={wrapperClassName}>
       <div className="hero-section">
-        <Header isScrolled={isScrolled} />
+        <Header isScrolled={isScrolled} isIntro={isIntro} />
         <Hero />
       </div>
       <About />
+      <Footer />
     </div>
   );
 }

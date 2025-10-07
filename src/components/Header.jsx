@@ -1,17 +1,18 @@
 import React from 'react';
 import ShinyText from './ShinyText';
 
-function Header({ isScrolled }) {
+function Header({ isScrolled, isIntro }) {
   const headerClasses = `main-header ${isScrolled ? 'scrolled' : ''}`;
   return (
     <header className={headerClasses}>
       <div className="header-left">
         <img src="/images/logo.png" alt="Navodaya High School Logo" className="logo" />
         <h1 className="school-name">
-          <ShinyText 
+          <ShinyText
             text="Navodaya High School"
             speed={3}
             className='shiny-effect-text'
+            disabled={isIntro}
           />
         </h1>
       </div>
