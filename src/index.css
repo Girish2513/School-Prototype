@@ -623,6 +623,95 @@ transition: height 1s ease-in-out,
     margin-bottom: 60px;
 }
 
+
+/* --- 4.X Testimonials Section --- */
+.testimonials-section {
+  text-align: center;
+  padding: 5rem 2rem;
+  background-color: white;
+  overflow: hidden;
+}
+
+.testimonials-section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 3rem;
+  color: #1a1a1a;
+}
+
+/* Wrapper to hold duplicate scrolling content */
+.testimonial-row {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 3rem;
+  white-space: nowrap;
+  width: max-content;
+}
+
+/* Keyframes for seamless loop */
+@keyframes scroll-right {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Infinite smooth movement */
+.testimonial-row.row-1 {
+  animation: scroll-right 35s linear infinite;
+}
+.testimonial-row.row-2 {
+  animation: scroll-left 35s linear infinite;
+}
+.testimonial-row.row-3 {
+  animation: scroll-right 35s linear infinite;
+}
+
+/* Testimonial Card Styles */
+.testimonial-card {
+  display: inline-block;
+  width: 220px;
+  margin: 0 1rem;
+  color: black;
+  text-align: left;
+}
+
+.quote {
+  font-size: 3.5rem;
+  color: navy;
+  display: block;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.testimonial-comment {
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+  color: black;
+}
+
+.testimonial-name {
+  font-weight: bold;
+  color: brown;
+  font-size: 1rem;
+}
+
+
+
+
 /* --- 4.5 Contact Form & Info --- */
 .contact-content {
     display: grid;

@@ -6,6 +6,7 @@ import Header from './components/Header';
 import Hero from './components/Hero';
 import About from './components/About'; 
 import Admissions from './components/Admissions';
+import Testimonials from './components/Testimonials';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 
@@ -85,6 +86,10 @@ function App() {
         {/* Admissions section */}
         <section id="admissions" ref={admissionsSectionRef} className="admissions-section-container">
           <Admissions />
+        </section>
+        {/* Testimonials section */}
+        <section id="testimonials">
+          <Testimonials />
         </section>
         {/* Contact section */}
         <section id="contact" ref={contactSectionRef} className="contact-section-container">

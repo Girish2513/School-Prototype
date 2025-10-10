@@ -64,6 +64,27 @@ export const admissionsData = [
   }
 ];
 
+
+export const testimonialsData = [
+  { comment: "Best school experience ever!", name: "Alice Johnson" },
+  { comment: "Teachers are very supportive.", name: "Bob Smith" },
+  { comment: "Learned so much in a short time.", name: "Catherine Lee" },
+  { comment: "Great extracurricular activities.", name: "Daniel Kim" },
+  { comment: "Loved the friendly environment.", name: "Ella Brown" },
+  { comment: "Facilities are top-notch.", name: "Frank Wilson" },
+  { comment: "Highly recommend this school.", name: "Grace Taylor" },
+  { comment: "My child is thriving here!", name: "Henry Davis" },
+  { comment: "Innovative teaching methods.", name: "Isla Martinez" },
+  { comment: "Staff is very approachable.", name: "Jack White" },
+  { comment: "Focus on holistic development.", name: "Karen Lewis" },
+  { comment: "Amazing art and music programs.", name: "Leo Clark" },
+  { comment: "Strong academic curriculum.", name: "Mia Hall" },
+  { comment: "Positive learning environment.", name: "Noah Allen" },
+  { comment: "Encourages creativity and curiosity.", name: "Olivia Scott" },
+];
+
+
+
 /**
  * Data for the footer section.
  * Organized into sections for contact, social links, and quick links.
