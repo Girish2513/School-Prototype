@@ -1,39 +1,69 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { footerData } from './siteData';
 
+/**
+ * Footer component displaying site-wide links, contact info, and social media.
+ * Data sourced from siteData.js for maintainability; includes contact, social, quick links, and copyright.
+ * Accessibility: Semantic footer, ARIA labels for links, keyboard navigation.
+ * Responsiveness: Layout adapts via CSS; stacks on mobile.
+ * For scalability, footerData can be extended with more sections or dynamic content.
+ * For extensibility, add newsletter signup or privacy policy links.
+ */
 function Footer() {
   return (
-    <footer className="site-footer">
+    <footer id="footer" className="site-footer" role="contentinfo">
       <div className="footer-container">
+        {/* Contact section: Address, email, phone with proper links */}
         <div className="footer-section footer-contact">
-          <h4>Contact Us</h4>
-          <p>Navodaya High School<br />123 Education Lane, Knowledge City, 500001</p>
-          <p>Email: <a href="mailto:info@navodayahighschool.com">info@navodayahighschool.com</a></p>
-          <p>Phone: <a href="tel:+911234567890">+91 12345 67890</a></p>
+          <h4>{footerData.contact.title}</h4>
+          <p dangerouslySetInnerHTML={{ __html: footerData.contact.address }}></p>
+          <p>
+            Email: <a href={`mailto:${footerData.contact.email}`} aria-label={`Email us at ${footerData.contact.email}`}>{footerData.contact.email}</a>
+          </p>
+          <p>
+            Phone: <a href={`tel:${footerData.contact.phone}`} aria-label={`Call us at ${footerData.contact.phone}`}>{footerData.contact.phone}</a>
+          </p>
         </div>
+        {/* Social links: External links with security attributes */}
         <div className="footer-section footer-social">
-          <h4>Follow Us</h4>
+          <h4>{footerData.social.title}</h4>
           <div className="social-links">
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i className="fab fa-facebook-f"></i></a>
-            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter"><i className="fab fa-twitter"></i></a>
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i className="fab fa-instagram"></i></a>
-            <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i className="fab fa-youtube"></i></a>
+            {footerData.social.links.map((link) => (
+              <a
+                key={link.platform}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={link.ariaLabel}
+              >
+                <i className={link.icon} aria-hidden="true"></i>
+              </a>
+            ))}
           </div>
         </div>
+        {/* Quick links: Internal navigation for accessibility */}
         <div className="footer-section footer-quick-links">
-          <h4>Quick Links</h4>
+          <h4>{footerData.quickLinks.title}</h4>
           <ul>
-            <li><a href="#about">About Us</a></li>
-            <li><a href="#admissions">Admissions</a></li>
-            <li><a href="#academics">Academics</a></li>
-            <li><a href="#contact">Contact Us</a></li>
+            {footerData.quickLinks.links.map((link) => (
+              <li key={link.href}>
+                <a href={link.href} aria-label={`Navigate to ${link.text}`}>{link.text}</a>
+              </li>
+            ))}
           </ul>
         </div>
       </div>
+      {/* Footer bottom: Copyright notice */}
       <div className="footer-bottom">
-        <p>&copy; {new Date().getFullYear()} Navodaya High School. All Rights Reserved.</p>
+        <p>{footerData.copyright}</p>
       </div>
     </footer>
   );
 }
+
+Footer.propTypes = {
+  // No props, but PropTypes for consistency; footerData is imported
+};
 
 export default Footer;

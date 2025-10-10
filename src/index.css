@@ -1,9 +1,17 @@
-/* --- General Styles & Resets --- */
+/*
+* ===================================================================
+*                            MAIN STYLESHEET
+* ===================================================================
+*/
+
+/* --- 1. Global Styles & Resets --- */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
 :root {
     --dark-brown: #4A2D23;
     --gold-accent: #FFD700;
     --professional-orange: rgba(230, 84, 33); /* The new brand color */
-    --school-name-blue: rgba(108, 190, 236); /* Color for the school name */
+    --school-name-blue: #4A2D23; /* Color for the school name */
     --light-text: #f0f0f0;
     --white: #FFFFFF;
 }
@@ -22,7 +30,16 @@ body {
     background-color: var(--dark-brown);
 }
 
-/* --- Keyframes for Background Rotation --- */
+html {
+    scroll-behavior: smooth;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+}
+
+/* --- 2. Animations --- */
 @keyframes rotate-background {
     from {
         transform: rotate(0deg);
@@ -32,12 +49,18 @@ body {
     }
 }
 
-/* --- Hero Section Background --- */
+/* --- 3. Page Sections --- */
+
+/* --- 3.1 Hero Section --- */
 .hero-section {
     min-height: 100vh;
     width: 100%;
     position: relative;
-    overflow: hidden; /* IMPORTANT: This contains the ::before pseudo-element */
+    /* 
+     * IMPORTANT: overflow: hidden contains the pseudo-element 
+     * used for the rotating background.
+    */
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     padding: 20px 5%;
@@ -54,6 +77,7 @@ body {
     background: url('images/background.png') no-repeat center center/cover;
     z-index: 0;
     animation: rotate-background 80s linear infinite;
+    filter: blur(3px);
 }
 
 .hero-section::after {
@@ -63,11 +87,12 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.6);
     z-index: 1;
 }
 
-/* --- Header & Navigation --- */
+/* --- 4. Components --- */
+/* --- 4.1 Header --- */
 .main-header {
     position: fixed;
     z-index: 100;
@@ -75,29 +100,96 @@ body {
     left: 5%;
     width: 90%;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-    background-color: transparent;
     border: none;
-    border-radius: 8px; /* Added border-radius */
-    /* More specific transitions to prevent conflicts */
+    border-radius: 8px;
+    background-color: transparent;
+    /* Transitions for intro animation and scroll effects */
     transition: top 1s ease-in-out, 
                 left 1s ease-in-out, 
                 width 1s ease-in-out,
-                justify-content 1s ease-in-out,
-                background-color 0.4s ease, /* Added for scroll effect */
-                box-shadow 0.4s ease; /* Added for scroll effect */
+                background-color 0.4s ease,
+                box-shadow 0.4s ease;
 }
 
-/* NEW: Style for the header when user scrolls down */
+/* Scrolled state adds a subtle shadow for depth */
 .main-header.scrolled {
-    background-color: rgba(42, 27, 22, 0.9);
-    backdrop-filter: blur(5px);
+    background-color: transparent;
     box-shadow: 0 4px 20px rgba(0,0,0,0.2);
 }
 
+/* Light theme for when the header is over a light background */
+.main-header.light-theme {
+    background-color: transparent;
+    box-shadow: none; /* Remove the shadow */
+}
 
+.main-header.light-theme .school-name {
+    color: var(--dark-brown);
+    text-shadow: none;
+}
+
+.main-header.light-theme .main-nav ul li a {
+    color: var(--dark-brown);
+    text-shadow: none;
+}
+
+.main-header.light-theme .main-nav ul li a:hover {
+    color: var(--professional-orange);
+}
+
+/* --- 4.1.1 Header Navigation --- */
+.main-header .main-nav {
+    margin-left: auto;
+}
+
+/* Hamburger menu icon for mobile */
+.hamburger-menu {
+    display: none;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 10px;
+    z-index: 101; /* Above the nav */
+}
+
+/* Lines that form the hamburger icon */
+.hamburger-line {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: var(--light-text);
+    margin: 5px 0;
+    transition: all 0.3s ease-in-out;
+}
+
+.main-header.light-theme .hamburger-line {
+    background-color: var(--dark-brown);
+}
+
+/* Animate hamburger to an "X" when the menu is open */
+.main-header.menu-open .hamburger-line:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+.main-header.menu-open .hamburger-line:nth-child(2) {
+    opacity: 0;
+}
+.main-header.menu-open .hamburger-line:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+/* Ensure the "X" is visible on light backgrounds */
+.main-header.menu-open.light-theme .hamburger-line {
+    background-color: var(--light-text);
+}
+
+/* Slide the mobile menu into view when open */
+.main-header.menu-open .main-nav {
+    transform: translateX(0);
+}
+
+/* --- 4.1.2 Header Logo and Title --- */
 .header-left {
     display: flex;
     align-items: center;
@@ -115,22 +207,29 @@ transition: height 1s ease-in-out,
 
 .school-name {
     font-size: 2rem;
-    font-weight: 700;
-    text-shadow: 0 2px 5px rgba(0,0,0,0.6);
+    text-shadow: none;
     transition: font-size 1s ease-in-out;
-    /* The base color is now on the h1 wrapper */
-    color: var(--school-name-blue);
+    /* The base color is now on the h1 wrapper */    
+    color: var(--light-text);
+    text-decoration: none;
+    border-bottom: none;
 }
 
-.shiny-effect-text {
-    position: relative; /* Needed for the shine to overlay correctly */
+.header-brand {
+    text-decoration: none;
+    border-bottom: none;
+}
+
+.header-brand:hover .school-name {
+    text-decoration: none;
+    border-bottom: none;
 }
 
 .main-nav {
     transition: opacity 0.5s ease-out 1s, transform 0.5s ease-out 1s;
 }
 
-/* --- Main Hero Content --- */
+/* --- 4.2 Hero Content --- */
 .hero-content {
     position: relative;
     z-index: 2;
@@ -146,12 +245,12 @@ transition: height 1s ease-in-out,
     transition: opacity 0.6s ease-out 1.2s, transform 0.6s ease-out 1.2s;
 }
 
-/* --- Intro Animation State --- */
+/* --- 4.2.1 Intro Animation State --- */
 .intro-state .main-header {
     top: 50%;
     left: 50%;
     width: auto;
-    justify-content: center;
+    justify-content: center; /* Center the logo/title block */
     /* This transform now correctly centers and scales the header */
     transform: translate(-50%, -50%) scale(1.1);
     opacity: 1; /* Ensure it's always visible */
@@ -181,16 +280,11 @@ transition: height 1s ease-in-out,
     height: 150px;
 }
 
-.intro-state .school-name, .intro-state .shiny-effect-text {
+.intro-state .school-name {
     font-size: 2.2rem;
 }
 
-/* Set the specific color for the text during the intro state */
-.intro-state .shiny-effect-text {
-    color: rgba(98, 188, 233);
-}
-
-/* --- Navigation Styles --- */
+/* --- 4.2.2 Desktop Navigation Styles --- */
 .main-nav ul {
     display: flex;
     list-style: none;
@@ -227,7 +321,7 @@ transition: height 1s ease-in-out,
     width: 80%;
 }
 
-/* --- Other Content Styles --- */
+/* --- 4.2.3 Hero Text and CTA Button --- */
 .hero-text {
     flex-shrink: 0; 
     max-width: 600px; 
@@ -236,7 +330,6 @@ transition: height 1s ease-in-out,
 
 .hero-text h2 {
     font-size: 4rem;
-    font-weight: 800;
     line-height: 1.1;
     margin-bottom: 25px;
     color: var(--white);
@@ -253,7 +346,7 @@ transition: height 1s ease-in-out,
     text-shadow: 0 2px 6px rgba(0,0,0,0.6);
 }
 
-/* --- Keyframes for Button Glow --- */
+/* Pulsing glow animation for the main call-to-action button */
 @keyframes pulse-glow {
     0% {
         transform: scale(1);
@@ -287,7 +380,7 @@ transition: height 1s ease-in-out,
     box-shadow: 0 0 20px rgba(230, 84, 33, 0.8), 0 0 35px rgba(230, 84, 33, 0.6);
 }
 
-/* --- Hero Video Styles --- */
+/* --- 4.2.4 Hero Video --- */
 .hero-video {
     flex-grow: 1; 
     min-width: 300px; 
@@ -301,80 +394,477 @@ transition: height 1s ease-in-out,
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
-/* --- About Us Section --- */
-.about-section {
-    background-color: rgba(236, 234, 244);
-    color: #333; /* Dark text for readability on a light background */
-    padding: 100px 5%;
+/* --- 3.2 About Us Section --- */
+.about-section-container {
+    /* This container allows the section to have natural height */
 }
 
-.about-section .container {
+.expanding-grid-section {
+    padding: 80px 5%;
+    background-color: #EFEFEF;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center the content wrapper */
+}
+
+.expanding-grid-content-wrapper {
+    width: 100%;
+    max-width: 1600px; /* Limit the max width for very large screens */
+}
+
+.expanding-grid-section .section-title {
+    text-align: center;
+    font-size: 2.8rem;
+    color: black;
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 60px;
+}
+
+/* --- 4.3 Expanding Grid Component --- */
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    width: 100%;
+    min-height: 80vh;
+    gap: 15px;
+    transition: grid-template-columns 0.5s cubic-bezier(0.19, 1, 0.22, 1), grid-template-rows 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.grid-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+/* Grid resizing classes applied by React based on the active item */
+.grid-container.active-item-0 { grid-template-columns: 2fr 1fr; grid-template-rows: 2fr 1fr; }
+.grid-container.active-item-1 { grid-template-columns: 1fr 2fr; grid-template-rows: 2fr 1fr; }
+.grid-container.active-item-2 { grid-template-columns: 2fr 1fr; grid-template-rows: 1fr 2fr; }
+.grid-container.active-item-3 { grid-template-columns: 1fr 2fr; grid-template-rows: 1fr 2fr; }
+
+.grid-item-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.6s ease, filter 0.6s ease;
+}
+
+.grid-item.active .grid-item-bg {
+    transform: scale(1.05);
+}
+
+.grid-item::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
+    transition: background 0.5s ease;
+}
+
+.grid-item.active::after {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.2));
+}
+
+.grid-item-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 30px;
+    color: var(--white);
+    z-index: 2;
+}
+
+.item-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.item-header .fas {
+    font-size: 2.2rem;
+    color: var(--professional-orange);
+}
+
+.item-header h3 {
+    font-size: 1.8rem;
+}
+
+.item-details {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out, opacity 0.4s ease-out 0.1s, margin-top 0.5s ease-out;
+    margin-top: 0;
+}
+
+/* Visually hide the content, but keep it accessible to screen readers */
+.item-details:not(.expanded) {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+}
+
+.grid-item.active .item-details {
+    max-height: 300px; /* Adjust as needed for content */
+    opacity: 1;
+    margin-top: 20px;
+}
+
+.item-details h3 {
+    font-size: 2.5rem;
+    color: var(--professional-orange);
+    margin-bottom: 15px;
+}
+
+.item-details p, .item-details blockquote {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #e0e0e0;
+}
+
+.item-details cite {
+    display: block;
+    text-align: right;
+    margin-top: 10px;
+    font-style: normal;
+    color: var(--school-name-blue);
+}
+
+/* --- 3.3 Admissions Section --- */
+.admissions-section-container {
+    /* This container allows the section to have natural height */
+}
+
+.scroll-stack-container {
+    --stack-offset: 2rem;
+    --stack-items: 5;
+    padding-top: calc(var(--stack-items) * var(--stack-offset));
+    padding-bottom: 20vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #EFEFEF;
+}
+
+/* --- 4.4 Scroll Stack Component --- */
+.scroll-stack-panel {
+    width: 95%;
+    max-width: 1200px;
+    height: 75vh;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: sticky;
+    top: 80px; /* Space from top for the header */
+    margin-bottom: var(--stack-offset);
+    transform-origin: center top;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.scroll-stack-panel h2 {
+    font-size: 2.5rem;
+    color: var(--white);
+    margin-bottom: 1rem;
+}
+
+.scroll-stack-panel p {
+    font-size: 1.2rem;
+    color: var(--light-text);
+    max-width: 600px;
+}
+
+/* Stacking colors and transforms for the panels */
+.scroll-stack-panel { background-image: linear-gradient(to bottom, rgba(20, 22, 63), rgba(28, 40, 80), rgba(45, 70, 111), rgba(61, 104, 147), rgba(89, 155, 207), rgba(97, 167, 226)); }
+.scroll-stack-panel:nth-child(1) { top: calc(80px + (var(--stack-offset) * 0)); transform: scale(calc(1 - 0.05 * (var(--stack-items) - 1))); }
+.scroll-stack-panel:nth-child(2) { top: calc(80px + (var(--stack-offset) * 1)); transform: scale(calc(1 - 0.05 * (var(--stack-items) - 2))); }
+.scroll-stack-panel:nth-child(3) { top: calc(80px + (var(--stack-offset) * 2)); transform: scale(calc(1 - 0.05 * (var(--stack-items) - 3))); }
+.scroll-stack-panel:nth-child(4) { top: calc(80px + (var(--stack-offset) * 3)); transform: scale(calc(1 - 0.05 * (var(--stack-items) - 4))); }
+.scroll-stack-panel:nth-child(5) { top: calc(80px + (var(--stack-offset) * 4)); }
+
+/* --- 3.4 Contact Section --- */
+.contact-section-container {
+    background-color: #EFEFEF;
+}
+
+.contact-page {
+    padding: 80px 5%;
+    color: var(--dark-brown);
+}
+
+.contact-container {
     max-width: 1200px;
     margin: 0 auto;
 }
 
-.about-section h2 {
+.contact-page .section-title {
     text-align: center;
     font-size: 2.8rem;
-    color: var(--dark-brown);
+    color: rgb(0, 0, 0);
     margin-bottom: 60px;
+}
+
+/* --- 4.5 Contact Form & Info --- */
+.contact-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: flex-start;
+}
+
+.contact-form-container, .contact-info-container {
+    position: relative;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    overflow: hidden; /* To contain the pseudo-element */
+}
+
+.contact-form-container {
+    background: #D2B48C;
+}
+
+.contact-info-container {
+    background-color: #EA4335; /* Google Maps Red */
+}
+
+.contact-form-container h3, .contact-info-container h3 {
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+}
+
+.contact-form-container h3 {
+    border-bottom: 2px solid var(--dark-brown);
+}
+
+.contact-info-container h3 {
+    color: var(--white);
+    border-bottom: 2px solid var(--white);
+}
+
+.contact-form .form-group {
+    margin-bottom: 20px;
+}
+
+.contact-form input, .contact-form textarea {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.contact-form input:focus, .contact-form textarea:focus {
+    outline: none;
+    border-color: var(--professional-orange);
+}
+
+.contact-form textarea {
+    resize: vertical;
+}
+
+.submit-button {
+    display: inline-block;
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--dark-brown);
+    color: var(--white);
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #6e5232;
+}
+
+.contact-info-container p {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.contact-info-container .fas {
+    color: var(--professional-orange);
+    font-size: 1.4rem;
+}
+
+.contact-info-container a {
+    color: var(--dark-brown);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.contact-info-container a:hover {
+    color: var(--professional-orange);
+}
+
+.map-container {
+    margin-top: 30px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* --- 3.5 Footer Section --- */
+.footer-section-container {
+    background-color: var(--dark-brown);
+    color: var(--light-text);
+}
+
+.site-footer {
+    padding: 60px 5%;
+    border-top: 3px solid var(--gold-accent);
+    width: 100%;
+    flex-shrink: 0; /* Prevent footer from shrinking */
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 250px;
+}
+
+.footer-section h4 {
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+    color: var(--gold-accent);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 10px;
+}
+
+.footer-section p, .footer-section ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.footer-section a {
+    color: var(--light-text);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-section a:hover {
+    color: var(--gold-accent);
+}
+
+.footer-section li {
+    margin-bottom: 10px;
+}
+
+.social-links {
+    display: flex;
+    gap: 20px;
+}
+
+.social-links a {
+    font-size: 1.5rem;
 }
 
 .highlight-blue {
     color: var(--school-name-blue);
 }
 
-.about-content {
-    display: flex;
-    align-items: flex-start; /* MODIFIED: Aligns items to the top */
-    gap: 60px;
-}
-
-.about-text {
-    flex: 1; 
-    font-size: 1.1rem;
-    line-height: 1.7;
-}
-
-.about-text p {
-    margin-bottom: 20px;
-}
-
-.about-image {
-    flex: 1;
-}
-
-.about-image img {
-    width: 100%;
-    height: auto;
-}
-
-/* --- Media Queries --- */
+/*
+* ===================================================================
+*                            MEDIA QUERIES
+* ===================================================================
+*/
+/* --- For Tablets and Smaller Desktops --- */
 @media (max-width: 992px) {
+    .footer-container {
+    }
+
     .hero-content {
         gap: 30px; /* Reduce gap on smaller screens */
     }
     .hero-text h2 {
         font-size: 3rem;
     }
+
+    /* --- Mobile Navigation Setup --- */
+    .main-nav {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 100vh;
+        background-color: rgba(42, 27, 22, 0.98);
+        backdrop-filter: blur(10px);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transform: translateX(100%);
+        transition: transform 0.3s ease-in-out;
+        margin-left: 0;
+    }
+    .main-nav.is-open {
+        transform: translateX(0);
+    }
+    .main-nav ul {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+    .main-nav ul li a {
+        font-size: 1.8rem;
+        color: var(--light-text) !important;
+    }
+    .hamburger-menu {
+        display: flex;
+        margin-left: auto;
+    }
+
+    /* --- Responsive Grids --- */
+    .grid-container {
+        grid-template-columns: 1fr;
+    }
 }
 
+/* --- For Mobile Phones --- */
 @media (max-width: 768px) {
-    .hero-section {
-        padding-top: 100px;
-    }
-    .school-name {
-        font-size: 1.5rem;
-    }
-    .logo {
-        height: 50px;
-    }
-    .main-nav {
-        display: none;
-    }
     .hero-content {
         flex-direction: column;
         text-align: center;
+    }
+    .contact-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
     }
     .hero-text {
        text-align: center; /* Center text on mobile */
@@ -390,96 +880,15 @@ transition: height 1s ease-in-out,
         margin-top: 40px; /* Add space between text and video on mobile */
         width: 90%;
     }
-
-    /* About Section Responsive */
-    .about-content {
+    .footer-container {
         flex-direction: column;
-        gap: 40px;
+        text-align: center;
     }
-
-    .about-section h2 {
-        font-size: 2.2rem;
-        margin-bottom: 40px;
+    .footer-section h4::after {
+        left: 50%;
+        transform: translateX(-50%);
     }
-}
-
-/* --- Footer Styles --- */
-.site-footer {
-    background-color: #1c1210; /* A slightly lighter shade of the dark brown */
-    color: var(--light-text);
-    padding: 60px 5% 20px;
-    border-top: 3px solid var(--professional-orange);
-}
-
-.footer-container {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 40px;
-    max-width: 1200px;
-    margin: 0 auto;
-    margin-bottom: 40px;
-}
-
-.footer-section {
-    flex: 1;
-    min-width: 220px;
-}
-
-.footer-section h4 {
-    font-size: 1.2rem;
-    color: var(--school-name-blue);
-    margin-bottom: 20px;
-    position: relative;
-    padding-bottom: 10px;
-}
-
-.footer-section h4::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 40px;
-    height: 2px;
-    background-color: var(--professional-orange);
-}
-
-.footer-section p, .footer-section ul {
-    font-size: 0.95rem;
-    color: #ccc;
-    line-height: 1.8;
-}
-
-.footer-section a {
-    color: #ccc;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.footer-section a:hover {
-    color: var(--gold-accent);
-}
-
-.footer-quick-links ul {
-    list-style: none;
-}
-
-.social-links a {
-    display: inline-block;
-    width: 40px;
-    height: 40px;
-    line-height: 40px;
-    text-align: center;
-    border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.1);
-    margin-right: 10px;
-    font-size: 1rem;
-}
-
-.footer-bottom {
-    text-align: center;
-    padding-top: 20px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    font-size: 0.9rem;
-    color: #aaa;
+    .social-links {
+        justify-content: center;
+    }
 }
