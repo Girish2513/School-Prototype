@@ -9,6 +9,8 @@ import Admissions from './components/Admissions';
 import Testimonials from './components/Testimonials';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import Gallery from './components/Gallery';
+import ViewGallery from './components/ViewGallery';
 
 /**
  * Main App component serving as the root of the application.
@@ -28,23 +30,28 @@ function App() {
   // State to track if light-background sections are in view for header theme
   const [aboutInViewState, setAboutInView] = useState(false);
   const [admissionsInViewState, setAdmissionsInView] = useState(false);
+  const [galleryInViewState, setGalleryInView] = useState(false);
   const [contactInViewState, setContactInView] = useState(false);
 
   // Use custom hooks for section visibility detection
-  // Each hook provides ref and uses onChange to update local state
   const { ref: aboutSectionRef } = useSectionInView({
     threshold: 0.1,
-    onChange: setAboutInView
+    onChange: setAboutInView,
   });
 
   const { ref: admissionsSectionRef } = useSectionInView({
-    threshold: 0.1, // Trigger when 10% of the section is visible
-    onChange: setAdmissionsInView
+    threshold: 0.1,
+    onChange: setAdmissionsInView,
+  });
+
+  const { ref: gallerySectionRef } = useSectionInView({
+    threshold: 0.1,
+    onChange: setGalleryInView,
   });
 
   const { ref: contactSectionRef } = useSectionInView({
     threshold: 0.1,
-    onChange: setContactInView
+    onChange: setContactInView,
   });
 
   // useEffect for the intro animation (runs only once on mount)
@@ -52,49 +59,73 @@ function App() {
     const timer = setTimeout(() => {
       setIsIntro(false);
     }, 2500);
-    
-    // Cleanup function to clear the timer if component unmounts early
+
     return () => clearTimeout(timer);
   }, []);
 
-  // A section is "light" if any light-background section (About, Admissions, Contact) is in view
-  // This determines the header theme for better contrast
-  const isLightSectionInView = aboutInViewState || admissionsInViewState || contactInViewState;
+  // A section is "light" if any light-background section is in view
+  const isLightSectionInView =
+    aboutInViewState || admissionsInViewState || galleryInViewState || contactInViewState;
+
+  // --- Basic Client-Side Routing ---
+  const [path, setPath] = useState(window.location.pathname);
+
+  useEffect(() => {
+    const onLocationChange = () => setPath(window.location.pathname);
+    // Listen for browser navigation (back/forward buttons) and custom events
+    window.addEventListener('popstate', onLocationChange);
+    // Cleanup listener on component unmount
+    return () => window.removeEventListener('popstate', onLocationChange);
+  }, []);
+
+  // Conditionally render the full gallery page
+  if (path === '/view-gallery') {
+    document.body.className = 'view-gallery-body'; // Apply special body class for the gallery page
+    return <ViewGallery />;
+  }
 
   // Dynamically apply classes based on intro state for smooth animations
   const wrapperClassName = isIntro ? 'intro-state' : '';
 
   return (
-    // Wrapper div for intro animation class, as direct <body> manipulation is not recommended in React
-    // For extensibility, this can be replaced with a CSS-in-JS solution or theme provider
-    <div className={wrapperClassName}>
-      {/* Pass states to Header for dynamic styling */}
+    <div className={wrapperClassName} style={{ backgroundColor: '#fff' }}>
       <Header 
         isScrolled={isScrolled} 
         isIntro={isIntro} 
         isLightSectionInView={isLightSectionInView} 
       />
+
       <main role="main" aria-label="Main content">
-        {/* Hero section with full-width layout */}
+        {/* Hero section */}
         <div className="hero-section">
           <Hero />
         </div>
-        {/* About section with scroll-snap and inView ref for theme switching */}
+
+        {/* About section */}
         <section id="about" ref={aboutSectionRef} className="about-section-container">
           <About />
         </section>
+
         {/* Admissions section */}
         <section id="admissions" ref={admissionsSectionRef} className="admissions-section-container">
           <Admissions />
         </section>
+
+        {/* Gallery section (above testimonials) */}
+        <section id="gallery" ref={gallerySectionRef} className="gallery-section-container">
+          <Gallery />
+        </section>
+
         {/* Testimonials section */}
         <section id="testimonials">
           <Testimonials />
         </section>
+
         {/* Contact section */}
         <section id="contact" ref={contactSectionRef} className="contact-section-container">
           <Contact />
         </section>
+
         {/* Footer section */}
         <section className="footer-section-container">
           <Footer />

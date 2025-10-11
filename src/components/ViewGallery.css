@@ -1,0 +1,159 @@
+/* --- Global & Layout --- */
+:root {
+  --gap: 20px;
+  /* --bg-color: #f5c4b0; Peachy/salmon background */
+  --bg-color: #EFEFEF; /* Match other light sections like About/Admissions */
+  --arrow-bg: rgba(239, 239, 239, 0.8); /* Match the new background */
+  --arrow-hover-bg: #fff;
+  --text-color: #333;
+}
+
+.view-gallery-body {
+  background-color: var(--bg-color);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  /* Scrolling is allowed by default on mobile */
+}
+
+.masonry-gallery-section {
+  /* Restore padding for a scrolling layout on mobile */
+  padding: 4rem 1.5rem;
+}
+
+.gallery-title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: var(--text-color);
+}
+
+/* --- Masonry Grid --- */
+.masonry-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden; /* Hides non-active grid pages */
+}
+
+.grid-pages-wrapper {
+  display: flex; /* Aligns pages horizontally */
+  transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1); /* Smooth page slide */
+}
+
+.grid-page {
+  min-width: 100%;
+  box-sizing: border-box;
+  display: grid;
+  /* Defines a 4-column grid for desktop */
+  grid-template-columns: repeat(4, 1fr);
+  /* Use a dense packing algorithm to fill holes in the grid */
+  grid-auto-flow: dense;
+  /* Set a consistent base row height for items to span against */
+  grid-auto-rows: 250px;
+  gap: var(--gap);
+}
+
+.grid-item {
+  border-radius: 16px;
+  overflow: hidden;
+  filter: drop-shadow(0 8px 15px rgba(0, 0, 0, 0.1));
+  transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+.grid-item:hover {
+  transform: scale(1.03);
+  filter: drop-shadow(0 12px 25px rgba(0, 0, 0, 0.15));
+}
+
+.grid-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* --- Grid Item Sizing Classes --- */
+.img-small { grid-column: span 1; grid-row: span 1; }
+.img-wide  { grid-column: span 2; grid-row: span 1; }
+.img-tall  { grid-column: span 1; grid-row: span 2; }
+.img-large { grid-column: span 2; grid-row: span 2; }
+
+/* --- Navigation Arrows --- */
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: var(--arrow-bg);
+  border: none;
+  color: var(--text-color);
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  transition: background-color 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
+  backdrop-filter: blur(5px);
+}
+
+.arrow:hover {
+  background-color: var(--arrow-hover-bg);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.arrow:disabled {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.prev-btn {
+  left: -70px; /* Position outside on larger screens */
+}
+
+.next-btn {
+  right: -70px; /* Position outside on larger screens */
+}
+
+/* --- Responsive Breakpoints (Mobile-First) --- */
+
+/* Mobile (Default) */
+.grid-page {
+  grid-template-columns: repeat(2, 1fr); /* 2 columns on mobile */
+  grid-auto-rows: 200px;
+}
+.arrow { width: 44px; height: 44px; }
+.prev-btn { left: 10px; }
+.next-btn { right: 10px; }
+
+/* Tablet */
+@media (max-width: 768px) {
+  .gallery-title { font-size: 2rem; }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .masonry-gallery-section {
+    height: 100vh; /* Fill viewport height */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center content vertically */
+    padding: 2rem 1.5rem; /* Adjust padding for centered layout */
+  }
+  .grid-page {
+    grid-template-columns: repeat(4, 1fr); /* 4 columns on desktop */
+    grid-auto-rows: 250px;
+  }
+  .prev-btn { left: 20px; }
+  .next-btn { right: 20px; }
+}
+
+/* Large Desktop */
+@media (min-width: 1350px) {
+  /* On very large screens, move the buttons slightly further from the edge */
+  .prev-btn { left: 40px; }
+  .next-btn { right: 40px; }
+}
