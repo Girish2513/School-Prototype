@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
+
+
 /**
  * The main header component for the website.
  * Handles responsive navigation (hamburger menu on mobile) and dynamically changes appearance
@@ -89,12 +91,12 @@ function Header({ isScrolled, isIntro, isLightSectionInView }) {
          aria-hidden for screen readers when closed on mobile; focus management can be added for better a11y. */}
       <nav 
         id="main-nav"
-        className={`main-nav ${isMenuOpen ? 'is-open' : ''}`} 
-        aria-hidden={!isMenuOpen && window.innerWidth <= 992}
+        className="main-nav" 
         role="navigation"
+        onClick={handleNavClick}
         aria-label="Main navigation"
       >
-        <ul onClick={handleNavClick}>
+        <ul>
           {navItems.map((item) => (
             <li key={item.href}>
               <a href={item.href} onClick={handleNavClick}>{item.label}</a>
