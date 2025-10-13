@@ -4,7 +4,7 @@
   width: 100%;
   overflow: hidden;
   display: flex;
-  background-color: #EFEFEF; /* Match admissions/about section background */
+  background-color: #d2b48c; /* Tan background */
   align-items: center;
   justify-content: center; /* Center the content horizontally */
 }
@@ -20,12 +20,12 @@
 
 .gallery-gradient-left {
   left: 0;
-  background: linear-gradient(to right, #EFEFEF 20%, transparent);
+  background: linear-gradient(to right, #d2b48c 20%, transparent);
 }
 
 .gallery-gradient-right {
   right: 0;
-  background: linear-gradient(to left, #EFEFEF 20%, transparent);
+  background: linear-gradient(to left, #d2b48c 20%, transparent);
 }
 
 .gallery-content {
@@ -106,16 +106,16 @@
   bottom: 40px;
   left: 50%;
   transform: translateX(-50%);
-  color: #333; /* Change text color for light background */
+  color: var(--dark-brown); /* Dark text for light background */
   text-decoration: none;
   font-size: 1rem;
   font-weight: 500;
   padding-bottom: 5px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(74, 45, 35, 0.4);
   z-index: 20;
   transition: border-color 0.3s ease;
 }
 
 .view-gallery-link:hover {
-  border-bottom-color: #000;
+  border-bottom-color: var(--dark-brown);
 }

@@ -32,6 +32,7 @@ function App() {
   const [admissionsInViewState, setAdmissionsInView] = useState(false);
   const [galleryInViewState, setGalleryInView] = useState(false);
   const [contactInViewState, setContactInView] = useState(false);
+  const [testimonialsInViewState, setTestimonialsInView] = useState(false);
 
   // Use custom hooks for section visibility detection
   const { ref: aboutSectionRef } = useSectionInView({
@@ -54,6 +55,11 @@ function App() {
     onChange: setContactInView,
   });
 
+  const { ref: testimonialsSectionRef } = useSectionInView({
+    threshold: 0.1,
+    onChange: setTestimonialsInView,
+  });
+
   // useEffect for the intro animation (runs only once on mount)
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -63,9 +69,11 @@ function App() {
     return () => clearTimeout(timer);
   }, []);
 
-  // A section is "light" if any light-background section is in view
+  // A section is considered "light" if any of the sections with a light background
+  // (like About, Admissions, or Contact) are currently in the viewport.
+  // The gallery section is now dark-themed, so it's excluded from this check.
   const isLightSectionInView =
-    aboutInViewState || admissionsInViewState || galleryInViewState || contactInViewState;
+    aboutInViewState || admissionsInViewState || contactInViewState || testimonialsInViewState;
 
   // --- Basic Client-Side Routing ---
   const [path, setPath] = useState(window.location.pathname);
@@ -81,18 +89,36 @@ function App() {
   // Conditionally render the full gallery page
   if (path === '/view-gallery') {
     document.body.className = 'view-gallery-body'; // Apply special body class for the gallery page
-    return <ViewGallery />;
+    return (
+      // This wrapper ensures the header and footer are part of the gallery page layout
+      <div style={{ backgroundColor: '#1A202C' }}>
+        <Header
+          isScrolled={isScrolled}
+          isIntro={false} // No intro animation on sub-pages
+          isLightSectionInView={false} // Gallery has a dark background
+          isHomePage={false} // Explicitly set to false for the gallery page
+        />
+        <main role="main" aria-label="Full gallery page">
+          <ViewGallery />
+        </main>
+        <section className="footer-section-container">
+          <Footer />
+        </section>
+      </div>
+    );
   }
+
 
   // Dynamically apply classes based on intro state for smooth animations
   const wrapperClassName = isIntro ? 'intro-state' : '';
 
   return (
-    <div className={wrapperClassName} style={{ backgroundColor: '#fff' }}>
+    <div className={wrapperClassName}>
       <Header 
         isScrolled={isScrolled} 
         isIntro={isIntro} 
         isLightSectionInView={isLightSectionInView} 
+        isHomePage={true} // This is the main page
       />
 
       <main role="main" aria-label="Main content">
@@ -106,18 +132,18 @@ function App() {
           <About />
         </section>
 
+        {/* Gallery section (moved between About and Admissions) */}
+        <section id="gallery" ref={gallerySectionRef} className="gallery-section-container">
+          <Gallery />
+        </section>
+
         {/* Admissions section */}
         <section id="admissions" ref={admissionsSectionRef} className="admissions-section-container">
           <Admissions />
         </section>
 
-        {/* Gallery section (above testimonials) */}
-        <section id="gallery" ref={gallerySectionRef} className="gallery-section-container">
-          <Gallery />
-        </section>
-
         {/* Testimonials section */}
-        <section id="testimonials">
+        <section id="testimonials" ref={testimonialsSectionRef} className="testimonials-section">
           <Testimonials />
         </section>
 

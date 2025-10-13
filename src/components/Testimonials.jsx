@@ -60,7 +60,7 @@ export default function Testimonials() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="testimonials-section">
+    <div ref={sectionRef}>
       <h2>What Our Students Say</h2>
 
       {rows.map((row, i) => (
@@ -78,6 +78,6 @@ export default function Testimonials() {
           ))}
         </div>
       ))}
-    </section>
+    </div>
   );
 }

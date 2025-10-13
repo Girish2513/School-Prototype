@@ -591,19 +591,19 @@ transition: height 1s ease-in-out,
 }
 
 .scroll-stack-panel h2 {
-    font-size: 2.5rem;
-    color: var(--white);
-    margin-bottom: 1rem;
+  font-size: 2.5rem;
+  color: #fff; /* White for contrast on dark brown */
+  margin-bottom: 1rem;
 }
 
 .scroll-stack-panel p {
-    font-size: 1.2rem;
-    color: var(--light-text);
-    max-width: 600px;
+  font-size: 1.2rem;
+  color: #f0f0f0; /* Light gray for readability */
+  max-width: 600px;
 }
 
 /* Stacking colors and transforms for the panels */
-.scroll-stack-panel { background-image: linear-gradient(to bottom, rgba(20, 22, 63), rgba(28, 40, 80), rgba(45, 70, 111), rgba(61, 104, 147), rgba(89, 155, 207), rgba(97, 167, 226)); }
+.scroll-stack-panel { background-image: linear-gradient(to bottom, #4A2D23, #5E3A2D, #724737, #865441, #9A624B); }
 .scroll-stack-panel:nth-child(1) { top: calc(80px + (var(--stack-offset) * 0)); transform: scale(calc(1 - 0.05 * (var(--stack-items) - 1))); }
 .scroll-stack-panel:nth-child(2) { top: calc(80px + (var(--stack-offset) * 1)); transform: scale(calc(1 - 0.05 * (var(--stack-items) - 2))); }
 .scroll-stack-panel:nth-child(3) { top: calc(80px + (var(--stack-offset) * 2)); transform: scale(calc(1 - 0.05 * (var(--stack-items) - 3))); }
@@ -637,7 +637,7 @@ transition: height 1s ease-in-out,
 .testimonials-section {
   text-align: center;
   padding: 5rem 2rem;
-  background-color: white;
+  background-color: rgba(210, 180, 140); /* Tan background color */
   overflow: hidden;
 }
 

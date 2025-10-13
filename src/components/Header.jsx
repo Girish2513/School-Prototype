@@ -15,9 +15,10 @@ import PropTypes from 'prop-types';
  * @param {boolean} props.isScrolled - True if the user has scrolled down from the top (applies scrolled class).
  * @param {boolean} props.isIntro - True during the initial intro animation (affects theme).
  * @param {boolean} props.isLightSectionInView - True if the header is over a light-colored section (switches to light theme).
+ * @param {boolean} [props.isHomePage=true] - True if the header is on the main single-page layout.
  * @returns {JSX.Element} The rendered header component.
  */
-function Header({ isScrolled, isIntro, isLightSectionInView }) {
+function Header({ isScrolled, isIntro, isLightSectionInView, isHomePage = true }) {
   // State to manage the visibility of the mobile navigation menu (hamburger toggle).
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -52,18 +53,35 @@ function Header({ isScrolled, isIntro, isLightSectionInView }) {
     setIsMenuOpen(false);
   };
 
+  /**
+   * Handles clicks on the header brand/logo.
+   * On the home page, it smoothly scrolls to the top.
+   * On other pages (like the gallery), it navigates back to the home page.
+   */
+  const handleBrandClick = (e) => {
+    e.preventDefault();
+    if (isHomePage) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      // Use custom routing to navigate to the home page
+      window.history.pushState({}, '', '/');
+      const navEvent = new PopStateEvent('popstate');
+      window.dispatchEvent(navEvent);
+    }
+  };
+
   // Navigation items array for maintainability; can be sourced from siteData.js in future.
   const navItems = [
     { href: '#about', label: 'About Us' },
+    { href: '#gallery', label: 'Gallery' },
     { href: '#admissions', label: 'Admissions' },
-    { href: '#academics', label: 'Academics' },
     { href: '#contact', label: 'Contact' }
   ];
 
   return (
     <header className={headerClasses} role="banner">
       
-      <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} aria-label="Go to home page" className="header-brand">
+      <a href="/" onClick={handleBrandClick} aria-label="Go to home page" className="header-brand">
         <div className="header-left">
           {/* Logo with descriptive alt text for accessibility; consider lazy loading for performance. */}
           <img src="/images/logo.png" alt="Navodaya High School Logo" className="logo" />
@@ -112,6 +130,7 @@ Header.propTypes = {
   isScrolled: PropTypes.bool.isRequired,
   isIntro: PropTypes.bool.isRequired,
   isLightSectionInView: PropTypes.bool.isRequired,
+  isHomePage: PropTypes.bool,
 };
 
 export default Header;

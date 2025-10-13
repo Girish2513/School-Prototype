@@ -1,14 +1,7 @@
-.testimonials-section {
-  background-color: white;
-  text-align: center;
-  padding: 5rem 2rem;
-  overflow: hidden;
-}
-
 .testimonials-section h2 {
   font-size: 2.5rem;
   margin-bottom: 3rem;
-  color: #111;
+  color: #4A2D23; /* Dark brown for better contrast on tan background */
 }
 
 .testimonial-row {
@@ -51,23 +44,23 @@
 .testimonial-card {
   flex: 0 0 auto;
   width: 240px;
-  transition: filter 0.3s ease, opacity 0.3s ease;
+  transition: filter 0.3s ease, opacity 0.3s ease; /* Ensure smooth transitions */
   text-align: center;
 }
 
 .quote {
   font-size: 3rem;
-  color: navy;
+  color: #00005a; /* Darker navy for better contrast */
   line-height: 1;
 }
 
 .testimonial-comment {
-  color: black;
+  color: #333; /* Dark gray for readability */
   margin: 0.5rem 0;
 }
 
 .testimonial-name {
-  color: brown;
+  color: #8B4513; /* SaddleBrown for a warmer tone */
   font-weight: bold;
 }
 

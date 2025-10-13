@@ -1,11 +1,11 @@
 /* --- Global & Layout --- */
 :root {
   --gap: 20px;
-  /* --bg-color: #f5c4b0; Peachy/salmon background */
-  --bg-color: #EFEFEF; /* Match other light sections like About/Admissions */
-  --arrow-bg: rgba(239, 239, 239, 0.8); /* Match the new background */
-  --arrow-hover-bg: #fff;
-  --text-color: #333;
+  /* Dark theme for the gallery page */
+  --bg-color: #1A202C;
+  --arrow-bg: rgba(255, 255, 255, 0.1);
+  --arrow-hover-bg: rgba(255, 255, 255, 0.2);
+  --text-color: #f0f0f0;
 }
 
 .view-gallery-body {
