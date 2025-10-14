@@ -141,6 +141,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* --- 4.1.1 Header Navigation --- */
 .main-header .main-nav {
+    display: flex; /* Use flex to help with vertical alignment */
     margin-left: auto;
 }
 
@@ -218,6 +219,7 @@ transition: height 1s ease-in-out,
     /* The base color is now on the h1 wrapper */    
     color: var(--light-text);
     text-decoration: none;
+    white-space: nowrap; /* Prevent the school name from wrapping to a new line */
     border-bottom: none;
 }
 
@@ -304,6 +306,7 @@ transition: height 1s ease-in-out,
     color: var(--light-text);
     text-decoration: none;
     transition: color 0.3s ease;
+    white-space: nowrap; /* Prevent nav links from wrapping */
     border-radius: 5px;
     position: relative;
     text-shadow: 0 2px 4px rgba(0,0,0,0.6);
@@ -336,10 +339,10 @@ transition: height 1s ease-in-out,
 }
 
 .hero-text h2 {
-    font-size: 4rem;
+    /* Fluid font size: min 2.5rem, preferred 5vw, max 4rem */
+    font-size: clamp(2.5rem, 5vw, 4rem);
     line-height: 1.1;
     margin-bottom: 25px;
-    color: var(--white);
     text-shadow: 0 2px 6px rgba(0,0,0,0.6);
 }
 
@@ -652,7 +655,6 @@ transition: height 1s ease-in-out,
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  gap: 2rem;
   margin-bottom: 3rem;
   white-space: nowrap;
   width: max-content;
@@ -902,21 +904,15 @@ transition: height 1s ease-in-out,
 * ===================================================================
 *                            MEDIA QUERIES
 * ===================================================================
-*/
-/* --- For Tablets and Smaller Desktops --- */
+ */
+/* --- For Tablets and smaller --- */
 @media (max-width: 768px) {
-    .footer-container {
-    }
-
-    .hero-content {
-        gap: 30px; /* Reduce gap on smaller screens */
-    }
-    .hero-text h2 {
-        font-size: 3rem;
-    }
-
     /* --- Mobile Navigation Setup --- */
     .main-nav {
+        /* Start hidden and off-screen */
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
         position: fixed;
         top: 0;
         left: 0;
@@ -925,16 +921,16 @@ transition: height 1s ease-in-out,
         background-color: rgba(42, 27, 22, 0.98);
         backdrop-filter: blur(10px);
         flex-direction: column;
+        justify-content: center;
         align-items: center;
-        display: none; /* Hide by default on mobile */
-        transform: translateX(-100%);
-        transition: transform 0.3s ease-in-out;
+        transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
         margin-left: 0;
     }
     .main-header.menu-open .main-nav {
-        justify-content: center;
-        display: flex; /* Show the nav when menu is open */
-        transform: translateX(0);
+        /* Become visible when menu is open */
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
     }
 
     .main-nav ul {
@@ -947,31 +943,13 @@ transition: height 1s ease-in-out,
         color: var(--light-text) !important;
     }
     .hamburger-menu {
-        display: flex;
+        display: block; /* Use block instead of flex for simpler stacking */
         margin-left: auto;
-        flex-direction: column; /* Stack the lines vertically */
     }
-
-    .school-name {
-        white-space: nowrap; /* Prevent name from wrapping */
-        margin-right: 1rem; /* Add some space between name and hamburger */
-    }
-
-    /* --- Responsive Grids --- */
-    .grid-container {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* --- For Mobile Phones --- */
-@media (max-width: 768px) {
     .hero-content {
         flex-direction: column;
         text-align: center;
-    }
-    .contact-content {
-        grid-template-columns: 1fr;
-        gap: 30px;
+        gap: 30px; /* Reduce gap on smaller screens */
     }
     .hero-text {
        text-align: center; /* Center text on mobile */
@@ -980,22 +958,85 @@ transition: height 1s ease-in-out,
         margin-left: auto; /* Re-center paragraph on mobile */
         margin-right: auto;
     }
-    .hero-text h2 {
-        font-size: 2.5rem;
+
+    /* --- Responsive About/Expanding Grid --- */
+    .grid-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto; /* Let rows size automatically */
+        min-height: auto; /* Remove fixed min-height */
     }
+
+    /* When an item is active on tablet, we don't want grid resizing */
+    .grid-container.active-item-0,
+    .grid-container.active-item-1,
+    .grid-container.active-item-2,
+    .grid-container.active-item-3 {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+    }
+
+    .grid-item {
+        min-height: 300px; /* Ensure items have a minimum height */
+    }
+
+    .expanding-grid-section .section-title {
+        font-size: 2.5rem; /* Slightly smaller title on tablets */
+    }    
+
+    .contact-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
     .hero-video {
         margin-top: 40px; /* Add space between text and video on mobile */
         width: 90%;
+    }
+
+    .expanding-grid-section .section-title {
+        font-size: 2.2rem; /* Smaller title on mobile */
+    }
+    .item-header h3 {
+        font-size: 1.5rem;
     }
     .footer-container {
         flex-direction: column;
         text-align: center;
     }
+    .expanding-grid-section {
+        padding: 60px 5%;
+    }
+
     .footer-section h4::after {
         left: 50%;
         transform: translateX(-50%);
     }
     .social-links {
         justify-content: center;
+    }
+}
+
+/* --- For Small Mobile Phones --- */
+@media (max-width: 480px) {
+    .main-header {
+        padding: 10px 15px; /* Reduce horizontal padding */
+    }
+    .logo {
+        margin-right: 10px; /* Reduce space next to logo */
+    }
+    
+}
+
+/* --- For Small Desktops/Large Tablets --- */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .main-nav ul li a {
+        padding: 10px 12px; /* Reduce horizontal padding to prevent wrapping */
+    }
+}
+
+/* --- For Very Small Mobile Phones --- */
+@media (max-width: 375px) {
+    .logo {
+        height: 40px; /* Further reduce logo size for very small screens */
     }
 }

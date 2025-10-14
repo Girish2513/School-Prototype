@@ -86,7 +86,7 @@ function Header({ isScrolled, isIntro, isLightSectionInView, isHomePage = true }
           {/* Logo with descriptive alt text for accessibility; consider lazy loading for performance. */}
           <img src="/images/logo.png" alt="Navodaya High School Logo" className="logo" />
           {/* School name as h1 for semantic heading structure, visible only at home (top of page). */}
-          {!isScrolled && (
+          {!isScrolled && isHomePage && (
             <h1 className="school-name">
               Navodaya High School
             </h1>

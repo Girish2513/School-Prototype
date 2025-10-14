@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import DOMPurify from 'dompurify';
 
@@ -18,6 +18,14 @@ import DOMPurify from 'dompurify';
 function ExpandingGrid({ title, sections = [] }) {
   // State to track the currently active (expanded) grid item index; null means none active.
   const [activeIndex, setActiveIndex] = useState(null);
+  // State to detect if the device supports touch, to disable hover effects on mobile/tablet.
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
+
+  // On component mount, check for touch support. This ensures hover effects are only for mouse users.
+  useEffect(() => {
+    const touchSupport = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    setIsTouchDevice(touchSupport);
+  }, []);
 
   // Error handling: If no sections, render empty or fallback message for resilience.
   if (!sections || sections.length === 0) {
@@ -50,6 +58,10 @@ function ExpandingGrid({ title, sections = [] }) {
    * @param {Event} [e] - The click or keydown event.
    */
   const handleClick = (index, e) => {
+    // On non-touch devices, click should not trigger expansion.
+    // The hover effect is sufficient.
+    if (!isTouchDevice) return;
+
     if (e) {
       e.preventDefault(); // Prevent scrolling on space key
     }
@@ -69,7 +81,7 @@ function ExpandingGrid({ title, sections = [] }) {
         <h2 id="grid-title" className="section-title">{title}</h2>
         <div
           className={`grid-container ${activeIndex !== null ? `active-item-${activeIndex}` : ''}`}
-          onMouseLeave={handleMouseLeave}
+          onMouseLeave={!isTouchDevice ? handleMouseLeave : undefined}
           role="grid"
           aria-label={`${title} grid`}
         >
@@ -81,7 +93,7 @@ function ExpandingGrid({ title, sections = [] }) {
               <div
                 key={section.id}
                 className={`grid-item ${isExpanded ? 'active' : ''}`}
-                onMouseEnter={() => handleMouseEnter(index)}
+                onMouseEnter={!isTouchDevice ? () => handleMouseEnter(index) : undefined}
                 onClick={(e) => handleClick(index, e)}
                 // Accessibility: Role button for interactive div, tabIndex for keyboard focus.
                 role="button"
