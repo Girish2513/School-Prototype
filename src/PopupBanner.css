@@ -1,0 +1,132 @@
+/* Popup wrapper */
+.popup-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); /* Soft dark overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px;
+  box-sizing: border-box;
+  /* backdrop-filter: blur(6px); Subtle blur for classy look */
+}
+
+/* Inner content box */
+.popup-banner-content {
+  width: 80vw; /* Use 80% of the viewport width */
+  /* max-width: 600px; But don't let it get wider than 600px */
+  aspect-ratio: 16 / 9; /* Give the container a size based on aspect ratio */
+  height: auto; /* Height will be calculated from aspect-ratio and width */
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  /* padding: 20px;Padding inside the white box */
+  box-sizing: border-box;
+}
+
+/* Popup image */
+.popup-banner-content img {
+  position: absolute; /* Stack images on top of each other */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out; /* Smooth fade transition */
+}
+
+.popup-banner-content img.active {
+  opacity: 1;
+}
+/* Classic “X” close button */
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 32px;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.5);
+  border: none;
+  transition: all 0.2s ease;
+  z-index: 10; /* Ensure it's above the images */
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 1;
+}
+
+.close-button:hover {
+  color: #e63946; /* Elegant red hover color */
+  transform: scale(1.1);
+  background: rgba(0, 0, 0, 0.7);
+}
+
+/* Arrow buttons for navigation */
+.arrow-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.3);
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 10px 15px;
+  font-size: 24px;
+  font-weight: bold;
+  z-index: 10;
+  transition: background-color 0.3s ease;
+}
+
+.arrow-btn:hover {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.left-arrow {
+  left: 15px;
+  border-radius: 5px 0 0 5px;
+}
+
+.right-arrow {
+  right: 15px;
+  border-radius: 0 5px 5px 0;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+  .popup-banner-content {
+    width: 90vw; /* Use more screen width on mobile */
+  }
+
+  .close-button {
+    top: 10px;
+    right: 10px;
+    width: 35px;
+    height: 35px;
+    font-size: 28px;
+  }
+
+  .arrow-btn {
+    font-size: 20px;
+    padding: 8px 12px;
+  }
+
+  .left-arrow { left: 10px; }
+
+  .right-arrow { right: 10px; }
+}

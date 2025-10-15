@@ -57,7 +57,7 @@ ScrollStack.defaultProps = {
  * Semantic section with ARIA for accessibility.
  */
 function Admissions({ panels: customPanels } = {}) {
-  const panelsToUse = customPanels || admissionsData;
+  const panelsToUse = customPanels && customPanels.length > 0 ? customPanels : admissionsData;
 
   return (
     <section className="admissions-section" aria-labelledby="admissions-title">

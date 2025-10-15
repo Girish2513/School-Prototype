@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useScroll } from './hooks/useScroll';
 import { useSectionInView } from './hooks/useSectionInView';
@@ -11,6 +11,7 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import Gallery from './components/Gallery';
 import ViewGallery from './components/ViewGallery';
+import PopupBanner from './PopupBanner';
 
 /**
  * Main App component serving as the root of the application.
@@ -23,6 +24,7 @@ import ViewGallery from './components/ViewGallery';
 function App() {
   // State to manage the intro animation class (fades out after 2.5s)
   const [isIntro, setIsIntro] = useState(true);
+  const [showPopup, setShowPopup] = useState(false);
 
   // Use custom hook for scroll detection (threshold: 50px)
   const { isScrolled } = useScroll(50);
@@ -69,6 +71,22 @@ function App() {
     return () => clearTimeout(timer);
   }, []);
 
+  useEffect(() => {
+    setTimeout(() => setShowPopup(true), 3000); // Show popup after 3 seconds
+  }, []);
+
+  // Effect to lock body scroll when the popup is open
+  useEffect(() => {
+    if (showPopup) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [showPopup]);
   // A section is considered "light" if any of the sections with a light background
   // (like About, Admissions, or Contact) are currently in the viewport.
   // The gallery section is now dark-themed, so it's excluded from this check.
@@ -114,6 +132,16 @@ function App() {
 
   return (
     <div className={wrapperClassName}>
+      {showPopup && (
+        <PopupBanner
+          imageUrls={[
+            "/images/event.jpg", 
+            "/images/poster.jpeg", 
+            "/images/trip.jpeg"
+          ]}
+          onClose={() => setShowPopup(false)}
+        />
+      )}
       <Header 
         isScrolled={isScrolled} 
         isIntro={isIntro} 
@@ -124,7 +152,7 @@ function App() {
       <main role="main" aria-label="Main content">
         {/* Hero section */}
         <div className="hero-section">
-          <Hero />
+          <Hero shouldPlay={!showPopup} />
         </div>
 
         {/* About section */}
@@ -163,6 +191,7 @@ function App() {
 
 App.propTypes = {
   // No props expected, but PropTypes added for consistency and future extensibility
+
 };
 
 export default App;
