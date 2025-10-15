@@ -237,6 +237,99 @@ transition: height 1s ease-in-out,
     transition: opacity 0.5s ease-out 1s, transform 0.5s ease-out 1s;
 }
 
+
+/* =========================================================
+   Transparent News Ticker with Intro Animation
+   ========================================================= */
+
+/* Main ticker container (scrolls with page) */
+.news-ticker {
+    position: fixed;  /* Fixed positioning to stay below header */
+    top: 100px;  /* Position below the header */
+    left: 0;
+    width: 100%;
+    padding: 8px 0;
+    background: transparent;
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+    overflow: hidden;
+    z-index: 90;  /* Below header (100) but above content */
+    opacity: 0;
+    transform: translateY(20px);
+    /* Match the hero-text timing: 0.6s duration with 1.2s delay */
+    transition: opacity 0.6s ease-out 1.2s, transform 0.6s ease-out 1.2s, top 1s ease-in-out;
+}
+
+/* Show ticker after intro animation */
+:not(.intro-state) .news-ticker {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Hide ticker completely during intro state */
+.intro-state .news-ticker {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* Ticker wrapper for scrolling */
+.ticker-wrapper {
+    display: inline-block;
+    white-space: nowrap;
+    padding-left: 100%;
+    animation: ticker-scroll 25s linear infinite;
+}
+
+/* List of ticker items */
+.ticker-list {
+    display: inline-flex;
+    gap: 50px;
+    list-style: none;
+}
+
+/* Individual ticker items */
+.ticker-list li {
+    display: inline-block;
+    padding: 0 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Highlight first ticker item in orange */
+.ticker-list li:first-child {
+    color: rgba(230, 84, 33);
+    font-weight: 600;
+}
+
+/* Smooth right-to-left scrolling */
+@keyframes ticker-scroll {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-100%); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .news-ticker {
+        padding: 6px 0;
+        font-size: 0.9rem;
+    }
+    .ticker-list {
+        gap: 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .news-ticker {
+        padding: 4px 0;
+        font-size: 0.85rem;
+    }
+    .ticker-list {
+        gap: 20px;
+    }
+}
+
+
 /* --- 4.2 Hero Content --- */
 .hero-content {
     position: relative;
