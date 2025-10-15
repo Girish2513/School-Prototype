@@ -285,11 +285,13 @@ transition: height 1s ease-in-out,
 .intro-state .logo {
     margin-right: 0;
     margin-bottom: 12px;
-    height: 150px;
+    /* Fluid logo height: min 100px, preferred 25vw, max 150px */
+    height: clamp(100px, 25vw, 150px);
 }
 
 .intro-state .school-name {
-    font-size: 2.2rem;
+    /* Fluid font size for the intro state */
+    font-size: clamp(1.8rem, 5vw, 2.2rem);
 }
 
 /* --- 4.2.2 Desktop Navigation Styles --- */
@@ -406,10 +408,7 @@ transition: height 1s ease-in-out,
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
-/* --- 3.2 About Us Section --- */
-.about-section-container {
-    /* This container allows the section to have natural height */
-}
+
 
 .expanding-grid-section {
     padding: 80px 5%;
@@ -557,10 +556,7 @@ transition: height 1s ease-in-out,
     color: var(--school-name-blue);
 }
 
-/* --- 3.3 Admissions Section --- */
-.admissions-section-container {
-    /* This container allows the section to have natural height */
-}
+
 
 .scroll-stack-container {
     --stack-offset: 2rem;
