@@ -1213,6 +1213,46 @@ transition: height 1s ease-in-out,
     
 }
 
+/* --- 4.6 Location Icon --- */
+.location-icon {
+    position: absolute;
+    bottom: 30px;
+    left: 1vw; /* Position relative to viewport width */
+    z-index: 10;
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    width: 55px; /* Slightly larger for better presence */
+    height: 55px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.location-icon img {
+    width: 60%; /* Control the size of the image inside the circle */
+    height: 60%;
+    object-fit: contain; /* Ensure the image fits without distortion */
+}
+
+.location-icon:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+@media (max-width: 768px) {
+    .location-icon {
+        bottom: 20px;
+        left: 1vw; /* Match viewport-relative positioning */
+        width: 50px;
+        height: 50px;
+    }
+}
+
 /* --- For Small Desktops/Large Tablets --- */
 @media (min-width: 769px) and (max-width: 1024px) {
     .main-nav ul li a {

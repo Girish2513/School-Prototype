@@ -64,14 +64,14 @@ function App() {
   // 🧭 Custom hook for detecting scroll position (used for header shadow & theme)
   const { isScrolled } = useScroll(50);
 
-  // 🌈 State for section visibility (used to switch header theme dynamically)
+  // State to track if light-background sections are in view for header theme
   const [aboutInViewState, setAboutInView] = useState(false);
   const [admissionsInViewState, setAdmissionsInView] = useState(false);
   const [galleryInViewState, setGalleryInView] = useState(false);
   const [contactInViewState, setContactInView] = useState(false);
   const [testimonialsInViewState, setTestimonialsInView] = useState(false);
 
-  // 🔍 Use custom hooks for tracking section visibility
+  // Use custom hooks for section visibility detection
   const { ref: aboutSectionRef } = useSectionInView({
     threshold: 0.1,
     onChange: setAboutInView,
@@ -119,13 +119,11 @@ function App() {
       document.body.style.overflow = 'auto';
     };
   }, [showPopup]);
-
-  // 🖌️ Determine if a light section is in view (used for header color inversion)
+  // A section is considered "light" if any of the sections with a light background
+  // (like About, Admissions, or Contact) are currently in the viewport.
+  // The gallery section is now dark-themed, so it's excluded from this check.
   const isLightSectionInView =
-    aboutInViewState ||
-    admissionsInViewState ||
-    contactInViewState ||
-    testimonialsInViewState;
+    aboutInViewState || admissionsInViewState || contactInViewState || testimonialsInViewState;
 
   // 🧭 Handle basic client-side routing (since no router is used)
   const [path, setPath] = useState(window.location.pathname);
@@ -199,6 +197,16 @@ function App() {
         {/* 🏫 Hero section */}
         <div className="hero-section">
           <Hero shouldPlay={!showPopup} />
+          {/* Location Icon Link */}
+          <a
+            href="https://maps.app.goo.gl/TyN8RFcqYWwvnMCt9"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="location-icon"
+            aria-label="View school location on Google Maps"
+          >
+            <img src="/images/Google_Maps_icon_(2020).svg.png" alt="Location" />
+          </a>
         </div>
 
         {/* ℹ️ About section */}
