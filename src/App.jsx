@@ -4,7 +4,7 @@ import { useScroll } from './hooks/useScroll';
 import { useSectionInView } from './hooks/useSectionInView';
 import Header from './components/Header';
 import Hero from './components/Hero';
-import About from './components/About'; 
+import About from './components/About';
 import Admissions from './components/Admissions';
 import Testimonials from './components/Testimonials';
 import Contact from './components/Contact';
@@ -12,6 +12,7 @@ import Footer from './components/Footer';
 import Gallery from './components/Gallery';
 import ViewGallery from './components/ViewGallery';
 import PopupBanner from './PopupBanner';
+import AdminPage from './AdminPage';
 
 /**
  * Main App component serving as the root of the application.
@@ -25,6 +26,35 @@ function App() {
   // State to manage the intro animation class (fades out after 2.5s)
   const [isIntro, setIsIntro] = useState(true);
   const [showPopup, setShowPopup] = useState(false);
+
+  // State for editable content
+  const [tickerItems, setTickerItems] = useState(() => {
+    const saved = localStorage.getItem('tickerItems');
+    return saved ? JSON.parse(saved) : [
+      '🎓 Admissions are open for 2026!',
+      '🏠 Open House: January 15, 2026',
+      '🧪 New STEM Lab inaugurated this month',
+      '☀️ Summer Camp registrations now live'
+    ];
+  });
+
+  const [popupImages, setPopupImages] = useState(() => {
+    const saved = localStorage.getItem('popupImages');
+    return saved ? JSON.parse(saved) : [
+      "/images/event.jpg",
+      "/images/poster.jpeg",
+      "/images/trip.jpeg"
+    ];
+  });
+
+  // Save to localStorage whenever state changes
+  useEffect(() => {
+    localStorage.setItem('tickerItems', JSON.stringify(tickerItems));
+  }, [tickerItems]);
+
+  useEffect(() => {
+    localStorage.setItem('popupImages', JSON.stringify(popupImages));
+  }, [popupImages]);
 
   // Use custom hook for scroll detection (threshold: 50px)
   const { isScrolled } = useScroll(50);
@@ -115,6 +145,7 @@ function App() {
           isIntro={false} // No intro animation on sub-pages
           isLightSectionInView={false} // Gallery has a dark background
           isHomePage={false} // Explicitly set to false for the gallery page
+          tickerItems={tickerItems}
         />
         <main role="main" aria-label="Full gallery page">
           <ViewGallery />
@@ -126,6 +157,20 @@ function App() {
     );
   }
 
+  // Conditionally render the admin page
+  if (path === '/admin') {
+    document.body.className = ''; // Reset body class
+    document.body.style.overflow = 'auto'; // Ensure scrolling is enabled
+    return (
+      <AdminPage
+        tickerItems={tickerItems}
+        setTickerItems={setTickerItems}
+        popupImages={popupImages}
+        setPopupImages={setPopupImages}
+      />
+    );
+  }
+
 
   // Dynamically apply classes based on intro state for smooth animations
   const wrapperClassName = isIntro ? 'intro-state' : '';
@@ -134,19 +179,16 @@ function App() {
     <div className={wrapperClassName}>
       {showPopup && (
         <PopupBanner
-          imageUrls={[
-            "/images/event.jpg", 
-            "/images/poster.jpeg", 
-            "/images/trip.jpeg"
-          ]}
+          imageUrls={popupImages}
           onClose={() => setShowPopup(false)}
         />
       )}
-      <Header 
-        isScrolled={isScrolled} 
-        isIntro={isIntro} 
-        isLightSectionInView={isLightSectionInView} 
+      <Header
+        isScrolled={isScrolled}
+        isIntro={isIntro}
+        isLightSectionInView={isLightSectionInView}
         isHomePage={true} // This is the main page
+        tickerItems={tickerItems}
       />
 
       <main role="main" aria-label="Main content">

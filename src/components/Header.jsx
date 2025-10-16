@@ -16,7 +16,7 @@ import PropTypes from 'prop-types';
  * @param {boolean} [props.isHomePage=true] - True if the header is on the main single-page layout.
  * @returns {JSX.Element} The rendered header component.
  */
-function Header({ isScrolled, isIntro, isLightSectionInView, isHomePage = true }) {
+function Header({ isScrolled, isIntro, isLightSectionInView, isHomePage = true, tickerItems }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -52,8 +52,8 @@ function Header({ isScrolled, isIntro, isLightSectionInView, isHomePage = true }
     { href: '#contact', label: 'Contact' }
   ];
 
-  // Sample news ticker items
-  const tickerItems = [
+  // Use tickerItems from props, with fallback
+  const displayTickerItems = tickerItems || [
     '🎓 Admissions are open for 2026!',
     '🏠 Open House: January 15, 2026',
     '🧪 New STEM Lab inaugurated this month',
@@ -105,7 +105,7 @@ function Header({ isScrolled, isIntro, isLightSectionInView, isHomePage = true }
       <div className="news-ticker">
         <div className="ticker-wrapper">
           <ul className="ticker-list">
-            {tickerItems.map((item, index) => (
+            {displayTickerItems.map((item, index) => (
               <li key={index}>{item}</li>
             ))}
           </ul>
