@@ -59,38 +59,27 @@ function App() {
   // Use custom hook for scroll detection (threshold: 50px)
   const { isScrolled } = useScroll(50);
 
-  // State to track if light-background sections are in view for header theme
-  const [aboutInViewState, setAboutInView] = useState(false);
-  const [admissionsInViewState, setAdmissionsInView] = useState(false);
-  const [galleryInViewState, setGalleryInView] = useState(false);
-  const [contactInViewState, setContactInView] = useState(false);
-  const [testimonialsInViewState, setTestimonialsInView] = useState(false);
+  // Consolidated state for section visibility to improve maintainability
+  const [sectionsInView, setSectionsInView] = useState({
+    about: false,
+    admissions: false,
+    gallery: false,
+    contact: false,
+    testimonials: false,
+  });
+
+  // Generic handler to update the visibility state for any section
+  const handleSectionInView = useCallback((sectionName) => (isInView) => {
+    setSectionsInView(prev => ({ ...prev, [sectionName]: isInView }));
+  }, []);
 
   // Use custom hooks for section visibility detection
-  const { ref: aboutSectionRef } = useSectionInView({
-    threshold: 0.1,
-    onChange: setAboutInView,
-  });
-
-  const { ref: admissionsSectionRef } = useSectionInView({
-    threshold: 0.1,
-    onChange: setAdmissionsInView,
-  });
-
-  const { ref: gallerySectionRef } = useSectionInView({
-    threshold: 0.1,
-    onChange: setGalleryInView,
-  });
-
-  const { ref: contactSectionRef } = useSectionInView({
-    threshold: 0.1,
-    onChange: setContactInView,
-  });
-
-  const { ref: testimonialsSectionRef } = useSectionInView({
-    threshold: 0.1,
-    onChange: setTestimonialsInView,
-  });
+  const options = { threshold: 0.1 };
+  const { ref: aboutSectionRef } = useSectionInView({ ...options, onChange: handleSectionInView('about') });
+  const { ref: admissionsSectionRef } = useSectionInView({ ...options, onChange: handleSectionInView('admissions') });
+  const { ref: gallerySectionRef } = useSectionInView({ ...options, onChange: handleSectionInView('gallery') });
+  const { ref: contactSectionRef } = useSectionInView({ ...options, onChange: handleSectionInView('contact') });
+  const { ref: testimonialsSectionRef } = useSectionInView({ ...options, onChange: handleSectionInView('testimonials') });
 
   // useEffect for the intro animation (runs only once on mount)
   useEffect(() => {
@@ -120,8 +109,11 @@ function App() {
   // A section is considered "light" if any of the sections with a light background
   // (like About, Admissions, or Contact) are currently in the viewport.
   // The gallery section is now dark-themed, so it's excluded from this check.
-  const isLightSectionInView =
-    aboutInViewState || admissionsInViewState || contactInViewState || testimonialsInViewState;
+  const isLightSectionInView = 
+    sectionsInView.about || 
+    sectionsInView.admissions || 
+    sectionsInView.contact || 
+    sectionsInView.testimonials;
 
   // --- Basic Client-Side Routing ---
   const [path, setPath] = useState(window.location.pathname);
@@ -195,6 +187,16 @@ function App() {
         {/* Hero section */}
         <div className="hero-section">
           <Hero shouldPlay={!showPopup} />
+          {/* Location Icon Link */}
+          <a
+            href="https://maps.app.goo.gl/TyN8RFcqYWwvnMCt9"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="location-icon"
+            aria-label="View school location on Google Maps"
+          >
+            <img src="/images/Google_Maps_icon_(2020).svg.png" alt="Location" />
+          </a>
         </div>
 
         {/* About section */}
