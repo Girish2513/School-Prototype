@@ -243,7 +243,7 @@ function App() {
       {/* ✅ WhatsApp floating button (added safely at the bottom)
           This will appear on all pages except /admin or /view-gallery
           It includes a greeting popup and floating WhatsApp icon */}
-      <WhatsAppButton />
+      <WhatsAppButton isPopupVisible={showPopup} />
     </div>
   );
 }

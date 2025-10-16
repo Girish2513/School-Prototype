@@ -1,4 +1,6 @@
-/* 📂 src/components/WhatsAppButton.css */
+/* ============================
+   WhatsApp Floating Button CSS
+   ============================ */
 
 /* Container for WhatsApp button and popup */
 .whatsapp-container {
@@ -10,6 +12,11 @@
   gap: 12px;
   z-index: 9999;
   pointer-events: auto;
+}
+
+/* When popup is active — lowers z-index to go behind popup */
+.whatsapp-container.hidden-behind-popup {
+  z-index: 1;
 }
 
 /* Greeting popup */
@@ -70,49 +77,6 @@
   50% {
     transform: translateY(-10px);
   }
-}
-
-/* --- NEW STYLES for Message Choices --- */
-.whatsapp-choices-popup {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  background-color: #ffffff;
-  padding: 12px;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  width: 280px;
-  animation: fadeIn 0.3s ease;
-}
-
-.whatsapp-choice-button {
-  background-color: #f0f0f0;
-  color: #333;
-  border: none;
-  border-radius: 8px;
-  padding: 12px;
-  text-align: left;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-  width: 100%;
-}
-
-.whatsapp-choice-button:hover {
-  background-color: #e0e0e0;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* --- ADD this inside your @media (max-width: 480px) block --- */
-.whatsapp-choices-popup {
-    width: calc(100vw - 32px); /* Full width minus padding */
-    right: 0;
-    bottom: 75px; /* Position it above the button */
-    position: absolute;
 }
 
 /* Responsive adjustments */
