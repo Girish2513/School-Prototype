@@ -193,6 +193,56 @@ h1, h2, h3, h4, h5, h6 {
     transform: translateX(0);
 }
 
+/* --- Dropdown Menu Styles --- */
+
+/* Styles the list item that will contain the dropdown (e.g., "Admissions") */
+.main-nav .dropdown {
+    position: relative; /* This is crucial for positioning the dropdown content */
+}
+
+/* The dropdown container, hidden by default */
+.main-nav .dropdown .dropdown-content {
+    display: none; /* Hides the dropdown by default */
+    position: absolute; /* Positions it relative to the parent 'li' */
+    top: 100%; /* Positions it right below the parent item */
+    left: 0;
+    background-color: #1f0f0f; /* Same as your header or a different color */
+    min-width: 240px; /* Adjust width as needed */
+    list-style: none; /* Removes bullet points */
+    padding: 10px 0;
+    margin: 0;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    z-index: 1000; /* Ensures it appears above other content */
+}
+
+/* This is the magic: Show the dropdown menu when hovering over the parent 'li' */
+.main-nav .dropdown:hover .dropdown-content {
+    display: block; /* Shows the dropdown on hover */
+}
+
+/* Styling for the links inside the dropdown */
+.main-nav .dropdown-content li {
+    width: 100%;
+}
+
+.main-nav .dropdown-content a {
+    color: white; /* Text color for dropdown links */
+    padding: 12px 20px;
+    text-decoration: none;
+    display: block; /* Makes the entire area clickable */
+    text-align: left;
+    transition: background-color 0.2s ease;
+}
+
+/* Hover effect for the dropdown links */
+.main-nav .dropdown-content a:hover {
+    background-color: #575757; /* A slightly lighter shade on hover */
+}
+
+
+
+
 /* --- 4.1.2 Header Logo and Title --- */
 .header-left {
     display: flex;
@@ -239,31 +289,33 @@ transition: height 1s ease-in-out,
 
 
 /* =========================================================
-   Transparent News Ticker with Intro Animation
+   Enhanced News Ticker with Modern Design (Updated)
    ========================================================= */
 
-/* Main ticker container (scrolls with page) */
+/* Main ticker container */
 .news-ticker {
-    position: absolute;  /* Absolute positioning within hero section */
-    top: 100px;  /* Position below the header */
-    left: 0;
-    width: 100%;
-    padding: 8px 0;
-    background: transparent;
+    position: absolute;
+    top: 100px;                 /* moved slightly up */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;                /* smaller width */
+    padding: 7px 15px;         /* smaller padding */
+    background: rgba(24, 15, 12, 0.85);  /* Semi-transparent dark brown */
+    backdrop-filter: blur(8px);
+    border-radius: 6px;
+    border: 1px solid rgba(255, 215, 0, 0.3);  /* subtle gold border */
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.3);
     color: #fff;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
     overflow: hidden;
-    z-index: 90;  /* Below header (100) but above content */
+    z-index: 90;
     opacity: 0;
-    transform: translateY(20px);
-    /* Match the hero-text timing: 0.6s duration with 1.2s delay */
-    transition: opacity 0.6s ease-out 1.2s, transform 0.6s ease-out 1.2s;
+    transition: opacity 0.4s ease-out 1.5s, transform 0.6s ease-out 1.2s;
 }
 
 /* Show ticker after intro animation */
 :not(.intro-state) .news-ticker {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateX(-50%);
 }
 
 /* Hide ticker completely during intro state */
@@ -272,42 +324,43 @@ transition: height 1s ease-in-out,
     visibility: hidden;
 }
 
-/* Ticker wrapper for scrolling */
+/* Ticker wrapper for seamless loop */
 .ticker-wrapper {
-    display: inline-block;
+    display: flex;
     white-space: nowrap;
-    padding-left: 100%;
-    animation: ticker-scroll 25s linear infinite;
+    animation: ticker-scroll 14s linear infinite; /* slightly slower */
+    will-change: transform;
 }
 
-/* List of ticker items */
-.ticker-list {
-    display: inline-flex;
-    gap: 50px;
-    list-style: none;
+/* Smooth right-to-left scrolling */
+@keyframes ticker-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
 }
 
-/* Individual ticker items */
 .ticker-list li {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    padding: 0 10px;
+    gap: 8px;                /* reduced spacing between icon and text */
+    padding: 0 10px;         /* smaller padding between items */
     font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    text-transform: none;    /* normal case, more readable */
+    letter-spacing: 0.5px;   /* slightly tighter */
+    font-size: 0.85rem;      /* smaller font */
 }
 
 /* Add icons before each ticker item */
 .ticker-list li::before {
     font-family: 'Font Awesome 5 Free';
     font-weight: 900;
-    font-size: 1rem;
+    font-size: 1rem;          /* smaller icons */
+    color: var(--gold-accent);
 }
 
 /* Icon for "Admissions are open" */
 .ticker-list li:nth-child(1)::before {
     content: '\f19d'; /* fa-graduation-cap */
+    color: rgba(230, 84, 33);
 }
 
 /* Icon for "Open House" */
@@ -331,17 +384,24 @@ transition: height 1s ease-in-out,
     font-weight: 600;
 }
 
-/* Smooth right-to-left scrolling */
-@keyframes ticker-scroll {
-    0% { transform: translateX(0%); }
-    100% { transform: translateX(-100%); }
+/* Add separator between items */
+.ticker-list li:not(:last-child)::after {
+    content: '•';
+    margin-left: 15px;        /* reduced separator spacing */
+    color: var(--gold-accent);
+    opacity: 0.5;
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .news-ticker {
-        padding: 6px 0;
-        font-size: 0.9rem;
+        width: 85%;
+        padding: 6px 12px;
+        top: 70px;
+    }
+    .ticker-list li {
+        font-size: 0.8rem;
+        gap: 6px;
     }
     .ticker-list {
         gap: 30px;
@@ -350,13 +410,21 @@ transition: height 1s ease-in-out,
 
 @media (max-width: 480px) {
     .news-ticker {
-        padding: 4px 0;
-        font-size: 0.85rem;
+        width: 90%;
+        padding: 5px 10px;
+        top: 65px;
+    }
+    .ticker-list li {
+        font-size: 0.75rem;
     }
     .ticker-list {
         gap: 20px;
     }
+    .ticker-list li::before {
+        font-size: 0.9rem;
+    }
 }
+
 
 
 /* --- 4.2 Hero Content --- */

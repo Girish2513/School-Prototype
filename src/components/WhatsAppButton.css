@@ -1,0 +1,161 @@
+/* 📂 src/components/WhatsAppButton.css */
+
+/* Container for WhatsApp button and popup */
+.whatsapp-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  z-index: 9999;
+  pointer-events: auto;
+}
+
+/* Greeting popup */
+.whatsapp-popup {
+  background-color: #ffffff;
+  color: #333333;
+  padding: 10px 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  max-width: 200px;
+  animation: bounce 1s infinite;
+}
+
+/* WhatsApp button */
+.whatsapp-button {
+  background-color: #25D366;
+  color: #ffffff;
+  padding: 16px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(37, 211, 102, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  width: 60px;
+  height: 60px;
+}
+
+/* WhatsApp icon styling */
+.whatsapp-button i {
+  font-size: 28px;
+  color: #ffffff;
+  line-height: 1;
+}
+
+/* Hover effect */
+.whatsapp-button:hover {
+  background-color: #128C7E;
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+}
+
+/* Active/click effect */
+.whatsapp-button:active {
+  transform: scale(0.95);
+}
+
+/* Bounce animation for popup */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* --- NEW STYLES for Message Choices --- */
+.whatsapp-choices-popup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background-color: #ffffff;
+  padding: 12px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  width: 280px;
+  animation: fadeIn 0.3s ease;
+}
+
+.whatsapp-choice-button {
+  background-color: #f0f0f0;
+  color: #333;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  text-align: left;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  width: 100%;
+}
+
+.whatsapp-choice-button:hover {
+  background-color: #e0e0e0;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- ADD this inside your @media (max-width: 480px) block --- */
+.whatsapp-choices-popup {
+    width: calc(100vw - 32px); /* Full width minus padding */
+    right: 0;
+    bottom: 75px; /* Position it above the button */
+    position: absolute;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .whatsapp-container {
+    bottom: 20px;
+    right: 20px;
+  }
+
+  .whatsapp-button {
+    width: 56px;
+    height: 56px;
+    padding: 14px;
+  }
+
+  .whatsapp-button i {
+    font-size: 26px;
+  }
+
+  .whatsapp-popup {
+    font-size: 13px;
+    padding: 8px 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .whatsapp-container {
+    bottom: 16px;
+    right: 16px;
+  }
+
+  .whatsapp-button {
+    width: 52px;
+    height: 52px;
+    padding: 12px;
+  }
+
+  .whatsapp-button i {
+    font-size: 24px;
+  }
+
+  .whatsapp-popup {
+    font-size: 12px;
+    max-width: 180px;
+  }
+}

@@ -143,8 +143,7 @@ function Contact() {
             <h3>Find Us Here</h3>
             <div className="map-container">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3806.927295113422!2d78.3734099759328!3d17.45193800133994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb93c55aaaaaab%3A0x63c3b4632f23554!2sNavodaya%20High%20School!5e0!3m2!1sen!2sin!4v1716466946453!5m2!1sen!2sin"
-                width="100%"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3804.9433560254197!2d78.42341787489686!3d17.51021719925554!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb91d3a4ef6e75%3A0x7e65664178ecaf59!2sNavodaya%20High%20School!5e0!3m2!1sen!2sin!4v1760607985446!5m2!1sen!2sin"                width="100%"
                 height="450"
                 style={{ border: 0 }}
                 allowFullScreen=""
