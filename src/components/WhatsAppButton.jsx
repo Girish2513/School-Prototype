@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import './WhatsAppButton.css';
 
-const WhatsAppButton = ({isPopupVisible}) => {
+const WhatsAppButton = ({ visible }) => {
   // 🟢 Replace with your actual WhatsApp number (country code without +)
   const phoneNumber = "919876543210";
   const message = "Hello! I would like to know more about Navodaya High School.";
@@ -23,7 +23,7 @@ const WhatsAppButton = ({isPopupVisible}) => {
   };
 
   return (
-    <div className="whatsapp-container">
+    <div className={`whatsapp-container ${visible ? "visible" : "hidden"}`}>
       {/* WhatsApp Button */}
       <button
         onClick={handleClick}
