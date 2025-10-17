@@ -103,6 +103,29 @@ function App() {
     return () => clearTimeout(timer);
   }, []);
 
+  // 🧩 Add this new state
+const [showWhatsApp, setShowWhatsApp] = useState(false);
+
+// 🟢 Delay showing the location icon after logo moves to top-left
+const [showLocation, setShowLocation] = useState(false);
+
+
+// After intro ends, delay the WhatsApp button appearance
+useEffect(() => {
+  if (!isIntro) {
+    const timer = setTimeout(() => setShowWhatsApp(true), 1500); // wait 1.5s after intro ends
+    return () => clearTimeout(timer);
+  }
+}, [isIntro]);
+
+useEffect(() => {
+  if (!isIntro) {
+    const timer = setTimeout(() => setShowLocation(true), 1500); // 1.5s delay after intro
+    return () => clearTimeout(timer);
+  }
+}, [isIntro]);
+
+
   // 🎬 Show popup banner 3 seconds after page load
   useEffect(() => {
     setTimeout(() => setShowPopup(true), 3000);
@@ -112,13 +135,17 @@ function App() {
   useEffect(() => {
     if (showPopup) {
       document.body.style.overflow = 'hidden';
+      document.body.classList.add('popup-open');
     } else {
       document.body.style.overflow = 'auto';
+      document.body.classList.remove('popup-open');
     }
     return () => {
       document.body.style.overflow = 'auto';
+      document.body.classList.remove('popup-open');
     };
   }, [showPopup]);
+
   // A section is considered "light" if any of the sections with a light background
   // (like About, Admissions, or Contact) are currently in the viewport.
   // The gallery section is now dark-themed, so it's excluded from this check.
@@ -202,7 +229,7 @@ function App() {
             href="https://maps.app.goo.gl/TyN8RFcqYWwvnMCt9"
             target="_blank"
             rel="noopener noreferrer"
-            className="location-icon"
+            className={`location-icon ${showLocation ? "visible" : "hidden"}`}
             aria-label="View school location on Google Maps"
           >
             <img src="/images/Google_Maps_icon_(2020).svg.png" alt="Location" />
@@ -243,7 +270,7 @@ function App() {
       {/* ✅ WhatsApp floating button (added safely at the bottom)
           This will appear on all pages except /admin or /view-gallery
           It includes a greeting popup and floating WhatsApp icon */}
-      <WhatsAppButton isPopupVisible={showPopup} />
+      <WhatsAppButton visible={showWhatsApp} />
     </div>
   );
 }
