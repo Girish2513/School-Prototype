@@ -21,10 +21,11 @@ function ScrollStack({ panels = [] }) {
       {panels.map((panel, index) => (
         // --- THIS IS THE KEY CHANGE ---
         // We are adding the id from our data to each article
-        <article key={index} id={panel.id} className="scroll-stack-panel" aria-labelledby={`panel-${index}-title`}>
-          <h2 id={`panel-${index}-title`}>{panel.title}</h2>
-          <p>{panel.content}</p>
-        </article>
+        <article key={index} id={panel.id} className="scroll-stack-panel">
+            <h2>{panel.title}</h2>
+            <p>{panel.content}</p>
+      </article>
+
       ))}
     </section>
   );

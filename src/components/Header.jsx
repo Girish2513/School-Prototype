@@ -37,11 +37,12 @@ function Header({ isScrolled, isIntro, isLightSectionInView, isHomePage = true }
       href: '#admissions', 
       label: 'Admissions',
       subMenu: [
-        { href: '#eligibility', label: 'Eligibility Criteria' },
-        { href: '#process', label: 'Admission Process' },
-        { href: '#dates', label: 'Important Dates' },
-        { href: '#reservation', label: 'Reservation Policies' }
-      ] 
+        { href: '#eligibility-criteria', label: 'Eligibility Criteria' },
+        { href: '#admission-process', label: 'Admission Process' },
+        { href: '#important-dates', label: 'Important Dates' },
+        { href: '#reservation-policy', label: 'Reservation Policy' }
+      ]
+
     },
     { href: '#testimonials', label: 'Testimonials' },
     { href: '#contact', label: 'Contact' }

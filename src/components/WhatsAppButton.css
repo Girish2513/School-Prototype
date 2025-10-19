@@ -47,13 +47,13 @@
 
 /* WhatsApp button */
 .whatsapp-button {
-  background-color: #25D366;
-  color: #ffffff;
+  background-color: #352c2c;
+  color: #33c241;
   padding: 16px;
   border-radius: 50%;
   border: none;
   cursor: pointer;
-  box-shadow: 0 4px 16px rgba(37, 211, 102, 0.4);
+  /* box-shadow: 0 4px 16px rgba(49, 152, 87, 0.4); */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -65,13 +65,13 @@
 /* WhatsApp icon styling */
 .whatsapp-button i {
   font-size: 28px;
-  color: #ffffff;
+  color: #55d352;
   line-height: 1;
 }
 
 /* Hover effect */
 .whatsapp-button:hover {
-  background-color: #128C7E;
+  background-color: #094330;
   transform: scale(1.1);
   box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
 }

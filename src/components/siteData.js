@@ -47,27 +47,26 @@ export const aboutSectionsData = [
  */
 export const admissionsData = [
   {
-    id: 'eligibility',
+    id: 'eligibility-criteria',
     title: "Eligibility Criteria",
-    content: "Students from rural areas in classes 6 and 9. Admission through Jawahar Navodaya Vidyalaya Selection Test (JNVST)."
+    content: "Students from rural areas in classes 6 and 9. Admission through JNVST."
   },
   {
-    id: 'process',
+    id: 'admission-process',
     title: "Admission Process",
     content: "The selection process includes a written exam followed by document verification. No donation or capitation fee is required."
   },
   {
-    id: 'dates',
+    id: 'important-dates',
     title: "Important Dates",
     content: "Application forms are available from [date]. Entrance exam on [date]. Results announced on [date]."
   },
   {
-    id: 'reservation',
+    id: 'reservation-policy',
     title: "Reservation Policy",
     content: "75% seats for rural candidates, 25% for urban. Reservation for girls, SC/ST, and disabled children as per government norms."
   }
 ];
-
 
 export const testimonialsData = [
   { comment: "Best school experience ever!", name: "Alice Johnson" },

@@ -79,10 +79,10 @@ h1, h2, h3, h4, h5, h6 {
     left: -50%;
     width: 200%;
     height: 200%;
-    background: url('images/background.png') no-repeat center center/cover;
+    background: url('images/background.jpg') no-repeat center center/cover;
     z-index: 0;
     animation: rotate-background 80s linear infinite;
-    filter: blur(3px);
+    /* filter: blur(3px); */
 }
 
 .hero-section::after {
