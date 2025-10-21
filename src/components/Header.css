@@ -19,7 +19,7 @@
 }
 
 .main-header.home-page {
-    top: 20px;
+    top: 30px;
 }
 
 /* Scrolled state */
@@ -224,7 +224,7 @@
 }
 
 .news-ticker.home-page {
-    top: 100px;
+    top: 130px;
 }
 
 /* Show ticker after intro animation */

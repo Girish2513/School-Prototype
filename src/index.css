@@ -101,7 +101,7 @@ h1, h2, h3, h4, h5, h6 {
 .main-header {
     position: fixed;
     z-index: 100;
-    top: 0;
+    top: 30px;
     left: 0;
     width: 100%;
     display: flex;
@@ -299,7 +299,7 @@ transition: height 1s ease-in-out,
 /* Main ticker container */
 .news-ticker {
     position: absolute;
-    top: 80px;
+    top: 115px;
     left: 50%;
     transform: translateX(-50%);
     width: 90%;
