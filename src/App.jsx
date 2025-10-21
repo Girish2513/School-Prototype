@@ -4,16 +4,55 @@ import { useScroll } from './hooks/useScroll';
 import { useSectionInView } from './hooks/useSectionInView';
 import Header from './components/Header';
 import Hero from './components/Hero';
-import About from './components/About';
-import Admissions from './components/Admissions';
-import Testimonials from './components/Testimonials';
-import Contact from './components/Contact';
+
+import Admissions from './components/Admissions'; 
+import { TestimonialCard } from './components/TestimonialCard';
 import Footer from './components/Footer';
 import Gallery from './components/Gallery';
 import ViewGallery from './components/ViewGallery';
 import PopupBanner from './PopupBanner';
 import AdminPage from './AdminPage';
 import WhatsAppButton from './components/WhatsAppButton';
+
+const TestimonialsSection = ({ title, description, testimonials, className, id }) => {
+  const cn = (...classes) => classes.filter(Boolean).join(' ');
+
+  return (
+    <section id={id} className={cn("testimonials-section", className)}>
+      <div className="testimonials-container">
+        <div className="testimonials-header">
+          <h2>VOICES<br />OF TRUST</h2>
+          <div className="testimonials-line"></div>
+          <p>{description}</p>
+        </div>
+
+        <div className="marquee-wrapper">
+          <div className="marquee-container">
+            <div className="marquee-content group-hover:[animation-play-state:paused]">
+              {/* First set of testimonials */}
+              {testimonials.map((testimonial, i) => (
+                <TestimonialCard 
+                  key={`first-${i}`}
+                  {...testimonial}
+                />
+              ))}
+              {/* Second, duplicated set for seamless loop */}
+              {testimonials.map((testimonial, i) => (
+                <TestimonialCard 
+                  key={`second-${i}`}
+                  {...testimonial}
+                  aria-hidden="true"
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+import Contact from './components/Contact';
 
 /**
  * Main App component serving as the root of the application.
@@ -65,17 +104,9 @@ function App() {
   const { isScrolled } = useScroll(50);
 
   // State to track if light-background sections are in view for header theme
-  const [aboutInViewState, setAboutInView] = useState(false);
   const [admissionsInViewState, setAdmissionsInView] = useState(false);
   const [galleryInViewState, setGalleryInView] = useState(false);
   const [contactInViewState, setContactInView] = useState(false);
-  const [testimonialsInViewState, setTestimonialsInView] = useState(false);
-
-  // Use custom hooks for section visibility detection
-  const { ref: aboutSectionRef } = useSectionInView({
-    threshold: 0.1,
-    onChange: setAboutInView,
-  });
 
   const { ref: admissionsSectionRef } = useSectionInView({
     threshold: 0.1,
@@ -90,11 +121,6 @@ function App() {
   const { ref: contactSectionRef } = useSectionInView({
     threshold: 0.1,
     onChange: setContactInView,
-  });
-
-  const { ref: testimonialsSectionRef } = useSectionInView({
-    threshold: 0.1,
-    onChange: setTestimonialsInView,
   });
 
   // 🎬 Trigger the intro animation on mount (2.5s)
@@ -147,10 +173,10 @@ useEffect(() => {
   }, [showPopup]);
 
   // A section is considered "light" if any of the sections with a light background
-  // (like About, Admissions, or Contact) are currently in the viewport.
+  // (like Admissions, or Contact) are currently in the viewport.
   // The gallery section is now dark-themed, so it's excluded from this check.
   const isLightSectionInView =
-    aboutInViewState || admissionsInViewState || contactInViewState || testimonialsInViewState;
+    admissionsInViewState || contactInViewState;
 
   // 🧭 Handle basic client-side routing (since no router is used)
   const [path, setPath] = useState(window.location.pathname);
@@ -200,6 +226,51 @@ useEffect(() => {
   // 🎞️ Add intro class for fade-in/fade-out effect
   const wrapperClassName = isIntro ? 'intro-state' : '';
 
+  const testimonialsData = [
+    {
+      author: {
+        name: "Abdul Arhaan",
+        handle: "Student (Grade 6)",
+        avatar: "/images/Testimonials1.jpg"
+      },
+      text: "Our school has given me endless opportunities to grow — from academics to sports and leadership programs. The teachers always encourage us to think creatively and aim higher every day.",
+      // href: "#"
+    },
+    {
+      author: {
+        name: "Mrs. B. Rama Devi",
+        handle: "Parent of Grade 3 Student",
+        avatar: "/images/Testimonials2.jpg"
+      },
+      text: "As a parent, I feel proud to see my child enjoy learning every day. The school’s focus on both moral values and academic excellence has truly helped my daughter become more confident and responsible.",
+      // href: "#"
+    },
+    {
+      author: {
+        name: "Dr. Hari Prasad",
+        handle: "Alumni (Batch of 2007)",
+        avatar: "/images/Testimonials3.jpg"
+      },
+      text: "My years at this school were the foundation of my success. The teachers not only prepared us academically but also taught us discipline, teamwork, and compassion — lessons that stay with me even today."
+    },
+    {
+      author: {
+        name: "N. Alekya",
+        handle: "Student (Grade 10)",
+        avatar: "/images/Testimonials4.jpg"
+      },
+      text: "This school has helped me discover my passion for science and innovation. The lab facilities, guidance from teachers, and extracurricular support have been incredible. I feel ready for college life ahead!"
+    },
+    {
+      author: {
+        name: "Mr. & Mrs. Ramachandram",
+        handle: "Parents of Alumni",
+        avatar: "/images/Testimonials5.jpg"
+      },
+      text: "We are grateful to the school for shaping our son into a disciplined and ambitious young man. The school’s balanced approach to academics and character development is truly commendable."
+    }
+  ];
+
   return (
     <div className={wrapperClassName}>
       {/* 🎉 Popup banner shown after page load */}
@@ -236,10 +307,7 @@ useEffect(() => {
           </a>
         </div>
 
-        {/* ℹ️ About section */}
-        <section id="about" ref={aboutSectionRef} className="about-section-container">
-          <About />
-        </section>
+
 
         {/* 🖼️ Gallery section */}
         <section id="gallery" ref={gallerySectionRef} className="gallery-section-container">
@@ -252,9 +320,12 @@ useEffect(() => {
         </section>
 
         {/* 💬 Testimonials section */}
-        <section id="testimonials" ref={testimonialsSectionRef} className="testimonials-section">
-          <Testimonials />
-        </section>
+        <TestimonialsSection
+          id="testimonials"
+          title="Voices of Trust"
+          description="The heart of our school lies in the people within it. Their words speak of trust, care, and lasting memories."
+          testimonials={testimonialsData}
+        />
 
         {/* 📞 Contact section */}
         <section id="contact" ref={contactSectionRef} className="contact-section-container">

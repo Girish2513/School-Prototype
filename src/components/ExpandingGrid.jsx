@@ -29,7 +29,7 @@ function ExpandingGrid({ title, sections = [] }) {
 
   // Error handling: If no sections, render empty or fallback message for resilience.
   if (!sections || sections.length === 0) {
-    return (
+    return ( // The class name here was correct, but I'm including it for context.
       <section className="expanding-grid-section" aria-live="polite">
         <div className="expanding-grid-content-wrapper">
           <h2 className="section-title">{title}</h2>
@@ -76,7 +76,7 @@ function ExpandingGrid({ title, sections = [] }) {
   }));
 
   return (
-    <section className="expanding-grid-section" aria-labelledby="grid-title">
+    <div className="expanding-grid-section" aria-labelledby="grid-title">
       <div className="expanding-grid-content-wrapper">
         <h2 id="grid-title" className="section-title">{title}</h2>
         <div
@@ -133,7 +133,7 @@ function ExpandingGrid({ title, sections = [] }) {
           })}
         </div>
       </div>
-    </section>
+    </div>
   );
 }
 

@@ -55,10 +55,15 @@ const Gallery = () => {
 
   return (
     <section className="gallery-section">
+      <div className="gallery-header">
+        <h2>SNEAK<br />PEAK</h2>
+        <div className="gallery-line"></div>
+        <p>Catch a sneak peek of campus life! 🎓<br />Where every picture tells a story of learning, laughter, and growth.</p>
+      </div>
       <div className="gallery-gradient gallery-gradient-left"></div>
       <div className="gallery-gradient gallery-gradient-right"></div>
       <div className="gallery-content">
-        <div className="gallery-track" id="galleryTrack">
+        <div id="galleryTrack" className="gallery-track">
           <div className="gallery-item"><img src="/images/activity.jpeg" alt="Activity" /></div>
           <div className="gallery-item"><img src="/images/class.jpeg" alt="Classroom" /></div>
           <div className="gallery-item"><img src="/images/event.jpg" alt="Event" /></div>
@@ -69,7 +74,7 @@ const Gallery = () => {
           <div className="gallery-item"><img src="/images/trip1.jpeg" alt="Field Trip" /></div>
         </div>
       </div>
-      <a href="/view-gallery" onClick={handleViewFullGallery} className="view-gallery-link">
+      <a href="/view-gallery" onClick={handleViewFullGallery} className="btn-gallery-view">
         View Full Gallery
       </a>
     </section>

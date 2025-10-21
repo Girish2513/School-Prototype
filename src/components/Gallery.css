@@ -1,12 +1,69 @@
 .gallery-section {
   position: relative;
-  height: 100vh; /* Use full viewport height */
+  height: 80vh; /* Reduced height to compress the section */
   width: 100%;
   overflow: hidden;
   display: flex;
+  flex-direction: column;
   background-color: #d2b48c; /* Tan background */
+  align-items: center; /* Center items horizontally by default */
+  justify-content: space-evenly; /* Distribute space evenly */
+  padding-top: 20px; /* Reduce top padding to move content up */
+}
+
+.gallery-header {
+  display: flex;
   align-items: center;
-  justify-content: center; /* Center the content horizontally */
+  width: 100%;
+  max-width: 1400px; /* Widen max-width for better spacing */
+  padding: 0 8%; /* Increased left padding to push content to the right */
+  margin-top: 0px;
+  margin-bottom: 0;
+  justify-content: flex-start; /* Align content to the left */
+}
+
+.gallery-header h2 {
+  font-size: 3rem;
+  font-weight: bold;
+  color: var(--dark-brown);
+  margin: 0;
+  margin-right: 20px;
+  line-height: 1.2;
+}
+
+.gallery-line {
+  width: 4px;
+  height: 100px;
+  background-color: var(--dark-brown);
+  margin-right: 20px;
+}
+
+.gallery-header p {
+  font-size: 1.2rem;
+  color: var(--dark-brown);
+  margin: 0;
+  text-align: left;
+}
+
+/* Mobile responsiveness for gallery header */
+@media (max-width: 767px) {
+  .gallery-header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
+    margin-top: 50px;
+  }
+
+  .gallery-header h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+
+  .gallery-header p {
+    font-size: 1rem;
+    text-align: left;
+    max-width: 100%;
+  }
 }
 
 .gallery-gradient {
@@ -30,7 +87,6 @@
 
 .gallery-content {
   display: flex;
-  height: 100%;
   width: 100%;
   align-items: center; /* Vertically center the track */
   justify-content: center; /* Horizontally center the track */
@@ -101,21 +157,54 @@
   }
 }
 
-.view-gallery-link {
-  position: absolute;
-  bottom: 40px;
-  left: 50%;
-  transform: translateX(-50%);
-  color: var(--dark-brown); /* Dark text for light background */
+/* --- New Button Styles for "View Full Gallery" --- */
+.btn-gallery-view {
+  position: relative; /* Changed from absolute */
+  color: var(--dark-brown);
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 45px;
   text-decoration: none;
-  font-size: 1rem;
-  font-weight: 500;
-  padding-bottom: 5px;
-  border-bottom: 1px solid rgba(74, 45, 35, 0.4);
+  text-transform: uppercase;
+  width: 220px; /* Adjusted width for better spacing */
+  text-align: center;
+  padding: 5px 10px; /* Add some padding */
+  letter-spacing: 0;
+  transition: letter-spacing 0.35s ease-in-out;
+  white-space: nowrap; /* Prevent text from wrapping on hover */
   z-index: 20;
-  transition: border-color 0.3s ease;
 }
 
-.view-gallery-link:hover {
-  border-bottom-color: var(--dark-brown);
+.btn-gallery-view:hover,
+.btn-gallery-view:active {
+  letter-spacing: 4px; /* Expand letter spacing on hover */
+}
+
+/* The pseudo-elements that create the underline effect */
+.btn-gallery-view:after,
+.btn-gallery-view:before {
+  backface-visibility: hidden;
+  border: 1px solid rgba(74, 45, 35, 0); /* Initially transparent */
+  bottom: 0px;
+  content: " ";
+  display: block;
+  margin: 0 auto;
+  position: relative;
+  transition: all 280ms ease-in-out;
+  width: 0;
+}
+
+.btn-gallery-view:hover:after,
+.btn-gallery-view:hover:before {
+  backface-visibility: hidden;
+  border-color: var(--dark-brown); /* Make border visible on hover */
+  transition: width 350ms ease-in-out;
+  width: 80%; /* Animate width to 80% */
+}
+
+.btn-gallery-view:hover:before {
+  bottom: auto;
+  top: 0;
+  color: var(--dark-brown);
 }
