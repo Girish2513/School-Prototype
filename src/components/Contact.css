@@ -1,0 +1,130 @@
+/* --- 3.4 Contact Section --- */
+.contact-section-container {
+    background-color: #EFEFEF;
+}
+
+.contact-page {
+    padding: 80px 5%;
+    color: var(--dark-brown);
+}
+
+.contact-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.contact-page .section-title {
+    text-align: center;
+    font-size: 2.8rem;
+    color: rgb(0, 0, 0);
+    margin-bottom: 60px;
+}
+
+/* --- 4.5 Contact Form & Info --- */
+.contact-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: flex-start;
+}
+
+.contact-form-container, .contact-info-container {
+    position: relative;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    overflow: hidden; /* To contain the pseudo-element */
+}
+
+.contact-form-container {
+    background: #D2B48C;
+}
+
+.contact-info-container {
+    background-color: #EA4335; /* Google Maps Red */
+}
+
+.contact-form-container h3, .contact-info-container h3 {
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+}
+
+.contact-form-container h3 {
+    border-bottom: 2px solid var(--dark-brown);
+}
+
+.contact-info-container h3 {
+    color: var(--white);
+    border-bottom: 2px solid var(--white);
+}
+
+.contact-form .form-group {
+    margin-bottom: 20px;
+}
+
+.contact-form input, .contact-form textarea {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.contact-form input:focus, .contact-form textarea:focus {
+    outline: none;
+    border-color: var(--professional-orange);
+}
+
+.contact-form textarea {
+    resize: vertical;
+}
+
+.submit-button {
+    display: inline-block;
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--dark-brown);
+    color: var(--white);
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #6e5232;
+}
+
+.contact-info-container p {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.contact-info-container .fas {
+    color: var(--professional-orange);
+    font-size: 1.4rem;
+}
+
+.contact-info-container a {
+    color: var(--dark-brown);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.contact-info-container a:hover {
+    color: var(--professional-orange);
+}
+
+.map-container {
+    margin-top: 30px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}

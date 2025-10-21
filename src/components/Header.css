@@ -1,0 +1,390 @@
+/* --- 4.1 Header --- */
+.main-header {
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 10px 40px;
+    border: none;
+    border-radius: 0;
+    background-color: transparent;
+    transition: top 1s ease-in-out,
+                left 1s ease-in-out,
+                width 1s ease-in-out,
+                background-color 0.4s ease,
+                box-shadow 0.4s ease;
+}
+
+.main-header.home-page {
+    top: 30px;
+}
+
+/* Scrolled state */
+.main-header.scrolled:not(.light-theme):not(.gallery-in-view) {
+    background-color: rgba(26, 32, 44, 0.8);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* When over the gallery, remove background and shadow */
+.main-header.gallery-in-view {
+    background-color: transparent;
+    box-shadow: none;
+}
+
+/* Light theme for when the header is over a light background */
+.main-header.light-theme {
+    background-color: transparent;
+    box-shadow: none; /* Remove the shadow */
+}
+
+.main-header.light-theme .school-name {
+    color: var(--dark-brown);
+    text-shadow: none;
+}
+
+.main-header.light-theme .main-nav ul li a {
+    color: var(--dark-brown);
+    text-shadow: none;
+}
+
+.main-header.light-theme .main-nav ul li a:hover {
+    color: var(--professional-orange);
+}
+
+/* --- 4.1.1 Header Navigation --- */
+.main-header .main-nav {
+    display: flex; /* Use flex to help with vertical alignment */
+    margin-left: auto;
+}
+
+.main-nav {
+    display: flex; /* Ensure nav is visible by default on desktop */
+}
+
+/* Hamburger menu icon for mobile */
+.hamburger-menu {
+    display: none;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 10px;
+    z-index: 1001; /* ensure it's above everything else */
+    position: relative; /* prevent it from being covered */
+    color: var(--light-text);
+}
+
+/* Lines that form the hamburger icon */
+.hamburger-line {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: currentColor;
+    margin: 5px 0;
+    transition: all 0.3s ease-in-out;
+    border-radius: 3px;
+}
+
+.main-header.light-theme .hamburger-menu .fas {
+    color: var(--dark-brown); /* Make icon dark on light backgrounds */
+}
+
+/* Animate hamburger to an "X" when the menu is open */
+.main-header.menu-open .hamburger-line:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+.main-header.menu-open .hamburger-line:nth-child(2) {
+    opacity: 0;
+}
+.main-header.menu-open .hamburger-line:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+/* Slide the mobile menu into view when open */
+.main-header.menu-open .main-nav {
+    transform: translateX(0);
+}
+
+/* --- Dropdown Menu Styles --- */
+
+/* Styles the list item that will contain the dropdown (e.g., "Admissions") */
+.main-nav .dropdown {
+    position: relative; /* This is crucial for positioning the dropdown content */
+}
+
+/* The dropdown container, hidden by default */
+.main-nav .dropdown .dropdown-content {
+    display: none; /* Hides the dropdown by default */
+    position: absolute; /* Positions it relative to the parent 'li' */
+    top: 100%; /* Positions it right below the parent item */
+    left: 0;
+    background-color: #1f0f0f; /* Same as your header or a different color */
+    min-width: 240px; /* Adjust width as needed */
+    list-style: none; /* Removes bullet points */
+    padding: 10px 0;
+    margin: 0;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    z-index: 1000; /* Ensures it appears above other content */
+}
+
+/* This is the magic: Show the dropdown menu when hovering over the parent 'li' */
+.main-nav .dropdown:hover .dropdown-content {
+    display: block; /* Shows the dropdown on hover */
+}
+
+/* Styling for the links inside the dropdown */
+.main-nav .dropdown-content li {
+    width: 100%;
+}
+
+.main-nav .dropdown-content a {
+    color: white; /* Text color for dropdown links */
+    padding: 12px 20px;
+    text-decoration: none;
+    display: block; /* Makes the entire area clickable */
+    text-align: left;
+    transition: background-color 0.2s ease;
+}
+
+/* Hover effect for the dropdown links */
+.main-nav .dropdown-content a:hover {
+    background-color: #575757; /* A slightly lighter shade on hover */
+}
+
+/* --- 4.1.2 Header Logo and Title --- */
+.header-left {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0; /* Prevent this container from shrinking */
+    transition: flex-direction 1s ease-in-out;
+}
+
+.logo {
+    height: 60px;
+    margin-right: 20px;
+    margin-bottom: 0;
+    transition: height 1s ease-in-out,
+                margin-right 1s ease-in-out,
+                margin-bottom 1s ease-in-out;
+}
+
+.school-name {
+    /* Fluid font size: min 1.2rem, preferred 2.5vw, max 2rem */
+    font-size: clamp(1.2rem, 2.5vw, 2rem);
+    text-shadow: none;
+    /* Use a faster transition for smoother resizing */
+    transition: font-size 0.4s ease-in-out;
+    /* The base color is now on the h1 wrapper */
+    color: var(--light-text);
+    text-decoration: none;
+    white-space: nowrap; /* Prevent the school name from wrapping to a new line */
+    border-bottom: none;
+}
+
+.header-brand {
+    text-decoration: none;
+    border-bottom: none;
+}
+
+.header-brand:hover .school-name {
+    text-decoration: none;
+    border-bottom: none;
+}
+
+.main-nav {
+    transition: opacity 0.5s ease-out 1s, transform 0.5s ease-out 1s;
+}
+
+/*
+   Enhanced News Ticker with Modern Design (Updated)
+   ========================================================= */
+
+/* Main ticker container */
+.news-ticker {
+    position: absolute;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    padding: 7px 15px;
+    background: rgba(24, 15, 12, 0.85);  /* Semi-transparent dark brown */
+    backdrop-filter: blur(8px);
+    border-radius: 6px;
+    border: 1px solid rgba(255, 215, 0, 0.3);  /* subtle gold border */
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.3);
+    color: #fff;
+    overflow: hidden;
+    z-index: 90;
+    opacity: 0;
+    transition: opacity 0.4s ease-out 1.5s, transform 0.6s ease-out 1.2s;
+}
+
+.news-ticker.home-page {
+    top: 130px;
+}
+
+/* Show ticker after intro animation */
+:not(.intro-state) .news-ticker {
+    opacity: 1;
+    transform: translateX(-50%);
+}
+
+/* Hide ticker completely during intro state */
+.intro-state .news-ticker {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* Ticker wrapper for seamless loop */
+.ticker-wrapper {
+    display: flex;
+    white-space: nowrap;
+    animation: ticker-scroll 14s linear infinite; /* slightly slower */
+    will-change: transform;
+}
+
+/* Smooth right-to-left scrolling */
+@keyframes ticker-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* List of ticker items - duplicated for seamless loop */
+.ticker-list {
+    display: inline-flex;
+    gap: 50px;
+    list-style: none;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.ticker-list li {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;                /* reduced spacing between icon and text */
+    padding: 0 10px;         /* smaller padding between items */
+    font-weight: 500;
+    text-transform: none;    /* normal case, more readable */
+    letter-spacing: 0.5px;   /* slightly tighter */
+    font-size: 0.85rem;      /* smaller font */
+}
+
+/* Add icons before each ticker item */
+.ticker-list li::before {
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    font-size: 1rem;          /* smaller icons */
+    color: var(--gold-accent);
+}
+
+/* Icon for "Admissions are open" */
+.ticker-list li:nth-child(1)::before {
+    content: '\f19d'; /* fa-graduation-cap */
+    color: rgba(230, 84, 33);
+}
+
+/* Icon for "Open House" */
+.ticker-list li:nth-child(2)::before {
+    content: '\f015'; /* fa-home */
+}
+
+/* Icon for "New STEM Lab" */
+.ticker-list li:nth-child(3)::before {
+    content: '\f0c3'; /* fa-flask */
+}
+
+/* Icon for "Summer Camp" */
+.ticker-list li:nth-child(4)::before {
+    content: '\f185'; /* fa-sun */
+}
+
+/* Highlight first ticker item in orange */
+.ticker-list li:first-child {
+    color: rgba(230, 84, 33);
+    font-weight: 600;
+}
+
+/* Add separator between items */
+.ticker-list li:not(:last-child)::after {
+    content: '•';
+    margin-left: 15px;        /* reduced separator spacing */
+    color: var(--gold-accent);
+    opacity: 0.5;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .news-ticker {
+        width: 85%;
+        padding: 6px 12px;
+        top: 70px;
+    }
+    .ticker-list li {
+        font-size: 0.8rem;
+        gap: 6px;
+    }
+    .ticker-list {
+        gap: 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .news-ticker {
+        width: 90%;
+        padding: 5px 10px;
+        top: 65px;
+    }
+    .ticker-list li {
+        font-size: 0.75rem;
+    }
+    .ticker-list {
+        gap: 20px;
+    }
+    .ticker-list li::before {
+        font-size: 0.9rem;
+    }
+}
+
+/* --- 4.2.2 Desktop Navigation Styles --- */
+.main-nav ul {
+    display: flex;
+    list-style: none;
+}
+
+.main-nav ul li a {
+    /* Fluid font size: min 0.9rem, preferred 1.2vw, max 1rem */
+    font-size: clamp(0.9rem, 1.2vw, 1rem);
+    padding: 10px 20px;
+    font-weight: 600;
+    color: var(--light-text);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    white-space: nowrap; /* Prevent nav links from wrapping */
+    border-radius: 5px;
+    position: relative;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+}
+
+.main-nav ul li a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background-color: var(--gold-accent);
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: width 0.3s ease-in-out;
+}
+
+.main-nav ul li a:hover {
+    color: var(--gold-accent);
+}
+
+.main-nav ul li a:hover::after {
+    width: 80%;
+}
