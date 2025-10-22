@@ -64,14 +64,11 @@ const Gallery = () => {
       <div className="gallery-gradient gallery-gradient-right"></div>
       <div className="gallery-content">
         <div id="galleryTrack" className="gallery-track">
-          <div className="gallery-item"><img src="/images/activity.jpeg" alt="Activity" /></div>
-          <div className="gallery-item"><img src="/images/class.jpeg" alt="Classroom" /></div>
+          <div className="gallery-item"><img src="/images/welcome.jpg" alt="Welcome" /></div>
+          <div className="gallery-item"><img src="/images/school-ground.jpg" alt="Activity" /></div>
+          <div className="gallery-item"><img src="/images/flag-hoisting.jpg" alt="Classroom" /></div>
           <div className="gallery-item"><img src="/images/event.jpg" alt="Event" /></div>
-          <div className="gallery-item"><img src="/images/group-pic.jpeg" alt="Group Photo" /></div>
-          <div className="gallery-item"><img src="/images/maxresdefault.jpg" alt="School Trip" /></div>
-          <div className="gallery-item"><img src="/images/republic-W1.jpg" alt="Republic Day" /></div>
-          <div className="gallery-item"><img src="/images/trip.jpeg" alt="Wonderla Trip" /></div>
-          <div className="gallery-item"><img src="/images/trip1.jpeg" alt="Field Trip" /></div>
+          <div className="gallery-item"><img src="/images/school-front-side.jpg" alt="Group Photo"/></div>
         </div>
       </div>
       <a href="/view-gallery" onClick={handleViewFullGallery} className="btn-gallery-view">

@@ -1,0 +1,180 @@
+.about-us-section {
+  background-color: white;
+  padding: 40px 20px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  min-height: 100vh; /* Ensure section takes full viewport height */
+}
+
+.about-us-wrapper {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.about-us-container {
+  display: flex;
+  align-items: flex-start; /* Align items to the top */
+  gap: 40px;
+  margin: 0 auto;
+}
+
+.about-us-text-block {
+  flex: 1.5; /* Give more space to the text */
+}
+
+.about-us-image-container {
+  flex: 1;
+  opacity: 0;
+  transform: translateX(20px);
+  transition: opacity 0.6s ease-out 0.5s, transform 0.6s ease-out 0.5s;
+}
+
+.about-us-image {
+  width: 100%;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.about-us-heading {
+  font-size: 2.5rem;
+  color: var(--dark-brown);
+  margin-bottom: 30px;
+  font-weight: bold;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.about-us-content p {
+  color: var(--dark-brown);
+  font-family: var(--elegant-serif);
+  font-size: 1.2rem; /* Slightly larger for better readability */
+  line-height: 1.6;
+  margin-bottom: 20px;
+  text-align: left;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.about-us-content p:first-child {
+  text-align: left; /* Align left for drop cap to work correctly */
+}
+
+/* Create the drop cap effect for the first letter */
+.about-us-content p:first-child::first-letter {
+  font-size: 4rem; /* Make the letter significantly larger */
+  float: left; /* Allow text to wrap around the letter */
+  line-height: 0.8; /* Adjust vertical alignment */
+  padding-right: 2px; /* Add space between the letter and the text */
+  font-weight: normal; /* Ensure the letter is not bold */
+  color: var(--dark-brown);
+}
+
+.section-divider {
+  border: none;
+  height: 1px;
+  background-color: var(--dark-brown);
+  margin: 40px 0;
+}
+
+.principals-message-container {
+  display: flex;
+  align-items: center;
+  /* max-width and auto margin removed to allow left alignment */
+  margin: 40px 0 0;
+  gap: 40px;
+}
+
+/* Modifier for the Vice Principal section to reverse the layout */
+.principals-message-container.vice-principal {
+  flex-direction: row-reverse;
+}
+
+.principals-message-container.vice-principal .principals-content {
+  text-align: right;
+}
+
+.about-us-section-container.is-in-view .about-us-image-container {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Animation trigger */
+.about-us-section-container.is-in-view .about-us-heading,
+.about-us-section-container.is-in-view .about-us-content p {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger the animation for paragraphs */
+.about-us-section-container.is-in-view .about-us-content p:nth-child(2) { transition-delay: 0.1s; }
+.about-us-section-container.is-in-view .about-us-content p:nth-child(3) { transition-delay: 0.2s; }
+.about-us-section-container.is-in-view .about-us-content p:nth-child(4) { transition-delay: 0.3s; }
+.about-us-section-container.is-in-view .about-us-content p:nth-child(5) { transition-delay: 0.4s; }
+
+.principals-image-container {
+  flex-shrink: 0; /* Prevent the container from shrinking */
+}
+
+.principals-image {
+  width: 390px; /* Set a fixed width */
+  height: 300px; /* Set a fixed height */
+  border-radius: 12px; /* A soft radius for a square image */
+  object-fit: cover;
+  border: 3px solid var(--dark-brown);
+}
+
+.principals-content {
+  flex: 1;
+  text-align: left;
+}
+
+.principals-heading {
+  font-size: 2rem;
+  color: var(--dark-brown);
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.principals-content p {
+  color: var(--dark-brown);
+  font-family: var(--elegant-serif);
+  font-size: 1.1rem; /* Slightly larger for better readability */
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+@media (max-width: 768px) {
+  .about-us-section {
+    min-height: auto; /* Remove fixed height on mobile */
+    padding: 60px 20px;
+  }
+
+  .about-us-container {
+    flex-direction: column;
+  }
+
+  .principals-message-container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .principals-content {
+    text-align: center;
+  }
+
+  /* On mobile, the vice-principal text should also be centered */
+  .principals-message-container.vice-principal .principals-content {
+    text-align: center;
+  }
+
+  .principals-image {
+    width: 150px; /* Adjust size for mobile view */
+    height: 150px;
+  }
+}
+
+

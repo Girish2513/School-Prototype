@@ -13,7 +13,7 @@ import ViewGallery from './components/ViewGallery';
 import PopupBanner from './PopupBanner';
 import AdminPage from './AdminPage';
 import WhatsAppButton from './components/WhatsAppButton';
-import AboutUs from '../../AboutUs';
+import AboutUs from './components/AboutUs';
 
 const TestimonialsSection = ({ title, description, testimonials, className, id }) => {
   const cn = (...classes) => classes.filter(Boolean).join(' ');
