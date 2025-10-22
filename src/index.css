@@ -5,12 +5,13 @@
 */
 
 /* --- 1. Global Styles & Resets --- */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:wght@400;500;600;700&display=swap');
 
 :root {
     --dark-brown: #4A2D23;
     --gold-accent: #FFD700;
     --professional-orange: rgba(230, 84, 33); /* The new brand color */
+    --elegant-serif: 'Cormorant Garamond', serif;
     --school-name-blue: #4A2D23; /* Color for the school name */
     --light-text: #f0f0f0;
     --white: #FFFFFF;

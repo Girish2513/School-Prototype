@@ -5,7 +5,7 @@ import { useSectionInView } from './hooks/useSectionInView';
 import Header from './components/Header';
 import Hero from './components/Hero';
 
-import Admissions from './components/Admissions'; 
+import Admissions from './components/Admissions';
 import { TestimonialCard } from './components/TestimonialCard';
 import Footer from './components/Footer';
 import Gallery from './components/Gallery';
@@ -13,6 +13,7 @@ import ViewGallery from './components/ViewGallery';
 import PopupBanner from './PopupBanner';
 import AdminPage from './AdminPage';
 import WhatsAppButton from './components/WhatsAppButton';
+import AboutUs from '../../AboutUs';
 
 const TestimonialsSection = ({ title, description, testimonials, className, id }) => {
   const cn = (...classes) => classes.filter(Boolean).join(' ');
@@ -104,6 +105,7 @@ function App() {
   const { isScrolled } = useScroll(50);
 
   // State to track if light-background sections are in view for header theme
+  const [aboutUsInViewState, setAboutUsInView] = useState(false);
   const [admissionsInViewState, setAdmissionsInView] = useState(false);
   const [galleryInViewState, setGalleryInView] = useState(false);
   const [contactInViewState, setContactInView] = useState(false);
@@ -111,6 +113,11 @@ function App() {
   const { ref: admissionsSectionRef } = useSectionInView({
     threshold: 0.1,
     onChange: setAdmissionsInView,
+  });
+
+  const { ref: aboutUsSectionRef } = useSectionInView({
+    threshold: 0.1,
+    onChange: setAboutUsInView,
   });
 
   const { ref: gallerySectionRef } = useSectionInView({
@@ -307,7 +314,15 @@ useEffect(() => {
           </a>
         </div>
 
-
+        {/* 📖 About Us section */}
+        <section
+          id="about-us"
+          ref={aboutUsSectionRef}
+          className={`about-us-section-container ${aboutUsInViewState ? 'is-in-view' : ''
+            }`}
+        >
+          <AboutUs />
+        </section>
 
         {/* 🖼️ Gallery section */}
         <section id="gallery" ref={gallerySectionRef} className="gallery-section-container">
