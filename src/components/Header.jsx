@@ -30,8 +30,7 @@ function Header({ isScrolled, isIntro, isLightSectionInView, isHomePage = true }
     }
   };
 
-  const navItems = [
-    { href: '#about', label: 'About Us' },
+  const navItems = [
     { href: '#gallery', label: 'Gallery' },
     { 
       href: '#admissions', 

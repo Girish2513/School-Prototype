@@ -5,12 +5,13 @@
 */
 
 /* --- 1. Global Styles & Resets --- */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:wght@400;500;600;700&display=swap');
 
 :root {
     --dark-brown: #4A2D23;
     --gold-accent: #FFD700;
     --professional-orange: rgba(230, 84, 33); /* The new brand color */
+    --elegant-serif: 'Cormorant Garamond', serif;
     --school-name-blue: #4A2D23; /* Color for the school name */
     --light-text: #f0f0f0;
     --white: #FFFFFF;
@@ -835,92 +836,178 @@ transition: height 1s ease-in-out,
     margin-bottom: 60px;
 }
 
-
-/* --- 4.X Testimonials Section --- */
+/* --- 4.7 New Testimonials Section --- */
 .testimonials-section {
+  background-color: #4E3629; /* Dark warm brown */
+  padding: 6rem 0; /* py-24 */
+  color: #E6C18A; /* soft golden amber */
+}
+
+.testimonials-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4rem;
   text-align: center;
-  padding: 5rem 2rem;
-  background-color: rgba(210, 180, 140); /* Tan background color */
+}
+
+.testimonials-header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 1400px;
+  padding: 0%; /* Further reduced padding to move content more to the left */
+  justify-content: flex-start;
+}
+
+.testimonials-header h2 {
+  max-width: 720px;
+  font-size: 2.5rem;
+  line-height: 1.1;
+  font-weight: 600;
+  font-family: 'Merriweather', serif;
+  margin: 0;
+  margin-right: 20px;
+}
+
+.testimonials-line {
+  width: 4px;
+  height: 100px;
+  background-color: #E6C18A; /* soft golden amber */
+  margin-right: 20px;
+}
+
+.testimonials-header p {
+  max-width: 600px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #D1B49C; /* beige */
+  text-align: left;
+  margin: 0;
+}
+
+.marquee-wrapper {
+  position: relative;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
 }
 
-.testimonials-section h2 {
-  font-size: 2.5rem;
-  margin-bottom: 3rem;
-  color: #1a1a1a;
-}
-
-/* Wrapper to hold duplicate scrolling content */
-.testimonial-row {
+.marquee-container {
+  --gap: 1rem;
+  --duration: 15s;
   display: flex;
-  justify-content: flex-start;
+  overflow: hidden;
+  padding: 0.5rem;
+  gap: var(--gap);
+}
+
+.marquee-content {
+  display: flex;
+  flex-shrink: 0;
+  justify-content: space-around;
+  width: fit-content;
+  gap: var(--gap);
+  animation: marquee var(--duration) linear infinite;
+}
+
+/* Stop animation on hover */
+.marquee-container:hover .marquee-content {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* --- Testimonial Card Styles --- */
+.testimonial-card-base {
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  margin-bottom: 3rem;
-  white-space: nowrap;
-  width: max-content;
+  border-radius: 0.75rem;
+  border: 1px solid #E6D8C3;
+  background-color: #FAF6F1;
+  padding: 1.5rem;
+  width: 300px;
+  min-height: 320px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  color: #3C2F2F;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  gap: 1rem;
+  text-align: center;
+  overflow: hidden;
 }
 
-/* Keyframes for seamless loop */
-@keyframes scroll-right {
-  0% {
-    transform: translateX(-50%);
-  }
-  100% {
-    transform: translateX(0%);
-  }
+.testimonial-card-base:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.25);
 }
 
-@keyframes scroll-left {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
+/* --- Avatar on Top, Circle Shape --- */
+.testimonial-card-author {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
 }
 
-/* Infinite smooth movement */
-.testimonial-row.row-1 {
-  animation: scroll-right 35s linear infinite;
-}
-.testimonial-row.row-2 {
-  animation: scroll-left 35s linear infinite;
-}
-.testimonial-row.row-3 {
-  animation: scroll-right 35s linear infinite;
+.testimonial-card-author .avatar-wrapper {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 2px solid #E6D8C3;
 }
 
-/* Testimonial Card Styles */
-.testimonial-card {
-  display: inline-block;
-  width: 220px;
-  margin: 0 1rem;
-  color: black;
-  text-align: left;
+.testimonial-card-author img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.quote {
-  font-size: 3.5rem;
-  color: navy;
-  display: block;
-  line-height: 1;
-  margin-bottom: 0.5rem;
+.testimonial-card-author-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.testimonial-comment {
+.testimonial-card-author-info h3 {
   font-size: 1rem;
+  font-weight: 600;
+  color: #6F4E37;
+  transition: color 0.3s ease;
+}
+
+.testimonial-card-author-info p {
+  font-size: 0.85rem;
+  color: #A6896F;
+  margin-top: 0.25rem;
+}
+
+.testimonial-card-base:hover .testimonial-card-author-info h3,
+.testimonial-card-base:hover a {
+  color: #D6A77A;
+}
+
+/* --- Testimonial Text --- */
+.testimonial-card-text {
+  margin-top: 0.5rem;
+  color: #3C2F2F;
+  font-size: 0.9rem;
   line-height: 1.5;
-  margin-bottom: 0.5rem;
-  color: black;
+  word-wrap: break-word;
+  text-align: center;
+  max-width: 260px;
 }
-
-.testimonial-name {
-  font-weight: bold;
-  color: brown;
-  font-size: 1rem;
-}
-
-
 
 
 /* --- 4.5 Contact Form & Info --- */
@@ -1298,4 +1385,120 @@ transition: height 1s ease-in-out,
 body.popup-open .location-icon {
   pointer-events: none;
   opacity: 0.4;
+}
+
+/* Button Hover Effects */
+.btn {
+  position: relative;
+  display: inline-block;
+  padding: 10px 20px;
+  text-decoration: none;
+  color: #fff;
+  background: #333;
+  border: 2px solid #333;
+  overflow: hidden;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: #fff;
+  stroke-width: 2;
+  stroke-dasharray: 0 0 0 1000;
+  transition: stroke-dasharray 0.5s ease;
+}
+
+.btn:hover svg {
+  stroke-dasharray: 0 0 1000 0;
+}
+
+.btn-1 {
+  background: var(--professional-orange);
+  border-color: var(--professional-orange);
+}
+
+.btn-1:hover {
+  background: #E66A44;
+  border-color: #E66A44;
+}
+
+.btn-2 {
+  background: #352c2c;
+  border-color: #352c2c;
+}
+
+.btn-2::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: #094330;
+  transition: left 0.5s ease;
+}
+
+.btn-2:hover::before {
+  left: 0;
+}
+
+.btn-2:hover {
+  color: #fff;
+}
+
+.btn-3 {
+  background: var(--dark-brown);
+  border-color: var(--dark-brown);
+}
+
+.btn-3:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(255,255,255,0.5);
+}
+
+.btn-4 {
+  background: #dc3545;
+  border-color: #dc3545;
+}
+
+.btn-4 span {
+  position: relative;
+  z-index: 1;
+  transition: transform 0.3s ease;
+}
+
+.btn-4:hover span {
+  transform: translateX(10px);
+}
+
+.btn-5 {
+  background: #28a745;
+  border-color: #28a745;
+}
+
+.btn-5::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background: #218838;
+  transition: width 0.3s ease;
+}
+
+.btn-5:hover::before {
+  width: 100%;
+}
+
+.btn-5:hover {
+  color: #fff;
 }

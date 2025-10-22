@@ -1,15 +1,14 @@
-# Admin Page Implementation TODO
+# TODO: Remove About Us Section Completely
 
-## Completed
-- [x] Analyze existing code: ticker in Header.jsx, popup images in App.jsx
-- [x] Create AdminPage.jsx component with forms for ticker texts and popup images
-- [x] Create AdminPage.css for styling
-- [x] Modify App.jsx: add state for tickerItems and popupImages with localStorage, add /admin routing, pass props
-- [x] Modify Header.jsx: accept tickerItems as prop
-- [x] Modify PopupBanner.jsx: ensure it accepts imageUrls as prop (already does)
-
-## Completed
-- [x] Test the admin page functionality
-
-## New Requirements
-- [x] Add file upload functionality for popup banner images (instead of URL inputs)
+## Tasks
+- [x] Remove About component file: `School-Prototype/src/components/About.jsx`
+- [x] Remove `aboutSectionsData` from `School-Prototype/src/components/siteData.js`
+- [x] Update `School-Prototype/src/App.jsx`:
+  - Remove import of About component
+  - Remove About section from JSX
+  - Remove aboutInViewState and related state/hook
+  - Update isLightSectionInView logic to exclude about
+- [x] Update `School-Prototype/src/components/Header.jsx`:
+  - Remove "About Us" nav item
+- [x] Update `School-Prototype/src/components/Footer.jsx`:
+  - Remove "About Us" quick link from footerData
