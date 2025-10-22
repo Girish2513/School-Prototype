@@ -55,21 +55,23 @@ const Gallery = () => {
 
   return (
     <section className="gallery-section">
+      <div className="gallery-header">
+        <h2>SNEAK<br />PEAK</h2>
+        <div className="gallery-line"></div>
+        <p>Catch a sneak peek of campus life! 🎓<br />Where every picture tells a story of learning, laughter, and growth.</p>
+      </div>
       <div className="gallery-gradient gallery-gradient-left"></div>
       <div className="gallery-gradient gallery-gradient-right"></div>
       <div className="gallery-content">
-        <div className="gallery-track" id="galleryTrack">
-          <div className="gallery-item"><img src="/images/activity.jpeg" alt="Activity" /></div>
-          <div className="gallery-item"><img src="/images/class.jpeg" alt="Classroom" /></div>
-          <div className="gallery-item"><img src="/images/event.jpg" alt="Event" /></div>
-          <div className="gallery-item"><img src="/images/group-pic.jpeg" alt="Group Photo" /></div>
-          <div className="gallery-item"><img src="/images/maxresdefault.jpg" alt="School Trip" /></div>
-          <div className="gallery-item"><img src="/images/republic-W1.jpg" alt="Republic Day" /></div>
-          <div className="gallery-item"><img src="/images/trip.jpeg" alt="Wonderla Trip" /></div>
-          <div className="gallery-item"><img src="/images/trip1.jpeg" alt="Field Trip" /></div>
+        <div id="galleryTrack" className="gallery-track">
+          <div className="gallery-item"><img src="/images/welcome.jpeg" alt="Welcome" /></div>
+          <div className="gallery-item"><img src="/images/school-ground.jpeg" alt="Activity" /></div>
+          <div className="gallery-item"><img src="/images/flag-hoisting.jpeg" alt="Classroom" /></div>
+          <div className="gallery-item"><img src="/images/event.jpeg" alt="Event" /></div>
+          <div className="gallery-item"><img src="/images/school-front-side.jpeg" alt="Group Photo" /></div>
         </div>
       </div>
-      <a href="/view-gallery" onClick={handleViewFullGallery} className="view-gallery-link">
+      <a href="/view-gallery" onClick={handleViewFullGallery} className="btn-gallery-view">
         View Full Gallery
       </a>
     </section>
