@@ -1,14 +1,12 @@
-# TODO: Remove About Us Section Completely
+# TODO: Remove Admissions Block Completely
 
-## Tasks
-- [x] Remove About component file: `School-Prototype/src/components/About.jsx`
-- [x] Remove `aboutSectionsData` from `School-Prototype/src/components/siteData.js`
-- [x] Update `School-Prototype/src/App.jsx`:
-  - Remove import of About component
-  - Remove About section from JSX
-  - Remove aboutInViewState and related state/hook
-  - Update isLightSectionInView logic to exclude about
-- [x] Update `School-Prototype/src/components/Header.jsx`:
-  - Remove "About Us" nav item
-- [x] Update `School-Prototype/src/components/Footer.jsx`:
-  - Remove "About Us" quick link from footerData
+## Steps to Complete:
+- [x] Delete Admissions.jsx file
+- [x] Delete Admissions.css file
+- [x] Remove admissionsData from siteData.js
+- [x] Remove "Admissions" link from footerData in siteData.js
+- [x] Remove Admissions import and section from App.jsx
+- [x] Remove admissionsInView state and related logic from App.jsx
+- [x] Remove "Admissions" from navigation in Header.jsx
+- [x] Remove admissions link from Hero.jsx
+- [x] Remove admissions-related ticker item from AppContext.jsx

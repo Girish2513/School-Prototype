@@ -36,10 +36,10 @@ export const AppProvider = ({ children }) => {
     return saved
       ? JSON.parse(saved)
       : [
-          '🎓 Admissions are open for 2026!',
           '🏠 Open House: January 15, 2026',
           '🧪 New STEM Lab inaugurated this month',
           '☀️ Summer Camp registrations now live',
+          '🎓 Explore our gallery and campus life!',
         ];
   });
 

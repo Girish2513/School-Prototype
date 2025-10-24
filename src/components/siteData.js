@@ -6,34 +6,7 @@
 
 
 
-/**
- * Data for the "Admissions" scroll-stacking section.
- * Each object represents a panel in the stack. This data is used in the ScrollStack component
- * for displaying admissions information. Content is plain text for simplicity and security.
- * For extensibility, consider adding more fields like icons or links if needed.
- */
-export const admissionsData = [
-  {
-    id: 'eligibility-criteria',
-    title: "Eligibility Criteria",
-    content: "Students from rural areas in classes 6 and 9. Admission through JNVST."
-  },
-  {
-    id: 'admission-process',
-    title: "Admission Process",
-    content: "The selection process includes a written exam followed by document verification. No donation or capitation fee is required."
-  },
-  {
-    id: 'important-dates',
-    title: "Important Dates",
-    content: "Application forms are available from [date]. Entrance exam on [date]. Results announced on [date]."
-  },
-  {
-    id: 'reservation-policy',
-    title: "Reservation Policy",
-    content: "75% seats for rural candidates, 25% for urban. Reservation for girls, SC/ST, and disabled children as per government norms."
-  }
-];
+
 
 export const testimonialsData = [
   { comment: "Best school experience ever!", name: "Alice Johnson" },
@@ -81,7 +54,6 @@ export const footerData = {
   quickLinks: {
     title: "Quick Links",
     links: [
-      { text: "Admissions", href: "#admissions" },
       { text: "Academics", href: "#academics" },
       { text: "Contact Us", href: "#contact" }
     ]

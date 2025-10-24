@@ -1,51 +1,99 @@
-/* --- 4.4 Scroll Stack Component --- */
-.scroll-stack-container {
-    --stack-offset: 2rem;
-    --stack-items: 5;
-    padding-top: calc(var(--stack-items) * var(--stack-offset));
-    padding-bottom: 20vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #EFEFEF;
+/* Admissions Section Styles */
+.admissions-section {
+  padding: 80px 20px;
+  background: #ffffff;
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
 }
 
-/* --- 4.4 Scroll Stack Component --- */
-.scroll-stack-panel {
-    width: 95%;
-    max-width: 1200px;
-    height: 75vh;
-    padding: 40px;
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    position: sticky;
-    top: 80px; /* Space from top for the header */
-    margin-bottom: var(--stack-offset);
-    transform-origin: center top;
-    transition: transform 0.5s ease, opacity 0.5s ease;
+.admissions-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
 }
 
-.scroll-stack-panel h2 {
+.admissions-header {
+  margin-bottom: 60px;
+}
+
+.admissions-header h2 {
   font-size: 2.5rem;
-  color: #fff; /* White for contrast on dark brown */
-  margin-bottom: 1rem;
+  font-weight: 800;
+  color: var(--dark-brown);
+  margin: 0;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
 }
 
-.scroll-stack-panel p {
+.admissions-line {
+  width: 400px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--dark-brown), var(--dark-brown));
+  margin: 20px auto;
+  border-radius: 2px;
+}
+
+.admissions-header p {
   font-size: 1.2rem;
-  color: #f0f0f0; /* Light gray for readability */
-  max-width: 600px;
+  color: var(--dark-brown);
+    font-family: var(--elegant-serif);
+  margin: 0;
+  max-width: 90%;
+  margin: 0 auto;
+  line-height: 1.6;
 }
 
-/* Stacking colors and transforms for the panels */
-.scroll-stack-panel { background-image: linear-gradient(to bottom, #4A2D23, #5E3A2D, #724737, #865441, #9A624B); }
-.scroll-stack-panel:nth-child(1) { top: calc(80px + (var(--stack-offset) * 0)); transform: scale(calc(1 - 0.05 * (var(--stack-items) - 1))); }
-.scroll-stack-panel:nth-child(2) { top: calc(80px + (var(--stack-offset) * 1)); transform: scale(calc(1 - 0.05 * (var(--stack-items) - 2))); }
-.scroll-stack-panel:nth-child(3) { top: calc(80px + (var(--stack-offset) * 2)); transform: scale(calc(1 - 0.05 * (var(--stack-items) - 3))); }
-.scroll-stack-panel:nth-child(4) { top: calc(80px + (var(--stack-offset) * 3)); transform: scale(calc(1 - 0.05 * (var(--stack-items) - 4))); }
-.scroll-stack-panel:nth-child(5) { top: calc(80px + (var(--stack-offset) * 4)); }
+.admissions-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flowchart-container {
+  width: 100%;
+  max-width: 70%;
+  margin: 0 auto;
+}
+
+.flowchart-image {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .admissions-section {
+    padding: 60px 20px;
+  }
+
+  .admissions-header h2 {
+    font-size: 2.5rem;
+  }
+
+  .admissions-header p {
+    font-size: 1.1rem;
+  }
+
+  .admissions-line {
+    width: 60px;
+    height: 3px;
+  }
+}
+
+@media (max-width: 480px) {
+  .admissions-section {
+    padding: 40px 15px;
+  }
+
+  .admissions-header h2 {
+    font-size: 2rem;
+  }
+
+  .admissions-header p {
+    font-size: 1rem;
+  }
+}

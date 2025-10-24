@@ -30,8 +30,8 @@ function Hero({ shouldPlay }) {
       <div className="hero-text">
         <h1 id="hero-heading" className="hero-title">Empowering Minds,<br />Shaping Futures.</h1>
         <p className="hero-description">Excellence in education, dedication to discipline, and a commitment to holistic development.</p>
-        {/* CTA button with smooth scroll to admissions; aria-label for clarity */}
-        <a href="#admissions" className="cta-button" aria-label="Learn more about admissions">Admissions Open</a>
+        {/* CTA button with smooth scroll to gallery; aria-label for clarity */}
+        <a href="#gallery" className="cta-button" aria-label="Explore our gallery">Explore Gallery</a>
       </div>
       {/* Hero video background: Auto-plays muted loop for immersive experience; playsInline for mobile */}
       <div className="hero-video">

@@ -1,71 +1,41 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { admissionsData } from './siteData';
 
 /**
- * Internal ScrollStack component for displaying stacked panels that reveal on scroll.
- */
-function ScrollStack({ panels = [] }) {
-  if (!panels || panels.length === 0) {
-    return (
-      <section className="scroll-stack-container" aria-live="polite">
-        <p>No admissions information available at the moment.</p>
-      </section>
-    );
-  }
-
-  return (
-    <section className="scroll-stack-container" aria-labelledby="admissions-heading">
-      {/* The main section container ID should be different from the sub-section IDs */}
-      <div id="admissions"></div>
-      {panels.map((panel, index) => (
-        // --- THIS IS THE KEY CHANGE ---
-        // We are adding the id from our data to each article
-        <article key={index} id={panel.id} className="scroll-stack-panel">
-            <h2>{panel.title}</h2>
-            <p>{panel.content}</p>
-      </article>
-
-      ))}
-    </section>
-  );
-}
-
-ScrollStack.propTypes = {
-  panels: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired, // Make sure to include 'id' in prop validation
-      title: PropTypes.string.isRequired,
-      content: PropTypes.string.isRequired,
-    })
-  ),
+ * Admissions component displaying the admission process flowchart.
+ * Shows a visual flowchart image for the admission process.
+ */
+const AdmissionsSection = ({ id }) => {
+  return (
+    <section id={id} className="admissions-section">
+      <div className="admissions-container">
+        <div className="admissions-header">
+          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+            ADMISSION PROCESS
+          </h2>
+          <div className="admissions-line"></div>
+          <p className="mt-4 text-lg leading-8 text-gray-600">
+            Choosing the right educational institution for your child is one of the most significant decisions you'll make as a parent. At Navodaya High School, we understand that this decision directly impacts your child’s development and future success.
+Our streamlined, step-by-step admission process is designed to help us get to know each other and set clear expectations. We believe in creating a partnership with you to ensure your child’s academic and personal growth in a nurturing and supportive environment. Together, we'll prepare your child for a brighter tomorrow.
+          </p>
+        </div>
+        <div className="admissions-content">
+          <div className="flowchart-container">
+            <img
+              src="/images/admission-flowchart.png"
+              alt="Admission Process Flowchart"
+              className="flowchart-image"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 };
 
-ScrollStack.defaultProps = {
-  panels: [],
+AdmissionsSection.propTypes = {
+  /** The ID for the section, used for navigation */
+  id: PropTypes.string.isRequired,
 };
 
-/**
- * Admissions section component wrapping ScrollStack with data from siteData.js.
- */
-function Admissions({ panels: customPanels } = {}) {
-  const panelsToUse = customPanels && customPanels.length > 0 ? customPanels : admissionsData;
-
-  return (
-    <section className="admissions-section" aria-labelledby="admissions-title">
-      <ScrollStack panels={panelsToUse} />
-    </section>
-  );
-}
-
-Admissions.propTypes = {
-  panels: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string,
-      title: PropTypes.string,
-      content: PropTypes.string,
-    })
-  ),
-};
-
-export default Admissions;
+export default AdmissionsSection;

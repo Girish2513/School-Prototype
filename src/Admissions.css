@@ -1,0 +1,30 @@
+.admissions-section {
+  background-color: white;
+  padding-top: 4rem; /* 64px */
+  padding-bottom: 4rem; /* 64px */
+}
+
+@media (min-width: 640px) {
+  .admissions-section {
+    padding-top: 6rem; /* 96px */
+    padding-bottom: 6rem; /* 96px */
+  }
+}
+
+.admissions-container {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 80rem; /* 1280px */
+  padding-left: 1.5rem; /* 24px */
+  padding-right: 1.5rem; /* 24px */
+  text-align: center;
+}
+
+.admissions-line {
+  width: 4px;
+  height: 100px;
+  background-color: #e65421; /* professional-orange */
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 1rem;
+}

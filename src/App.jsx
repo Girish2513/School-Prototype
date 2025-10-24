@@ -5,7 +5,11 @@ import { useSectionInView } from './hooks/useSectionInView';
 // 🧩 Components
 import Header from './components/Header';
 import Hero from './components/Hero';
+
+
 import Admissions from './components/Admissions';
+
+
 import { TestimonialCard } from './components/TestimonialCard';
 import Footer from './components/Footer';
 import Gallery from './components/Gallery';
@@ -14,8 +18,12 @@ import PopupBanner from './PopupBanner';
 import AdminPage from './AdminPage';
 import WhatsAppButton from './components/WhatsAppButton';
 import AboutUs from './components/AboutUs';
+import './components/Admissions.css';
+import AdmissionsSection from './components/Admissions';
 import Achievements from './components/Achievements';
 import Contact from './components/Contact';
+import './components/Admissions.css';
+import AdmissionsSection from './components/Admissions';
 
 // 💬 Testimonials Section
 const TestimonialsSection = ({ title, description, testimonials, className, id }) => {
@@ -74,7 +82,6 @@ function App() {
 
   // 👁️ Section In-View States
   const [aboutUsInViewState, setAboutUsInView] = useState(false);
-  const [admissionsInViewState, setAdmissionsInView] = useState(false);
   const [galleryInViewState, setGalleryInView] = useState(false);
   const [contactInViewState, setContactInView] = useState(false);
 
@@ -83,6 +90,21 @@ function App() {
   const { ref: aboutUsSectionRef } = useSectionInView({ threshold: 0.1, onChange: setAboutUsInView });
   const { ref: gallerySectionRef } = useSectionInView({ threshold: 0.1, onChange: setGalleryInView });
   const { ref: contactSectionRef } = useSectionInView({ threshold: 0.1, onChange: setContactInView });
+
+  const { ref: aboutUsSectionRef } = useSectionInView({
+    threshold: 0.1,
+    onChange: setAboutUsInView,
+  });
+
+  const { ref: gallerySectionRef } = useSectionInView({
+    threshold: 0.1,
+    onChange: setGalleryInView,
+  });
+
+  const { ref: contactSectionRef } = useSectionInView({
+    threshold: 0.1,
+    onChange: setContactInView,
+  });
 
   // Intro delay
   useEffect(() => {
@@ -130,6 +152,12 @@ function App() {
 
   // 🌗 Header theme control
   const isLightSectionInView = admissionsInViewState || contactInViewState;
+  // A section is considered "light" if any of the sections with a light background
+  // (like Contact) are currently in the viewport.
+  // (like Contact) are currently in the viewport.
+  // The gallery section is now dark-themed, so it's excluded from this check.
+  const isLightSectionInView = contactInViewState;
+  const isLightSectionInView = contactInViewState;
 
   // 🔗 Path routing (manual)
   const [path, setPath] = useState(window.location.pathname);
@@ -271,10 +299,18 @@ function App() {
           <Gallery />
         </section>
 
+        {/* 🎓 Admissions section */}
+        <AdmissionsSection
+          id="admissions"
+        />
         {/* 📝 Admissions */}
         <section id="admissions" ref={admissionsSectionRef} className="admissions-section-container">
           <Admissions />
         </section>
+        {/* 🎓 Admissions section */}
+        <AdmissionsSection
+          id="admissions"
+        />
 
         {/* 💬 Testimonials */}
         <TestimonialsSection
