@@ -1,105 +1,247 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './AdminPage.css';
 
-function AdminPage({ tickerItems, setTickerItems, popupImages, setPopupImages }) {
-  const [localTickerItems, setLocalTickerItems] = useState(tickerItems);
-  const [localPopupImages, setLocalPopupImages] = useState(popupImages);
+function AdminPage({ tickerItems, setTickerItems, popupImages, setPopupImages, onReset }) {
+  // --- STATE MANAGEMENT ---
+  const [isDarkMode, setDarkMode] = useState(false);
+  const [isSaving, setSaving] = useState(false);
+  const fileInputRef = useRef(null);
+  const [replacingBannerId, setReplacingBannerId] = useState(null);
+  const [isDraggingOver, setIsDraggingOver] = useState(false);
+
+
+  // Transform popupImages (string array) to a structure the admin page can use
+  const [banners, setBanners] = useState(
+    popupImages.map((url, i) => ({ id: i, name: url.split('/').pop(), preview: url }))
+  );
+
+  // Last Updated Timestamps
+  const [lastUpdated, setLastUpdated] = useState({
+    ticker: new Date(),
+    banners: new Date(),
+  });
 
   useEffect(() => {
-    setLocalTickerItems(tickerItems);
-    setLocalPopupImages(popupImages);
-  }, [tickerItems, popupImages]);
+    document.body.dataset.theme = isDarkMode ? 'dark' : 'light';
+  }, [isDarkMode]);
 
-  const handleTickerChange = (index, value) => {
-    const updated = [...localTickerItems];
-    updated[index] = value;
-    setLocalTickerItems(updated);
-  };
+  // --- HANDLERS ---
 
-  const handlePopupImageChange = (index, value) => {
-    const updated = [...localPopupImages];
-    updated[index] = value;
-    setLocalPopupImages(updated);
-  };
-
-  const handleFileUpload = (index, event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const updated = [...localPopupImages];
-        updated[index] = e.target.result; // Base64 data URL
-        setLocalPopupImages(updated);
-      };
-      reader.readAsDataURL(file);
-    }
+  const handleTickerChange = (index, newText) => {
+    setTickerItems(items => items.map((item, i) => (i === index ? newText : item)));
   };
 
   const addTickerItem = () => {
-    setLocalTickerItems([...localTickerItems, '']);
+    setTickerItems(items => [...items, 'New item...']);
   };
 
   const removeTickerItem = (index) => {
-    setLocalTickerItems(localTickerItems.filter((_, i) => i !== index));
+    setTickerItems(items => items.filter((_, i) => i !== index));
   };
 
-  const addPopupImage = () => {
-    setLocalPopupImages([...localPopupImages, '']);
+  const processUploadedFile = (file) => {
+    if (file) {
+      const newBanner = {
+        id: Date.now(),
+        name: file.name,
+        preview: URL.createObjectURL(file),
+      };
+      setBanners(b => [...b, newBanner]);
+    }
   };
 
-  const removePopupImage = (index) => {
-    setLocalPopupImages(localPopupImages.filter((_, i) => i !== index));
+  const handleBannerUpload = (event) => {
+    const file = event.target.files[0];
+    processUploadedFile(file);
   };
 
-  const saveChanges = () => {
-    setTickerItems(localTickerItems);
-    setPopupImages(localPopupImages);
-    alert('Changes saved successfully!');
+  const handleDragOver = (event) => {
+    event.preventDefault();
+    setIsDraggingOver(true);
   };
 
+  const handleDragLeave = () => {
+    setIsDraggingOver(false);
+  };
+
+  const handleDrop = (event) => {
+    event.preventDefault();
+    setIsDraggingOver(false);
+    const file = event.dataTransfer.files[0];
+    processUploadedFile(file);
+  };
+
+  const removeBanner = (id) => {
+    setBanners(b => b.filter(banner => banner.id !== id));
+    setPopupImages(popupImages.filter((_, i) => i !== banners.findIndex(b => b.id === id)));
+  };
+
+  const handleReplaceClick = (bannerId) => {
+    setReplacingBannerId(bannerId);
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleBannerReplace = (event) => {
+    const file = event.target.files[0];
+    if (file && replacingBannerId !== null) {
+      setBanners(currentBanners =>
+        currentBanners.map(banner =>
+          banner.id === replacingBannerId
+            ? { ...banner, name: file.name, preview: URL.createObjectURL(file) }
+            : banner
+        )
+      );
+      setReplacingBannerId(null);
+      event.target.value = null; // Allows selecting the same file again
+    }
+  };
+
+  const handleSaveChanges = () => {
+    setSaving(true);
+    console.log("Saving data...", { tickerItems, banners });
+
+    setTimeout(() => {
+      // Update the main app's state for popup images
+      setPopupImages(banners.map(b => b.preview));
+      setSaving(false);
+
+      alert('✅ Changes saved successfully!');
+      const now = new Date();
+      setLastUpdated({ ticker: now, banners: now });
+    }, 1000);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('isLoggedIn');
+    window.location.href = '/login';
+  };
+
+  const formatDate = (date) => {
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
+    });
+  };
+
+  // --- RENDER ---
   return (
-    <div className="admin-page">
-      <h1>Admin Panel</h1>
+    <div className="admin-container">
+      {/* --- Header --- */}
+      <header className="admin-header">
+        <div className="header-left">
+          <img src="/images/logo.png" alt="School Logo" className="logo" />
+          <span className="school-name">Admin Panel</span>
+        </div>
+        <div className="header-right">          
+          <button className="theme-toggle-button" onClick={() => setDarkMode(!isDarkMode)} aria-label="Toggle theme">
+            {isDarkMode ? (
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="5"></circle>
+                <line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                <line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+              </svg>
+            ) : (
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+              </svg>
+            )}
+          </button>
+          <button className="logout-button" onClick={handleLogout}>Logout</button>
+        </div>
+      </header>
 
-      <section className="admin-section">
-        <h2>News Ticker Items</h2>
-        {localTickerItems.map((item, index) => (
-          <div key={index} className="input-group">
-            <input
-              type="text"
-              value={item}
-              onChange={(e) => handleTickerChange(index, e.target.value)}
-              placeholder="Enter ticker text"
-            />
-            <button onClick={() => removeTickerItem(index)} className="remove-btn">Remove</button>
+      {/* --- Main Content --- */}
+      <main className="admin-main">
+        <h1 className="admin-main-title">Welcome, Admin!</h1>
+        {/* News Ticker Section */}
+        <section className="section-card">
+          <div className="section-header">
+            <h2>News Ticker Items</h2>
+            <p className="last-updated">Last updated on {formatDate(lastUpdated.ticker)}</p>
           </div>
-        ))}
-        <button onClick={addTickerItem} className="add-btn">Add Ticker Item</button>
-      </section>
 
-      <section className="admin-section">
-        <h2>Popup Banner Images</h2>
-        {localPopupImages.map((image, index) => (
-          <div key={index} className="input-group">
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => handleFileUpload(index, e)}
-              className="file-input"
-            />
-            <input
-              type="text"
-              value={image}
-              onChange={(e) => handlePopupImageChange(index, e.target.value)}
-              placeholder="Or enter image URL (e.g., /images/image.jpg)"
-            />
-            <button onClick={() => removePopupImage(index)} className="remove-btn">Remove</button>
+          <div className="item-list">
+            {tickerItems.map((item, index) => (
+              <div key={index} className="ticker-item">
+                <input
+                  type="text"
+                  value={item}
+                  onChange={(e) => handleTickerChange(index, e.target.value)}
+                  placeholder="Enter ticker text..."
+                />
+                <button onClick={() => removeTickerItem(index)} className="btn-remove">Remove</button>
+              </div>
+            ))}
           </div>
-        ))}
-        <button onClick={addPopupImage} className="add-btn">Add Image</button>
-      </section>
+          
+          <button onClick={addTickerItem} className="btn-add">+ Add Ticker Item</button>
 
-      <button onClick={saveChanges} className="save-btn">Save Changes</button>
+          <div className="ticker-preview-container">
+            <h4>Ticker Preview</h4>
+            <div className="ticker-preview">
+              <div className="ticker-content">
+                {tickerItems.map((item, i) => <span key={i}>{item}</span>)}
+                {tickerItems.map((item, i) => <span key={`dup-${i}`}>{item}</span>)}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Popup Banner Section */}
+        <section className="section-card">
+          <div className="section-header">
+            <h2>Popup Banner Images</h2>
+            <p className="last-updated">Last updated on {formatDate(lastUpdated.banners)}</p>
+          </div>
+
+          <div className="banner-list">
+            {banners.map((banner) => (
+              <div key={banner.id} className="banner-item">
+                <img src={banner.preview} alt={banner.name} className="banner-thumbnail" />
+                <p className="banner-name">{banner.name}</p>
+                <div className="banner-actions">
+                  <button onClick={() => handleReplaceClick(banner.id)} className="btn-replace">Replace</button>
+                  <button onClick={() => removeBanner(banner.id)} className="btn-remove">Remove</button>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div
+            className={`upload-zone ${isDraggingOver ? 'dragging-over' : ''}`}
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
+          >
+            <input type="file" id="banner-upload" accept="image/*" onChange={handleBannerUpload} />
+            <label htmlFor="banner-upload">
+              <p>Drag & drop or click to upload new banner</p>
+              <small>Recommended: 1080×720 px, Max 2MB</small>
+            </label>
+          </div>
+        </section>
+
+        {/* Hidden file input for replacing banners */}
+        <input
+          type="file"
+          ref={fileInputRef}
+          onChange={handleBannerReplace}
+          style={{ display: 'none' }}
+          accept="image/*" />
+
+        {/* Save Section */}
+        <div className="save-section">
+          <button className="save-button" onClick={handleSaveChanges} disabled={isSaving}>
+            {isSaving ? 'Saving...' : 'Save All Changes'}
+          </button>
+          <button className="reset-button" onClick={onReset} disabled={isSaving}>
+            Reset to Defaults
+          </button>
+        </div>
+      </main>
     </div>
   );
 }

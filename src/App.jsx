@@ -16,12 +16,28 @@ import Gallery from './components/Gallery';
 import ViewGallery from './components/ViewGallery';
 import PopupBanner from './PopupBanner';
 import AdminPage from './AdminPage';
+import LoginPage from './LoginPage';
 import WhatsAppButton from './components/WhatsAppButton';
 import AboutUs from './components/AboutUs';
 import './components/Admissions.css';
 import './components/Hero.css';
 import Achievements from './components/Achievements';
 import Contact from './components/Contact';
+
+// --- DEFAULT STATE CONSTANTS ---
+const DEFAULT_TICKER_ITEMS = [
+  '🎓 Admissions are open for 2026!',
+  '🏠 Open House: January 15, 2026',
+  '🧪 New STEM Lab inaugurated this month',
+  '☀️ Summer Camp registrations now live',
+];
+
+const DEFAULT_POPUP_IMAGES = [
+  '/images/Pamphlet-1-2025.png',
+  '/images/Pamphlet-2-2025.png',
+  '/images/event.jpg',
+  '/images/poster.jpeg',
+];
 
 // 💬 Testimonials Section
 const TestimonialsSection = ({ title, description, testimonials, className, id }) => {
@@ -60,20 +76,22 @@ function App() {
   const [isIntro, setIsIntro] = useState(true);
   const [showPopup, setShowPopup] = useState(false);
 
+    // Function to load state from localStorage or use a default
+    const loadState = (key, defaultValue) => {
+        try {
+            const saved = localStorage.getItem(key);
+            return saved ? JSON.parse(saved) : defaultValue;
+        } catch (error) {
+            console.error(`Error reading from localStorage for key "${key}":`, error);
+            return defaultValue;
+        }
+    };
+
   // 🎓 Announcements (Ticker)
-  const [tickerItems, setTickerItems] = useState([
-    '🎓 Admissions are open for 2026!',
-    '🏠 Open House: January 15, 2026',
-    '🧪 New STEM Lab inaugurated this month',
-    '☀️ Summer Camp registrations now live',
-  ]);
+  const [tickerItems, setTickerItems] = useState(() => loadState('tickerItems', DEFAULT_TICKER_ITEMS));
 
   // 🖼️ Popup Images
-  const [popupImages, setPopupImages] = useState([
-    '/images/event.jpg',
-    '/images/poster.jpeg',
-    '/images/trip.jpeg',
-  ]);
+  const [popupImages, setPopupImages] = useState(() => loadState('popupImages', DEFAULT_POPUP_IMAGES));
 
   // 📜 Scroll State
   const { isScrolled } = useScroll(50);
@@ -99,6 +117,29 @@ function App() {
     const timer = setTimeout(() => setIsIntro(false), 2500);
     return () => clearTimeout(timer);
   }, []);
+
+    // Persist tickerItems to localStorage whenever they change
+    useEffect(() => {
+        localStorage.setItem('tickerItems', JSON.stringify(tickerItems));
+    }, [tickerItems]);
+
+  // Persist popupImages to localStorage whenever they change.
+  // The Admin panel updates this state.
+  useEffect(() => {
+    localStorage.setItem('popupImages', JSON.stringify(popupImages));
+    }, [popupImages]);
+
+  // --- Admin Panel Handlers ---
+  const handleResetToDefaults = () => {
+    const isConfirmed = window.confirm(
+      'Are you sure you want to reset all content to the original defaults? This action cannot be undone.'
+    );
+    if (isConfirmed) {
+      localStorage.removeItem('tickerItems');
+      localStorage.removeItem('popupImages');
+      window.location.reload();
+    }
+  };
 
   // 🌐 Floating buttons visibility
   const [showWhatsApp, setShowWhatsApp] = useState(false);
@@ -147,6 +188,19 @@ function App() {
   const [path, setPath] = useState(window.location.pathname);
   useEffect(() => {
     const onLocationChange = () => setPath(window.location.pathname);
+
+    // Intercept pushState and replaceState to dispatch a popstate event
+    const originalPushState = history.pushState;
+    history.pushState = function (...args) {
+      originalPushState.apply(this, args);
+      onLocationChange();
+    };
+
+    const originalReplaceState = history.replaceState;
+    history.replaceState = function (...args) {
+      originalReplaceState.apply(this, args);
+      onLocationChange();
+    };
     window.addEventListener('popstate', onLocationChange);
     return () => window.removeEventListener('popstate', onLocationChange);
   }, []);
@@ -175,16 +229,35 @@ function App() {
 
   // ⚙️ Admin Page
   if (path === '/admin') {
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+
+    useEffect(() => {
+      if (!isLoggedIn) {
+        window.location.href = '/login';
+      }
+    }, [isLoggedIn]);
+
+    if (!isLoggedIn) {
+      return null; // Render nothing while redirecting
+    }
+
     document.body.className = '';
     document.body.style.overflow = 'auto';
-    return (
-      <AdminPage
+    return <AdminPage
         tickerItems={tickerItems}
         setTickerItems={setTickerItems}
         popupImages={popupImages}
         setPopupImages={setPopupImages}
-      />
-    );
+        onReset={handleResetToDefaults}
+      />;
+  }
+
+  // 🔐 Login Page
+  if (path === '/login') {
+    document.body.className = '';
+    document.body.style.overflow = 'auto';
+    // Redirect to admin on successful login
+    return <LoginPage onLoginSuccess={() => (window.location.href = '/admin')} />;
   }
 
   // Default (Home)
