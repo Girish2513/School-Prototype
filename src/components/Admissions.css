@@ -5,6 +5,9 @@
   min-height: 60vh;
   display: flex;
   align-items: center;
+    /* Subtle dotted background */
+  background-image: radial-gradient(circle at 1px 1px, #d2b48c 1px, transparent 0);
+  background-size: 20px 20px; /* Adjust the spacing of the dots */
 }
 
 .admissions-container {
@@ -35,7 +38,7 @@
 }
 
 .admissions-header p {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   color: var(--dark-brown);
     font-family: var(--elegant-serif);
   margin: 0;
@@ -62,9 +65,21 @@
   border-radius: 12px;
 
 }
-
-
-/* Responsive Design */
+.eligibility-criteria-container {
+  margin-top: 5rem; /* Add space between the two sections */
+}
+.eligibility-image-container {
+  margin-top: 3rem; /* Space between text and image */
+  padding: 0 1rem;
+}
+.eligibility-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.75rem; /* 12px */
+  margin: 0 auto; /* Center the image */
+  display: block;
+}
+/* Responsive Design */ 
 @media (max-width: 768px) {
   .admissions-section {
     padding: 60px 20px;
@@ -81,6 +96,9 @@
   .admissions-line {
     width: 60px;
     height: 3px;
+  }
+  .eligibility-criteria-container {
+    margin-top: 4rem;
   }
 }
 

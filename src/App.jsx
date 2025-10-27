@@ -10,7 +10,7 @@ import Hero from './components/Hero';
 import Admissions from './components/Admissions';
 
 
-import { TestimonialCard } from './components/TestimonialCard';
+import { TestimonialCard } from './components/TestimonialCard'; // Keep this line
 import Footer from './components/Footer';
 import Gallery from './components/Gallery';
 import ViewGallery from './components/ViewGallery';
@@ -19,11 +19,9 @@ import AdminPage from './AdminPage';
 import WhatsAppButton from './components/WhatsAppButton';
 import AboutUs from './components/AboutUs';
 import './components/Admissions.css';
-import AdmissionsSection from './components/Admissions';
+import './components/Hero.css';
 import Achievements from './components/Achievements';
 import Contact from './components/Contact';
-import './components/Admissions.css';
-import AdmissionsSection from './components/Admissions';
 
 // 💬 Testimonials Section
 const TestimonialsSection = ({ title, description, testimonials, className, id }) => {
@@ -81,30 +79,20 @@ function App() {
   const { isScrolled } = useScroll(50);
 
   // 👁️ Section In-View States
-  const [aboutUsInViewState, setAboutUsInView] = useState(false);
-  const [galleryInViewState, setGalleryInView] = useState(false);
-  const [contactInViewState, setContactInView] = useState(false);
+  const [admissionsInViewState, setAdmissionsInView] = useState(false);
+  const [aboutUsInViewState, setAboutUsInView] = useState(false); // Keep this line
+  const [achievementsInViewState, setAchievementsInView] = useState(false);
+  const [galleryInViewState, setGalleryInView] = useState(false); // Keep this line
+  const [testimonialsInViewState, setTestimonialsInView] = useState(false);
+  const [contactInViewState, setContactInView] = useState(false); // Keep this line
 
   // Section observers
   const { ref: admissionsSectionRef } = useSectionInView({ threshold: 0.1, onChange: setAdmissionsInView });
-  const { ref: aboutUsSectionRef } = useSectionInView({ threshold: 0.1, onChange: setAboutUsInView });
-  const { ref: gallerySectionRef } = useSectionInView({ threshold: 0.1, onChange: setGalleryInView });
-  const { ref: contactSectionRef } = useSectionInView({ threshold: 0.1, onChange: setContactInView });
-
-  const { ref: aboutUsSectionRef } = useSectionInView({
-    threshold: 0.1,
-    onChange: setAboutUsInView,
-  });
-
-  const { ref: gallerySectionRef } = useSectionInView({
-    threshold: 0.1,
-    onChange: setGalleryInView,
-  });
-
-  const { ref: contactSectionRef } = useSectionInView({
-    threshold: 0.1,
-    onChange: setContactInView,
-  });
+  const { ref: aboutUsSectionRef } = useSectionInView({ threshold: 0.1, onChange: setAboutUsInView }); // Keep this line
+  const { ref: achievementsSectionRef } = useSectionInView({ threshold: 0.1, onChange: setAchievementsInView });
+  const { ref: gallerySectionRef } = useSectionInView({ threshold: 0.1, onChange: setGalleryInView }); // Keep this line
+  const { ref: testimonialsSectionRef } = useSectionInView({ threshold: 0.1, onChange: setTestimonialsInView });
+  const { ref: contactSectionRef } = useSectionInView({ threshold: 0.1, onChange: setContactInView }); // Keep this line
 
   // Intro delay
   useEffect(() => {
@@ -151,14 +139,10 @@ function App() {
   }, [showPopup]);
 
   // 🌗 Header theme control
-  const isLightSectionInView = admissionsInViewState || contactInViewState;
+  const isLightSectionInView = (admissionsInViewState || contactInViewState || aboutUsInViewState || achievementsInViewState) && !testimonialsInViewState;
   // A section is considered "light" if any of the sections with a light background
-  // (like Contact) are currently in the viewport.
-  // (like Contact) are currently in the viewport.
-  // The gallery section is now dark-themed, so it's excluded from this check.
-  const isLightSectionInView = contactInViewState;
-  const isLightSectionInView = contactInViewState;
-
+  // (like Contact, Admissions, About Us, or Achievements) are currently in the viewport.
+  // Dark sections like Gallery and Testimonials are excluded.
   // 🔗 Path routing (manual)
   const [path, setPath] = useState(window.location.pathname);
   useEffect(() => {
@@ -175,7 +159,7 @@ function App() {
         <Header
           isScrolled={isScrolled}
           isIntro={false}
-          isLightSectionInView={false}
+          isLightSectionInView={true}
           isHomePage={false}
           tickerItems={tickerItems}
         />
@@ -269,20 +253,11 @@ function App() {
         {/* 🏫 Hero Section */}
         <div className="hero-section relative">
           <Hero shouldPlay={!showPopup} />
-          <a
-            href="https://maps.app.goo.gl/TyN8RFcqYWwvnMCt9"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`location-icon ${showLocation ? 'visible' : 'hidden'}`}
-            aria-label="View school location on Google Maps"
-          >
-            <img src="/images/Google_Maps_icon_(2020).svg.png" alt="Location" />
-          </a>
         </div>
 
         {/* 🏆 Achievements Section */}
-        <section id="achievements" style={{ backgroundColor: 'white', padding: '4rem 0' }}>
-          <Achievements />
+        <section id="achievements" ref={achievementsSectionRef} className="achievements-section-container">
+          <Achievements isInView={achievementsInViewState} />
         </section>
 
         {/* 📖 About Us */}
@@ -299,22 +274,15 @@ function App() {
           <Gallery />
         </section>
 
-        {/* 🎓 Admissions section */}
-        <AdmissionsSection
-          id="admissions"
-        />
-        {/* 📝 Admissions */}
+        {/* 🎓 Admissions */}
         <section id="admissions" ref={admissionsSectionRef} className="admissions-section-container">
           <Admissions />
         </section>
-        {/* 🎓 Admissions section */}
-        <AdmissionsSection
-          id="admissions"
-        />
 
         {/* 💬 Testimonials */}
         <TestimonialsSection
           id="testimonials"
+          ref={testimonialsSectionRef}
           title="Voices of Trust"
           description="The heart of our school lies in the people within it. Their words speak of trust, care, and lasting memories."
           testimonials={testimonialsData}
@@ -333,6 +301,17 @@ function App() {
 
       {/* 🟢 WhatsApp Floating Button */}
       <WhatsAppButton visible={showWhatsApp} />
+
+      {/* 📍 Location Floating Button */}
+      <a
+        href="https://maps.app.goo.gl/TyN8RFcqYWwvnMCt9"
+        target="_blank"
+        rel="noopener noreferrer"
+        className={`location-icon ${showLocation ? 'visible' : 'hidden'}`}
+        aria-label="View school location on Google Maps"
+      >
+        <img src="/images/Google_Maps_icon_(2020).svg.png" alt="Location" />
+      </a>
     </div>
   );
 }

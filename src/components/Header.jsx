@@ -1,23 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import './Header.css';
 
 function Header({ isScrolled, isIntro, isLightSectionInView, isHomePage = true }) {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+ const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  useEffect(() => {
-    document.body.style.overflow = isMenuOpen ? 'hidden' : 'auto';
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
+ useEffect(() => {
+ document.body.style.overflow = isMenuOpen ? 'hidden' : 'auto';
+ return () => {
+ document.body.style.overflow = 'auto';
+  };
   }, [isMenuOpen]);
 
   const headerClasses = `main-header ${isScrolled ? 'scrolled' : ''} ${
-    isLightSectionInView && !isIntro ? 'light-theme' : ''
-  } ${isMenuOpen ? 'menu-open' : ''}`;
+ isLightSectionInView && !isIntro ? 'light-theme' : ''
+  } ${isMenuOpen ? 'menu-open' : ''} ${isHomePage ? 'home-page' : ''}`;
 
   const handleNavClick = () => {
     setIsMenuOpen(false);
   };
+ 
+  /**
+   * Handles clicks on navigation links to smoothly scroll the target section to the center of the viewport.
+   * @param {React.MouseEvent<HTMLAnchorElement>} e - The click event.
+   */
+  const handleScrollToSection = (e) => {
+    e.preventDefault(); // Prevent the default anchor link jump
+    handleNavClick(); // Close the mobile menu if it's open
+ 
+    const targetId = e.currentTarget.getAttribute('href').substring(1);
+    const targetElement = document.getElementById(targetId);
+ 
+    if (targetElement) {
+      // The 'center' block option scrolls the element to the middle of the viewport.
+      targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  };
 
   const handleBrandClick = (e) => {
     e.preventDefault();
@@ -31,10 +49,27 @@ function Header({ isScrolled, isIntro, isLightSectionInView, isHomePage = true }
   };
 
   const navItems = [
-    { href: '#gallery', label: 'Gallery' },
+    { 
+      href: '#about-us', 
+      label: 'About Us',
+      subMenu: [
+        { href: '#about-us-main', label: 'About Us' },
+        { href: '#principals-message', label: 'Principal\'s Message' },
+        { href: '#vice-principals-message', label: 'Vice Principal\'s Message' }
+      ]
+    },
+    { href: '#gallery', label: 'Gallery' },
+    { 
+      href: '#admissions', 
+      label: 'Admissions',
+      subMenu: [
+        { href: '#admission-process', label: 'Admission Process' },
+        { href: '#eligibility-criteria', label: 'Eligibility Criteria' }
+      ]
+    },
     { href: '#testimonials', label: 'Testimonials' },
-    { href: '#contact', label: 'Contact' }
-  ];
+    { href: '#contact', label: 'Contact' }
+  ];
 
   const tickerItems = [
     'Admissions are open for 2026!',
@@ -76,14 +111,14 @@ function Header({ isScrolled, isIntro, isLightSectionInView, isHomePage = true }
           <ul>
             {navItems.map((item) => (
               <li key={item.href} className={item.subMenu ? 'dropdown' : ''}>
-                <a href={item.href} onClick={!item.subMenu ? handleNavClick : (e) => e.preventDefault()}>
+                <a href={item.href} onClick={!item.subMenu ? handleScrollToSection : (e) => e.preventDefault()}>
                   {item.label}
                 </a>
                 {item.subMenu && (
                   <ul className="dropdown-content">
                     {item.subMenu.map((subItem) => (
                       <li key={subItem.href}>
-                        <a href={subItem.href} onClick={handleNavClick}>{subItem.label}</a>
+                        <a href={subItem.href} onClick={handleScrollToSection}>{subItem.label}</a>
                       </li>
                     ))}
                   </ul>

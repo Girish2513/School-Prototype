@@ -5,6 +5,9 @@
   display: flex;
   align-items: center;
   min-height: 100vh; /* Ensure section takes full viewport height */
+    /* Subtle dotted background */
+  background-image: radial-gradient(circle at 1px 1px, #d2b48c 1px, transparent 0);
+  background-size: 20px 20px; /* Adjust the spacing of the dots */
 }
 
 .about-us-wrapper {
@@ -14,41 +17,53 @@
 }
 
 .about-us-container {
-  display: flex;
-  align-items: flex-start; /* Align items to the top */
-  gap: 40px;
+  position: relative; /* Needed for the overlay */
+  background-image: url('/images/aboutus-modified.JPG');
+  background-size: cover;
+  background-position: center;
+  border-radius: 12px;
+  overflow: hidden; /* Ensures overlay respects border-radius */
+  padding: 60px 40px;
   margin: 0 auto;
+  color: white; /* Set default text color for children to white */
+}
+
+/* Dark overlay to make white text readable */
+.about-us-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6); /* Adjust opacity as needed */
+  z-index: 1;
 }
 
 .about-us-text-block {
-  flex: 1.5; /* Give more space to the text */
+  position: relative; /* To place it above the overlay */
+  z-index: 2;
+  text-align: center;
 }
 
-.about-us-image-container {
-  flex: 1;
-  opacity: 0;
-  transform: translateX(20px);
-  transition: opacity 0.6s ease-out 0.5s, transform 0.6s ease-out 0.5s;
-}
-
-.about-us-image {
-  width: 100%;
-  border-radius: 12px;
-  object-fit: cover;
+.about-us-text-content {
+  max-width: 800px; /* Constrain text width for readability */
+  margin: 0 auto;
 }
 
 .about-us-heading {
   font-size: 2.5rem;
-  color: var(--dark-brown);
+  color: var(--white); /* Change heading color to white */
   margin-bottom: 30px;
   font-weight: bold;
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7); /* Add shadow for better visibility */
 }
 
 .about-us-content p {
-  color: var(--dark-brown);
+  color: var(--white); /* Change paragraph color to white */
   font-family: var(--elegant-serif);
   font-size: 1.2rem; /* Slightly larger for better readability */
   line-height: 1.6;
@@ -57,6 +72,7 @@
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8); /* Add subtle shadow for readability */
 }
 
 .about-us-content p:first-child {
@@ -70,7 +86,7 @@
   line-height: 0.8; /* Adjust vertical alignment */
   padding-right: 2px; /* Add space between the letter and the text */
   font-weight: normal; /* Ensure the letter is not bold */
-  color: var(--dark-brown);
+  color: var(--white); /* Change drop cap color to white */
 }
 
 .section-divider {
@@ -83,6 +99,7 @@
 .principals-message-container {
   display: flex;
   align-items: center;
+    max-width: 1200px;
   /* max-width and auto margin removed to allow left alignment */
   margin: 40px 0 0;
   gap: 40px;
@@ -97,26 +114,42 @@
   text-align: right;
 }
 
-.about-us-section-container.is-in-view .about-us-image-container {
-  opacity: 1;
-  transform: translateX(0);
-}
+/* --- Animation Triggers --- */
 
-/* Animation trigger */
+/* About Us Section Animation */
 .about-us-section-container.is-in-view .about-us-heading,
 .about-us-section-container.is-in-view .about-us-content p {
   opacity: 1;
   transform: translateY(0);
 }
 
-/* Stagger the animation for paragraphs */
 .about-us-section-container.is-in-view .about-us-content p:nth-child(2) { transition-delay: 0.1s; }
 .about-us-section-container.is-in-view .about-us-content p:nth-child(3) { transition-delay: 0.2s; }
 .about-us-section-container.is-in-view .about-us-content p:nth-child(4) { transition-delay: 0.3s; }
 .about-us-section-container.is-in-view .about-us-content p:nth-child(5) { transition-delay: 0.4s; }
 
+/* Principals' Messages Animation */
+.principals-message-container.is-in-view .principals-image-container,
+.principals-message-container.is-in-view .principals-heading,
+.principals-message-container.is-in-view .message-quote,
+.principals-message-container.is-in-view .principals-content p {
+  opacity: 1;
+  transform: none;
+}
+
+.principals-message-container.is-in-view .principals-heading { transition-delay: 0.1s; }
+.principals-message-container.is-in-view .message-quote { transition-delay: 0.2s; }
+.principals-message-container.is-in-view .principals-content p { transition-delay: 0.3s; }
+
 .principals-image-container {
   flex-shrink: 0; /* Prevent the container from shrinking */
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.principals-message-container.vice-principal .principals-image-container {
+  transform: translateX(20px);
 }
 
 .principals-image {
@@ -125,6 +158,11 @@
   border-radius: 12px; /* A soft radius for a square image */
   object-fit: cover;
   border: 3px solid var(--dark-brown);
+  transition: transform 0.3s ease-in-out;
+}
+
+.principals-image:hover {
+  transform: scale(1.03);
 }
 
 .principals-content {
@@ -137,24 +175,42 @@
   color: var(--dark-brown);
   margin-bottom: 20px;
   font-weight: bold;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
 
 .principals-content p {
   color: var(--dark-brown);
   font-family: var(--elegant-serif);
-  font-size: 1.1rem; /* Slightly larger for better readability */
+  font-size: 1.2rem; /* Slightly larger for better readability */
   line-height: 1.6;
   margin-bottom: 15px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.message-quote {
+  font-style: italic;
+  font-style: bold;
+  font-size: 1.563rem; /* Larger, more authoritative size */
+  color: var(--dark-brown);
+  line-height: 1.5;
+  margin: 25px auto;
+  font-family: var(--elegant-serif); /* Using existing serif for elegance */
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  background-color: #f8f0ce; /* Light yellow highlight */
+  padding: 20px 25px;
+  border-radius: 8px;
 }
 
 @media (max-width: 768px) {
   .about-us-section {
     min-height: auto; /* Remove fixed height on mobile */
     padding: 60px 20px;
-  }
-
-  .about-us-container {
-    flex-direction: column;
   }
 
   .principals-message-container {
@@ -176,5 +232,3 @@
     height: 150px;
   }
 }
-
-

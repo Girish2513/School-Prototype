@@ -1,6 +1,9 @@
 /* --- 3.4 Contact Section --- */
 .contact-section-container {
     background-color: #EFEFEF;
+      /* Subtle dotted background */
+  background-image: radial-gradient(circle at 1px 1px, #d2b48c 1px, transparent 0);
+  background-size: 20px 20px; /* Adjust the spacing of the dots */
 }
 
 .contact-page {

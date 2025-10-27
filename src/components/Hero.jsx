@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
+import './Hero.css';
 
 /**
  * Hero section component displaying the main banner with school slogan, description, CTA button, and background video.

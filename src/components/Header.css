@@ -2,7 +2,7 @@
 .main-header {
     position: fixed;
     z-index: 100;
-    top: 0;
+    top: 30px;
     left: 0;
     width: 100%;
     display: flex;
@@ -23,11 +23,6 @@
 }
 
 /* Scrolled state */
-.main-header.scrolled:not(.light-theme):not(.gallery-in-view) {
-    background-color: rgba(26, 32, 44, 0.8);
-    backdrop-filter: blur(10px);
-    /* box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); */
-}
 
 /* When over the gallery, remove background and shadow */
 .main-header.gallery-in-view {
@@ -37,8 +32,9 @@
 
 /* Light theme for when the header is over a light background */
 .main-header.light-theme {
-    background-color: transparent;
-    box-shadow: none; /* Remove the shadow */
+    background-color: transparent !important;
+    box-shadow: none !important; /* Remove the shadow */
+    backdrop-filter: none !important;
 }
 
 .main-header.light-theme .school-name {
@@ -121,12 +117,12 @@
     position: absolute; /* Positions it relative to the parent 'li' */
     top: 100%; /* Positions it right below the parent item */
     left: 0;
-    background-color: #1f0f0f; /* Same as your header or a different color */
+    background-color: transparent; /* Changed to transparent */
     min-width: 240px; /* Adjust width as needed */
     list-style: none; /* Removes bullet points */
     padding: 10px 0;
     margin: 0;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    /* box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); */
     border-radius: 4px;
     z-index: 1000; /* Ensures it appears above other content */
 }
@@ -151,8 +147,8 @@
 }
 
 /* Hover effect for the dropdown links */
-.main-nav .dropdown-content a:hover {
-    background-color: #575757; /* A slightly lighter shade on hover */
+.main-nav .dropdown-content a:hover { /* Removed background color on hover */
+    background-color: transparent;
 }
 
 /* --- 4.1.2 Header Logo and Title --- */
@@ -206,7 +202,7 @@
 /* Main ticker container */
 .news-ticker {
     position: absolute;
-    top: 80px;
+    top: 115px;
     left: 50%;
     transform: translateX(-50%);
     width: 90%;
