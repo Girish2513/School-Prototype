@@ -134,7 +134,8 @@ function Header({ isScrolled, isIntro, isLightSectionInView, isHomePage = true }
                 <a 
                   href={item.href} 
                   onClick={(e) => {
-                    if (item.subMenu) {
+                    // Check window size only when the click happens
+                    if (item.subMenu && window.innerWidth > 768) {
                       handleSubMenuToggle(e, item.label);
                     } else {
                       handleScrollToSection(e);

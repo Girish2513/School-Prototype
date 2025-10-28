@@ -13,12 +13,13 @@ function Contact() {
   // Form state for controlled inputs, improving UX and validation
   const [formData, setFormData] = useState({
     name: '',
+    phone: '',
     email: '',
-    subject: '',
     message: ''
   });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null); // 'success', 'error', or null
 
   // Handle input changes: Update state and clear errors for that field
   const handleChange = (e) => {
@@ -27,36 +28,61 @@ function Contact() {
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: '' }));
     }
+    setSubmitStatus(null); // Clear submission status on new input
   };
 
   // Basic validation: Required fields, email format
   const validateForm = () => {
     const newErrors = {};
     if (!formData.name.trim()) newErrors.name = 'Name is required';
-    if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+    if (!formData.phone.trim()) {
+      newErrors.phone = 'Phone number is required';
+    } else if (!/^\d{10}$/.test(formData.phone)) {
+      newErrors.phone = 'Please enter a valid 10-digit phone number';
+    }
+    // Email is optional, but if provided, it must be valid
+    if (formData.email.trim() && !/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = 'Email is invalid';
     }
-    if (!formData.subject.trim()) newErrors.subject = 'Subject is required';
     if (!formData.message.trim()) newErrors.message = 'Message is required';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   // Handle form submission: Validate, prevent default, simulate send (log for now)
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setSubmitStatus(null);
     if (!validateForm()) return;
 
     setIsSubmitting(true);
-    // Simulate API call; replace with actual submission (e.g., fetch to backend)
-    console.log('Form submitted:', formData);
-    setTimeout(() => {
-      alert('Message sent successfully!'); // Replace with better UX (toast)
-      setFormData({ name: '', email: '', subject: '', message: '' });
+    
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbzitlbnOLEo0hyCpVW0ilqMbuXsBGHsXKYXHDRzNgYj28Nl3vnqerFx3AJCAitESSvb/exec';
+    
+    try {
+      // We use 'no-cors' mode to prevent CORS errors from Google's redirect response.
+      // When sending FormData, the browser automatically sets the correct 'Content-Type' header (multipart/form-data).
+      // This is the most reliable way for Google Apps Script's e.parameter to be populated.
+      const dataToSend = new FormData();
+      dataToSend.append('name', formData.name);
+      dataToSend.append('phone', formData.phone);
+      dataToSend.append('email', formData.email);
+      dataToSend.append('message', formData.message);
+
+      await fetch(scriptURL, { 
+        method: 'POST', 
+        body: dataToSend,
+        mode: 'no-cors' // Essential for bypassing CORS issues with Google Apps Script redirects
+      });
+
+      setSubmitStatus('success');
+      setFormData({ name: '', phone: '', email: '', message: '' });
+    } catch (error) {
+      console.error('Error submitting to Google Sheet!', error);
+      setSubmitStatus('error');
+    } finally {
       setIsSubmitting(false);
-    }, 1000);
+    }
   };
 
   return (
@@ -66,8 +92,8 @@ function Contact() {
         <div className="contact-content">
           {/* Contact form container: Controlled form with validation */}
           <div className="contact-form-container">
-            <h3>Send us a Message</h3>
-            <form className="contact-form" onSubmit={handleSubmit} noValidate aria-describedby="form-instructions">
+            <h3>Drop us a Line</h3>
+            <form name="submit-to-google-sheet" className="contact-form" onSubmit={handleSubmit} noValidate aria-describedby="form-instructions">
               <p id="form-instructions" className="sr-only">Required fields are marked with *</p>
               <div className="form-group">
                 <label htmlFor="name" className="sr-only">Your Name *</label>
@@ -86,12 +112,28 @@ function Contact() {
                 {errors.name && <span id="name-error" className="error" role="alert">{errors.name}</span>}
               </div>
               <div className="form-group">
-                <label htmlFor="email" className="sr-only">Your Email *</label>
+                <label htmlFor="phone" className="sr-only">Phone Number *</label>
+                <input
+                  id="phone"
+                  type="tel"
+                  name="phone"
+                  placeholder="Phone Number *"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  required
+                  aria-required="true"
+                  aria-invalid={!!errors.phone}
+                  aria-describedby={errors.phone ? 'phone-error' : undefined}
+                />
+                {errors.phone && <span id="phone-error" className="error" role="alert">{errors.phone}</span>}
+              </div>
+              <div className="form-group">
+                <label htmlFor="email" className="sr-only">Your Email</label>
                 <input
                   id="email"
                   type="email"
                   name="email"
-                  placeholder="Your Email *"
+                  placeholder="Your Email"
                   value={formData.email}
                   onChange={handleChange}
                   required
@@ -100,22 +142,6 @@ function Contact() {
                   aria-describedby={errors.email ? 'email-error' : undefined}
                 />
                 {errors.email && <span id="email-error" className="error" role="alert">{errors.email}</span>}
-              </div>
-              <div className="form-group">
-                <label htmlFor="subject" className="sr-only">Subject *</label>
-                <input
-                  id="subject"
-                  type="text"
-                  name="subject"
-                  placeholder="Subject *"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  required
-                  aria-required="true"
-                  aria-invalid={!!errors.subject}
-                  aria-describedby={errors.subject ? 'subject-error' : undefined}
-                />
-                {errors.subject && <span id="subject-error" className="error" role="alert">{errors.subject}</span>}
               </div>
               <div className="form-group">
                 <label htmlFor="message" className="sr-only">Your Message *</label>
@@ -136,13 +162,15 @@ function Contact() {
               <button type="submit" className="submit-button" disabled={isSubmitting}>
                 {isSubmitting ? 'Sending...' : 'Send Message'}
               </button>
+              {submitStatus === 'success' && <p className="submit-message success">Message sent successfully! We'll get back to you soon.</p>}
+              {submitStatus === 'error' && <p className="submit-message error">Something went wrong. Please try again later.</p>}
             </form>
           </div>
           {/* Contact info with map: Static embed; for dynamic, use Google Maps API */}
           <div className="contact-info-container" style={{ padding: 0, borderRadius: 0, boxShadow: 'none', backgroundColor: 'transparent' }}>
             <div className="map-container">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3804.9433560254197!2d78.42341787489686!3d17.51021719925554!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb91d3a4ef6e75%3A0x7e65664178ecaf59!2sNavodaya%20High%20School!5e0!3m2!1sen!2sin!4v1760607985446!5m2!1sen!2sin&theme=dark"                width="100%"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3804.9433560254197!2d78.42341787489686!3d17.51021719925554!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb91d3a4ef6e75%3A0x7e65664178ecaf59!2sNavodaya%20High%20School!5e0!3m2!1sen!2sin!4v1760607985446!5m2!1sen!2sin"                width="100%"
                 height="450"
                 style={{ border: 0 }}
                 allowFullScreen=""
