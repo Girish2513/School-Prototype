@@ -651,6 +651,15 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 1.5rem;
 }
 
+.footer-bottom {
+    text-align: left;
+    margin-top: 40px;
+    padding-top: 20px;
+    padding-left: 40px; /* Add space from the left */
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+}
+
 .highlight-blue {
     color: var(--school-name-blue);
 }

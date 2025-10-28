@@ -38,24 +38,27 @@ export const testimonialsData = [
 export const footerData = {
   contact: {
     title: "Contact Us",
-    address: "Navodaya High School<br />123 Education Lane, Knowledge City, 500001",
-    email: "info@navodayahighschool.com",
-    phone: "+91 12345 67890"
+    address: "45-97/1,Srinivas Nagar,Jagathgirigutta,Hyderabad-37.",
+    email: "Schoolnavodaya@gmail.com",
+    phone: "+91 81211 53138"
   },
   social: {
     title: "Follow Us",
     links: [
-      { platform: "Facebook", url: "https://facebook.com", icon: "fab fa-facebook-f", ariaLabel: "Visit our Facebook page" },
+      { platform: "Facebook", url: "https://www.facebook.com/groups/navodayahs", icon: "fab fa-facebook-f", ariaLabel: "Visit our Facebook page" },
       { platform: "Twitter", url: "https://twitter.com", icon: "fab fa-twitter", ariaLabel: "Visit our Twitter page" },
       { platform: "Instagram", url: "https://instagram.com", icon: "fab fa-instagram", ariaLabel: "Visit our Instagram page" },
-      { platform: "YouTube", url: "https://youtube.com", icon: "fab fa-youtube", ariaLabel: "Visit our YouTube channel" }
+      { platform: "YouTube", url: "https://www.youtube.com/@navodayaschool1989", icon: "fab fa-youtube", ariaLabel: "Visit our YouTube channel" }
     ]
   },
   quickLinks: {
     title: "Quick Links",
     links: [
-      { text: "Academics", href: "#academics" },
-      { text: "Contact Us", href: "#contact" }
+      { text: "About Us", href: "#about-us" },
+      { text: "Gallery", href: "#gallery" },
+      { text: "Admissions", href: "#admissions" },
+      { text: "Testimonials", href: "#testimonials" },
+      { text: "Contact", href: "#contact" }
     ]
   },
   copyright: `© ${new Date().getFullYear()} Navodaya High School. All Rights Reserved.`
