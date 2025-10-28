@@ -51,39 +51,46 @@
     flex-direction: column;
     align-items: flex-start;
     padding: 10px;
-    margin-top: 50px;
+    margin-top: 20px; /* Reduce top margin */
   }
 
   .gallery-header h2 {
     font-size: 2rem;
-    margin-bottom: 10px;
+    margin-bottom: 5px; /* Small margin below title */
+  }
+
+  .gallery-line {
+    width: 100%; /* Make horizontal */
+    height: 4px; /* Horizontal line */
+    margin-bottom: 10px; /* Space below line */
   }
 
   .gallery-header p {
     font-size: 1rem;
     text-align: left;
     max-width: 100%;
+    margin-bottom: 10px; /* Reduce gap to photos */
+  }
+
+  .gallery-section {
+    height: auto; /* Allow height to adjust */
+    justify-content: flex-start; /* Align to top to reduce gaps */
+    padding-top: 10px; /* Reduce top padding */
+    padding-bottom: 20px; /* Reduce bottom padding */
+  }
+
+  .gallery-content {
+    margin-top: 10px; /* Reduce gap from text to photos */
+  }
+
+  .btn-gallery-view {
+    position: relative;
+    z-index: 30; /* Ensure visibility */
+    margin-top: 10px; /* Reduce top margin */
   }
 }
 
-.gallery-gradient {
-  position: absolute;
-  top: 0;
-  height: 100%;
-  width: 15%;
-  z-index: 10;
-  pointer-events: none;
-}
 
-.gallery-gradient-left {
-  left: 0;
-  background: linear-gradient(to right, #d2b48c 20%, transparent);
-}
-
-.gallery-gradient-right {
-  right: 0;
-  background: linear-gradient(to left, #d2b48c 20%, transparent);
-}
 
 .gallery-content {
   display: flex;

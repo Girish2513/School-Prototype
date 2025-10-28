@@ -41,6 +41,28 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 700;
 }
 
+.logo {
+    height: 60px;
+    margin-right: 20px;
+    margin-bottom: 0;
+    transition: height 1s ease-in-out,
+                margin-right 1s ease-in-out,
+                margin-bottom 1s ease-in-out;
+}
+
+.school-name {
+    /* Fluid font size: min 1.2rem, preferred 2.5vw, max 2rem */
+    font-size: clamp(1.2rem, 2.5vw, 2rem);
+    text-shadow: none;
+    /* Use a faster transition for smoother resizing */
+    transition: font-size 0.4s ease-in-out;
+    /* The base color is now on the h1 wrapper */
+    color: var(--light-text);
+    text-decoration: none;
+    white-space: nowrap; /* Prevent the school name from wrapping to a new line */
+    border-bottom: none;
+}
+
 /* --- 2. Animations --- */
 @keyframes rotate-background {
     from {

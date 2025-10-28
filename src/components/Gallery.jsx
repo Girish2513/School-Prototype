@@ -60,8 +60,7 @@ const Gallery = () => {
         <div className="gallery-line"></div>
         <p>Catch a sneak peek of campus life! 🎓<br />Where every picture tells a story of learning, laughter, and growth.</p>
       </div>
-      <div className="gallery-gradient gallery-gradient-left"></div>
-      <div className="gallery-gradient gallery-gradient-right"></div>
+
       <div className="gallery-content">
         <div id="galleryTrack" className="gallery-track">
           <div className="gallery-item"><img src="/images/welcome.jpg" alt="Welcome" /></div>
