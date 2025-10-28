@@ -5,9 +5,6 @@
   display: flex;
   align-items: center;
   min-height: 100vh; /* Ensure section takes full viewport height */
-    /* Subtle dotted background */
-  background-image: radial-gradient(circle at 1px 1px, #d2b48c 1px, transparent 0);
-  background-size: 20px 20px; /* Adjust the spacing of the dots */
 }
 
 .about-us-wrapper {

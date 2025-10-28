@@ -494,11 +494,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* --- 4.5 Contact Form & Info --- */
-.contact-page{
-      /* Subtle dotted background */
-  background-image: radial-gradient(circle at 1px 1px, #d2b48c 1px, transparent 0);
-  background-size: 20px 20px; /* Adjust the spacing of the dots */
-}
 
 .contact-content {
     display: grid;

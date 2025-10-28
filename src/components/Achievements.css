@@ -1,9 +1,6 @@
 .achievements-section-container {
   background-color: white;
   padding: 4rem 0;
-  /* Subtle dotted background */
-  background-image: radial-gradient(circle at 1px 1px, #d2b48c 1px, transparent 0);
-  background-size: 20px 20px; /* Adjust the spacing of the dots */
 }
 
 

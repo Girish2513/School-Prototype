@@ -207,7 +207,7 @@ function App() {
   if (path === '/view-gallery') {
     document.body.className = 'view-gallery-body';
     return (
-      <div style={{ backgroundColor: '#1A202C' }}>
+      <div>
         <Header
           isScrolled={isScrolled}
           isIntro={false}
@@ -323,12 +323,7 @@ function App() {
       <main role="main" aria-label="Main content">
         {/* 🏫 Hero Section */}
         <div className="hero-section relative">
-          <Hero shouldPlay={!showPopup} startAnimations={!showPopup} />
-        </div>
-        
-        {/* Scroll down indicator for Hero Section */}
-        <div className="scroll-indicator">
-          <a href="#achievements" aria-label="Scroll down to next section"></a>
+          <Hero shouldPlay={!showPopup} />
         </div>
 
         {/* 🏆 Achievements Section */}
