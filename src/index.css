@@ -78,7 +78,7 @@ h1, h2, h3, h4, h5, h6 {
 .expanding-grid-section {
     padding: 80px 5%;
     background-color: #EFEFEF;
-    min-height: 100vh;
+    min-height: 80vh;
     display: flex;
     flex-direction: column;
     align-items: center; /* Center the content wrapper */
@@ -103,7 +103,7 @@ h1, h2, h3, h4, h5, h6 {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
     width: 100%;
-    min-height: 80vh;
+    min-height: 70vh;
     gap: 15px;
     transition: grid-template-columns 0.5s cubic-bezier(0.19, 1, 0.22, 1), grid-template-rows 0.5s cubic-bezier(0.19, 1, 0.22, 1);
 }
@@ -221,6 +221,30 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--school-name-blue);
 }
 
+/* --- 4.8 Admissions Section Animations --- */
+.anim-fade-up {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.anim-fade-in {
+    opacity: 0;
+    transition: opacity 0.8s ease-out;
+}
+
+/* Trigger animations when the container is in view */
+.admission-process-container.is-in-view .anim-fade-up,
+.admission-process-container.is-in-view .anim-fade-in,
+.eligibility-criteria-container.is-in-view .anim-fade-up,
+.eligibility-criteria-container.is-in-view .anim-fade-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Add delays for a staggered effect */
+.admission-process-container.is-in-view .anim-fade-in { transition-delay: 0.2s; }
+.eligibility-criteria-container.is-in-view .anim-fade-in { transition-delay: 0.2s; }
 
 
 .scroll-stack-container {

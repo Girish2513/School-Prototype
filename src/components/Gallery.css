@@ -1,6 +1,6 @@
 .gallery-section {
   position: relative;
-  height: 80vh; /* Reduced height to compress the section */
+  min-height: 80vh; /* Ensure a minimum height but allow it to expand */
   width: 100%;
   overflow: hidden;
   display: flex;
@@ -154,6 +154,11 @@
     border-width: 2px;
     border-radius: 10px;
   }
+
+  .gallery-track {
+    height: 280px; /* Adjust track height for smaller mobile images */
+  }
+
 }
 
 /* Tablet devices */

@@ -51,7 +51,7 @@ function Hero({ shouldPlay, startAnimations }) {
         <HeroStats startAnimations={startAnimations} />
         {/* CTA buttons with smooth scroll; aria-labels for clarity */}
         <div className="cta-buttons">
-          <a href="#admissions" className="cta-button primary" aria-label="Apply for admissions">Apply for Admissions</a>
+          <a href="#contact" className="cta-button primary" aria-label="Apply for admissions">Apply for Admissions</a>
           <a href="#about-us" className="cta-button secondary" aria-label="Learn more about our school">Learn More</a>
         </div>
       </div>

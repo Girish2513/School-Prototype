@@ -35,8 +35,6 @@ const DEFAULT_TICKER_ITEMS = [
 const DEFAULT_POPUP_IMAGES = [
   '/images/Pamphlet-1-2025.png',
   '/images/Pamphlet-2-2025.png',
-  '/images/event.jpg',
-  '/images/poster.jpeg',
 ];
 
 // 💬 Testimonials Section

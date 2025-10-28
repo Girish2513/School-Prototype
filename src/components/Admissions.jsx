@@ -1,16 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useSectionInView } from '../hooks/useSectionInView';
 
 /**
  * Admissions component displaying the admission process flowchart.
  * Shows a visual flowchart image for the admission process.
  */
 const AdmissionsSection = ({ id }) => {
+  // Hooks to detect when each section is in view to trigger animations.
+  const { ref: processRef, inView: processInView } = useSectionInView({ threshold: 0.3, triggerOnce: true });
+  const { ref: eligibilityRef, inView: eligibilityInView } = useSectionInView({ threshold: 0.3, triggerOnce: true });
+
   return (
     <section id={id} className="admissions-section">
       <div className="admissions-container"> 
-        <div id="admission-process">
-          <div className="admissions-header">
+        <div id="admission-process" ref={processRef} className={`admission-process-container ${processInView ? 'is-in-view' : ''}`}>
+          {/* The header and content are now wrapped for animation targeting */}
+          <div className="admissions-header anim-fade-up">
             <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
               ADMISSION PROCESS
             </h2>
@@ -20,7 +26,7 @@ const AdmissionsSection = ({ id }) => {
   Our streamlined, step-by-step admission process is designed to help us get to know each other and set clear expectations. We believe in creating a partnership with you to ensure your child’s academic and personal growth in a nurturing and supportive environment. Together, we'll prepare your child for a brighter tomorrow.
             </p>
           </div>
-          <div className="admissions-content">
+          <div className="admissions-content anim-fade-in">
             <div className="flowchart-container">
               <img
                 src="/images/admission-flowchart.png"
@@ -31,8 +37,10 @@ const AdmissionsSection = ({ id }) => {
           </div>
         </div>
 
-        <div id="eligibility-criteria" className="eligibility-criteria-container"> 
-          <div className="admissions-header"> {/* Re-using the existing class for consistency */}
+        <hr className="section-divider" />
+
+        <div id="eligibility-criteria" ref={eligibilityRef} className={`eligibility-criteria-container ${eligibilityInView ? 'is-in-view' : ''}`}> 
+          <div className="admissions-header anim-fade-up"> {/* Re-using the existing class for consistency */}
             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
               Eligibility Criteria
             </h2>
@@ -41,7 +49,7 @@ const AdmissionsSection = ({ id }) => {
               To maintain a standard of academic excellence, prospective students must meet certain age and academic prerequisites. Our criteria are designed to ensure that every child is well-prepared for the curriculum at their respective grade level, fostering a productive and supportive learning environment for all.
             </p>
           </div>
-          <div className="eligibility-image-container">
+          <div className="eligibility-image-container anim-fade-in">
             <img
               src="/images/EligibilityCriteria.png"
               alt="Eligibility Criteria for Admission"
