@@ -651,6 +651,15 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 1.5rem;
 }
 
+.footer-bottom {
+    text-align: left;
+    margin-top: 40px;
+    padding-top: 20px;
+    padding-left: 40px; /* Add space from the left */
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+}
+
 .highlight-blue {
     color: var(--school-name-blue);
 }
@@ -751,6 +760,57 @@ h1, h2, h3, h4, h5, h6 {
     }
     .social-links {
         justify-content: center;
+    }
+
+    /* --- Responsive Testimonials Section --- */
+    .testimonials-section {
+        padding: 4rem 20px; /* Reduce padding and add horizontal padding */
+    }
+
+    .testimonials-header {
+        flex-direction: column; /* Stack header items vertically */
+        align-items: flex-start; /* Align to the left */
+        gap: 20px;
+        padding: 0;
+        text-align: left;
+    }
+
+    .testimonials-header h2 {
+        font-size: 2.2rem;
+    }
+
+    .testimonials-line {
+        width: 80px; /* Make the line horizontal */
+        height: 3px;
+    }
+
+    /* --- Responsive Testimonial Cards --- */
+    .testimonial-card-base {
+        width: 260px; /* Reduce card width */
+        min-height: auto; /* Allow height to be flexible */
+        padding: 1rem; /* Reduce padding */
+        gap: 0.75rem;
+    }
+
+    .testimonial-card-author .avatar-wrapper {
+        width: 60px; /* Reduce avatar size */
+        height: 60px;
+    }
+
+    .testimonial-card-author-info h3 {
+        font-size: 0.9rem; /* Reduce author name font size */
+    }
+
+    .testimonial-card-author-info p {
+        font-size: 0.75rem; /* Reduce author handle font size */
+    }
+
+    .testimonial-card-text {
+        font-size: 0.8rem; /* Reduce testimonial text font size */
+    }
+
+    .marquee-container {
+        --gap: 0.75rem; /* Reduce gap between cards */
     }
 }
 

@@ -4,6 +4,7 @@ import './Header.css';
 
 function Header({ isScrolled, isIntro, isLightSectionInView, isHomePage = true }) {
  const [isMenuOpen, setIsMenuOpen] = useState(false);
+ const [openSubMenu, setOpenSubMenu] = useState(null); // State to track open sub-menu
 
  useEffect(() => {
  document.body.style.overflow = isMenuOpen ? 'hidden' : 'auto';
@@ -18,6 +19,7 @@ function Header({ isScrolled, isIntro, isLightSectionInView, isHomePage = true }
 
   const handleNavClick = () => {
     setIsMenuOpen(false);
+    setOpenSubMenu(null); // Close sub-menu when main menu closes
   };
  
   /**
@@ -26,7 +28,7 @@ function Header({ isScrolled, isIntro, isLightSectionInView, isHomePage = true }
    */
   const handleScrollToSection = (e) => {
     e.preventDefault(); // Prevent the default anchor link jump
-    handleNavClick(); // Close the mobile menu if it's open
+    handleNavClick(); // Close the mobile menu and any open sub-menu
  
     const targetId = e.currentTarget.getAttribute('href').substring(1);
     const targetElement = document.getElementById(targetId);
@@ -36,6 +38,21 @@ function Header({ isScrolled, isIntro, isLightSectionInView, isHomePage = true }
       targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   };
+
+  /**
+   * Toggles the sub-menu on mobile or prevents default on desktop.
+   * @param {React.MouseEvent<HTMLAnchorElement>} e - The click event.
+   * @param {string} menuLabel - The label of the menu being clicked.
+   */
+  const handleSubMenuToggle = (e, menuLabel) => {
+    // Check if we are in mobile view (you might need a more robust check)
+    if (window.innerWidth <= 768) {
+      e.preventDefault(); // Prevent navigation only on mobile
+      setOpenSubMenu(openSubMenu === menuLabel ? null : menuLabel);
+    }
+    // On desktop, do nothing, allowing the default link behavior or hover to work.
+  };
+
 
   const handleBrandClick = (e) => {
     e.preventDefault();
@@ -110,8 +127,20 @@ function Header({ isScrolled, isIntro, isLightSectionInView, isHomePage = true }
         >
           <ul>
             {navItems.map((item) => (
-              <li key={item.href} className={item.subMenu ? 'dropdown' : ''}>
-                <a href={item.href} onClick={!item.subMenu ? handleScrollToSection : (e) => e.preventDefault()}>
+              <li 
+                key={item.href} 
+                className={`${item.subMenu ? 'dropdown' : ''} ${openSubMenu === item.label ? 'submenu-open' : ''}`}
+              >
+                <a 
+                  href={item.href} 
+                  onClick={(e) => {
+                    if (item.subMenu) {
+                      handleSubMenuToggle(e, item.label);
+                    } else {
+                      handleScrollToSection(e);
+                    }
+                  }}
+                >
                   {item.label}
                 </a>
                 {item.subMenu && (

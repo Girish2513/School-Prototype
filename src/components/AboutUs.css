@@ -227,6 +227,11 @@
     text-align: center;
   }
 
+  /* Ensure the vice-principal section also stacks image-first on mobile */
+  .principals-message-container.vice-principal {
+    flex-direction: column;
+  }
+
   .principals-image {
     width: 150px; /* Adjust size for mobile view */
     height: 150px;

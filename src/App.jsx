@@ -325,7 +325,12 @@ function App() {
       <main role="main" aria-label="Main content">
         {/* 🏫 Hero Section */}
         <div className="hero-section relative">
-          <Hero shouldPlay={!showPopup} />
+          <Hero shouldPlay={!showPopup} startAnimations={!showPopup} />
+        </div>
+        
+        {/* Scroll down indicator for Hero Section */}
+        <div className="scroll-indicator">
+          <a href="#achievements" aria-label="Scroll down to next section"></a>
         </div>
 
         {/* 🏆 Achievements Section */}

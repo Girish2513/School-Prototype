@@ -55,8 +55,26 @@ function Footer() {
         </div>
       </div>
       {/* Footer bottom: Copyright notice */}
-      <div className="footer-bottom">
+      <div 
+        className="footer-bottom"
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          paddingRight: '3rem'
+        }}>
         <p>{footerData.copyright}</p>
+        <p>
+          © Designed by{' '}
+          <a
+            href="https://www.webaura.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ textDecoration: 'none' }}
+          >
+            <span style={{ color: 'tomato' }}>WebAura</span>
+          </a>
+        </p>
       </div>
     </footer>
   );

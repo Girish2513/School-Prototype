@@ -132,6 +132,13 @@
     display: block; /* Shows the dropdown on hover */
 }
 
+/* On non-mobile devices, ensure hover works for dropdowns */
+@media (min-width: 769px) {
+  .main-nav .dropdown:hover .dropdown-content {
+    display: block;
+  }
+}
+
 /* Styling for the links inside the dropdown */
 .main-nav .dropdown-content li {
     width: 100%;
@@ -314,10 +321,12 @@
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
+    .main-header {
+        top: 0; /* Align header to the top on mobile */
+    }
     .news-ticker {
-        width: 85%;
-        padding: 6px 12px;
-        top: 70px;
+        top: 110px; /* Position below the header */
+        width: 90%;
     }
     .ticker-list li {
         font-size: 0.8rem;
@@ -331,8 +340,7 @@
 @media (max-width: 480px) {
     .news-ticker {
         width: 90%;
-        padding: 5px 10px;
-        top: 65px;
+        top: 90px; /* Adjust for smaller mobile screens */
     }
     .ticker-list li {
         font-size: 0.75rem;
@@ -342,6 +350,50 @@
     }
     .ticker-list li::before {
         font-size: 0.9rem;
+    }
+
+    /* --- Mobile Navigation Adjustments --- */
+    .main-header.menu-open .main-nav {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 80%;
+        max-width: 320px;
+        height: 100vh;
+        background-color: rgba(26, 32, 44, 0.95);
+        backdrop-filter: blur(10px);
+        flex-direction: column;
+        padding-top: 100px;
+        transform: translateX(100%);
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .main-header.menu-open .main-nav {
+        transform: translateX(0);
+    }
+
+    .main-nav ul {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .main-nav ul li a {
+        padding: 15px 25px;
+        display: block;
+        color: white;
+        text-shadow: none;
+    }
+
+    /* --- Mobile Dropdown --- */
+    .main-nav .dropdown .dropdown-content {
+        position: static; /* Remove absolute positioning */
+        display: none; /* Keep it hidden by default */
+        background-color: rgba(0, 0, 0, 0.2); /* Darker background for visibility */
+        padding-left: 20px; /* Indent sub-menu items */
+    }
+
+    .main-nav .dropdown.submenu-open .dropdown-content {
+        display: block; /* Show when parent has .submenu-open class */
     }
 }
 

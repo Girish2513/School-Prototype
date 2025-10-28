@@ -126,8 +126,7 @@
 }
 
 .map-container {
-    margin-top: 30px;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    /* Removed margin-top, border-radius, overflow, and box-shadow */
+    /* The map will now fill its parent container without extra styling */
+    margin-top: 0; /* Ensure no top margin */
 }
