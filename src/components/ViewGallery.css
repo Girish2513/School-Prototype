@@ -16,7 +16,7 @@
 
 .masonry-gallery-section {
   /* Restore padding for a scrolling layout on mobile */
-  padding: 4rem 1.5rem;
+  padding: 10rem 1.5rem 4rem;
 }
 
 .gallery-title {
@@ -24,7 +24,7 @@
   font-weight: 600;
   text-align: center;
   margin-bottom: 2rem;
-  color: var(--text-color);
+  color: var(--dark-brown);
 }
 
 /* --- Masonry Grid --- */
@@ -136,13 +136,6 @@
 
 /* Desktop */
 @media (min-width: 1024px) {
-  .masonry-gallery-section {
-    height: 100vh; /* Fill viewport height */
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Center content vertically */
-    padding: 2rem 1.5rem; /* Adjust padding for centered layout */
-  }
   .grid-page {
     grid-template-columns: repeat(4, 1fr); /* 4 columns on desktop */
     grid-auto-rows: 250px;
