@@ -42,6 +42,11 @@
     text-shadow: none;
 }
 
+.main-header.light-theme .header-brand .school-name {
+    color: var(--dark-brown);
+    text-shadow: none;
+}
+
 .main-header.light-theme .main-nav ul li a {
     color: var(--dark-brown);
     text-shadow: none;

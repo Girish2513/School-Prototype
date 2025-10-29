@@ -207,7 +207,16 @@ function App() {
   if (path === '/view-gallery') {
     document.body.className = 'view-gallery-body';
     return (
+<<<<<<< HEAD
       <div>
+=======
+      <div style={{
+        backgroundColor: 'white',
+        backgroundImage: 'radial-gradient(circle at 1px 1px, #d2b48c 1px, transparent 0)',
+        backgroundSize: '20px 20px'
+      }}
+      >
+>>>>>>> 503c8a655f3711557786f628d1fd8b39b45a5a9d
         <Header
           isScrolled={isScrolled}
           isIntro={false}

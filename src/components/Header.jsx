@@ -101,7 +101,7 @@ function Header({ isScrolled, isIntro, isLightSectionInView, isHomePage = true }
         <a href="/" onClick={handleBrandClick} aria-label="Go to home page" className="header-brand">
           <div className="header-left">
             <img src="/images/logo.png" alt="Navodaya High School Logo" className="logo" />
-            {!isScrolled && isHomePage && (
+            {((!isScrolled && isHomePage) || !isHomePage) && (
               <h1 className="school-name">Navodaya High School</h1>
             )}
           </div>

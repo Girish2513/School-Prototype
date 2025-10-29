@@ -19,7 +19,7 @@
 
 .masonry-gallery-section {
   /* Restore padding for a scrolling layout on mobile */
-  padding: 4rem 1.5rem;
+  padding: 10rem 1.5rem 4rem;
 }
 
 .gallery-title {
