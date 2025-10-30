@@ -1,113 +1,132 @@
+/* ============================
+   Login Page CSS
+   ============================ */
+
+/* CSS Custom Properties for theming */
 :root {
-  --login-bg: #f0f2f5;
-  --login-card-bg: #ffffff;
-  --login-primary: #4E3629;
-  --login-text: #333;
-  --login-border: #d9d9d9;
-  --login-error: #ff4d4f;
+  --login-bg: #f0f2f5; /* Light gray background */
+  --login-card-bg: #ffffff; /* White card background */
+  --login-primary: #4E3629; /* Dark brown primary color */
+  --login-text: #333; /* Dark text color */
+  --login-border: #d9d9d9; /* Light gray border */
+  --login-error: #ff4d4f; /* Red error color */
 }
 
+/* Main container - full height centering */
 .login-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background-color: var(--login-bg);
-  font-family: 'Poppins', sans-serif;
+  display: flex; /* Flexbox for centering */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  min-height: 100vh; /* Full viewport height */
+  background-color: var(--login-bg); /* Light background */
+  font-family: 'Poppins', sans-serif; /* Modern font */
 }
 
+/* Login card - centered white box */
 .login-box {
-  background: var(--login-card-bg);
-  padding: 2.5rem 3rem;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 400px;
-  text-align: center;
+  background: var(--login-card-bg); /* White background */
+  padding: 2.5rem 3rem; /* Generous padding */
+  border-radius: 12px; /* Rounded corners */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  width: 100%; /* Full width within max-width */
+  max-width: 400px; /* Maximum width */
+  text-align: center; /* Center text */
 }
 
+/* School logo */
 .login-logo {
-  width: 60px;
-  height: auto;
-  margin-bottom: 1rem;
+  width: 60px; /* Fixed width */
+  height: auto; /* Maintain aspect ratio */
+  margin-bottom: 1rem; /* Space below */
 }
 
+/* Login title */
 .login-box h2 {
-  font-family: 'Playfair Display', serif;
-  font-size: 2rem;
-  color: var(--login-primary);
-  margin: 0 0 0.5rem 0;
+  font-family: 'Playfair Display', serif; /* Elegant serif font */
+  font-size: 2rem; /* Large size */
+  color: var(--login-primary); /* Primary color */
+  margin: 0 0 0.5rem 0; /* Spacing */
 }
 
+/* Subtitle text */
 .login-subtitle {
-  color: #666;
-  margin-bottom: 2rem;
-  font-size: 0.95rem;
+  color: #666; /* Gray text */
+  margin-bottom: 2rem; /* Space below */
+  font-size: 0.95rem; /* Slightly smaller */
 }
 
+/* Input field groups */
 .input-group {
-  margin-bottom: 1.5rem;
-  text-align: left;
+  margin-bottom: 1.5rem; /* Space between groups */
+  text-align: left; /* Left align labels */
 }
 
+/* Input labels */
 .input-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 600;
-  color: #555;
-  font-size: 0.9rem;
+  display: block; /* Block display */
+  margin-bottom: 0.5rem; /* Space below label */
+  font-weight: 600; /* Semi-bold */
+  color: #555; /* Dark gray */
+  font-size: 0.9rem; /* Small size */
 }
 
+/* Input fields */
 .input-group input {
-  width: 100%;
-  padding: 0.8rem 1rem;
-  border: 1px solid var(--login-border);
-  border-radius: 6px;
-  font-size: 1rem;
-  transition: border-color 0.3s, box-shadow 0.3s;
+  width: 100%; /* Full width */
+  padding: 0.8rem 1rem; /* Padding inside */
+  border: 1px solid var(--login-border); /* Light border */
+  border-radius: 6px; /* Rounded corners */
+  font-size: 1rem; /* Standard size */
+  transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transitions */
 }
 
+/* Input focus state */
 .input-group input:focus {
-  outline: none;
-  border-color: var(--login-primary);
-  box-shadow: 0 0 0 2px rgba(78, 54, 41, 0.2);
+  outline: none; /* Remove default outline */
+  border-color: var(--login-primary); /* Primary border on focus */
+  box-shadow: 0 0 0 2px rgba(78, 54, 41, 0.2); /* Subtle glow */
 }
 
+/* Error message styling */
 .error-message {
-  color: var(--login-error);
-  background-color: rgba(255, 77, 79, 0.1);
-  border: 1px solid rgba(255, 77, 79, 0.2);
-  border-radius: 6px;
-  padding: 0.75rem;
-  margin-bottom: 1.5rem;
-  font-size: 0.9rem;
+  color: var(--login-error); /* Red text */
+  background-color: rgba(255, 77, 79, 0.1); /* Light red background */
+  border: 1px solid rgba(255, 77, 79, 0.2); /* Light red border */
+  border-radius: 6px; /* Rounded corners */
+  padding: 0.75rem; /* Padding */
+  margin-bottom: 1.5rem; /* Space below */
+  font-size: 0.9rem; /* Small size */
 }
 
+/* Login button */
 .login-button {
-  width: 100%;
-  padding: 0.9rem;
-  border: none;
-  border-radius: 6px;
-  background-color: var(--login-primary);
-  color: white;
-  font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
+  width: 100%; /* Full width */
+  padding: 0.9rem; /* Padding */
+  border: none; /* No border */
+  border-radius: 6px; /* Rounded corners */
+  background-color: var(--login-primary); /* Primary background */
+  color: white; /* White text */
+  font-size: 1.1rem; /* Large size */
+  font-weight: 600; /* Semi-bold */
+  cursor: pointer; /* Pointer cursor */
+  transition: background-color 0.3s, transform 0.2s; /* Smooth transitions */
 }
 
+/* Button hover state */
 .login-button:hover:not(:disabled) {
-  background-color: #3a281f;
-  transform: translateY(-2px);
+  background-color: #3a281f; /* Darker on hover */
+  transform: translateY(-2px); /* Slight lift */
 }
 
+/* Button disabled state */
 .login-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
+  background-color: #ccc; /* Gray when disabled */
+  cursor: not-allowed; /* Not allowed cursor */
 }
 
+/* Footer text (if used) */
 .login-footer {
-  margin-top: 2rem;
-  font-size: 0.8rem;
-  color: #999;
+  margin-top: 2rem; /* Space above */
+  font-size: 0.8rem; /* Small size */
+  color: #999; /* Light gray */
 }

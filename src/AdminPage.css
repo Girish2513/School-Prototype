@@ -1,106 +1,130 @@
 /* --- Admin Panel: Base & Variables --- */
+/* CSS custom properties for consistent theming and colors */
 :root {
-  --admin-font: 'Poppins', sans-serif;
-  --admin-primary: #2563eb;
-  --admin-green: #22c55e;
-  --admin-red: #ef4444;
+  --admin-font: 'Poppins', sans-serif; /* Primary font family for admin panel */
+  --admin-primary: #2563eb; /* Primary blue color for buttons and accents */
+  --admin-green: #22c55e; /* Green color for add/positive actions */
+  --admin-red: #ef4444; /* Red color for remove/dangerous actions */
 }
 
+/* Light theme color variables */
 body[data-theme='light'] {
-  --bg-color: #f5f6fa;
-  --card-bg-color: #ffffff;
-  --text-color: #333;
-  --text-secondary-color: #6b7280;
-  --border-color: #e5e7eb;
+  --bg-color: #f5f6fa; /* Light background color */
+  --card-bg-color: #ffffff; /* White background for cards */
+  --text-color: #333; /* Dark text color */
+  --text-secondary-color: #6b7280; /* Gray text for secondary content */
+  --border-color: #e5e7eb; /* Light gray borders */
 }
 
+/* Dark theme color variables */
 body[data-theme='dark'] {
-  --bg-color: #111827;
-  --card-bg-color: #1f2937;
-  --text-color: #f9fafb;
-  --text-secondary-color: #9ca3af;
-  --border-color: #374151;
+  --bg-color: #111827; /* Dark background color */
+  --card-bg-color: #1f2937; /* Dark gray background for cards */
+  --text-color: #f9fafb; /* Light text color */
+  --text-secondary-color: #9ca3af; /* Light gray text for secondary content */
+  --border-color: #374151; /* Dark gray borders */
 }
 
+/* Main container for the admin panel */
 .admin-container {
-  font-family: var(--admin-font);
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  min-height: 100vh;
-  transition: background-color 0.3s, color 0.3s;
+  font-family: var(--admin-font); /* Apply custom font */
+  background-color: var(--bg-color); /* Dynamic background based on theme */
+  color: var(--text-color); /* Dynamic text color based on theme */
+  min-height: 100vh; /* Full viewport height */
+  transition: background-color 0.3s, color 0.3s; /* Smooth theme transitions */
 }
 
 /* --- Header --- */
+/* Header section of the admin panel */
 .admin-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-  background-color: var(--card-bg-color);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  border-bottom: 1px solid var(--border-color);
-  transition: background-color 0.3s, border-color 0.3s;
+  display: flex; /* Flexbox layout for horizontal alignment */
+  justify-content: space-between; /* Space between left and right sections */
+  align-items: center; /* Center items vertically */
+  padding: 1rem 2rem; /* Padding around header */
+  background-color: var(--card-bg-color); /* Dynamic background based on theme */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  border-bottom: 1px solid var(--border-color); /* Bottom border */
+  transition: background-color 0.3s, border-color 0.3s; /* Smooth theme transitions */
 }
 
+/* Left and right sections of the header */
 .header-left, .header-right {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
+  display: flex; /* Flexbox for alignment */
+  align-items: center; /* Center items vertically */
+  gap: 1rem; /* Gap between child elements */
 }
 
-.logo { height: 32px; }
-.school-name { 
-  font-size: 1.25rem; 
-  font-weight: 600; 
-  color: var(--text-color);
+/* Logo styling */
+.logo { height: 32px; } /* Fixed height for logo */
+
+/* School name styling */
+.school-name {
+  font-size: 1.25rem; /* Larger font size */
+  font-weight: 600; /* Semi-bold weight */
+  color: var(--text-color); /* Dynamic text color */
 }
-.logout-button { background: none; border: none; color: var(--text-secondary-color); cursor: pointer; font-size: 0.9rem; }
+
+/* Logout button styling */
+.logout-button {
+  background: none; /* No background */
+  border: none; /* No border */
+  color: var(--text-secondary-color); /* Secondary text color */
+  cursor: pointer; /* Pointer cursor on hover */
+  font-size: 0.9rem; /* Smaller font size */
+}
 
 /* --- Main Content --- */
+/* Main content area container */
 .admin-main {
-  max-width: 800px;
-  margin: 2rem auto;
-  padding: 0 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
+  max-width: 800px; /* Maximum width for content */
+  margin: 2rem auto; /* Center horizontally with top/bottom margin */
+  padding: 0 1rem; /* Horizontal padding */
+  display: flex; /* Flexbox layout */
+  flex-direction: column; /* Stack children vertically */
+  gap: 2rem; /* Gap between child elements */
 }
 
+/* Title for the admin main section */
 .admin-main-title {
-  font-size: 2rem;
-  font-weight: 700;
-  text-align: center;
-  margin-bottom: 0; /* The gap in admin-main will handle spacing */
+  font-size: 2rem; /* Large font size */
+  font-weight: 700; /* Bold weight */
+  text-align: center; /* Center align text */
+  margin-bottom: 0; /* No bottom margin, gap handles spacing */
 }
 
+/* Card container for sections */
 .section-card {
-  background-color: var(--card-bg-color);
-  border-radius: 12px;
-  padding: 1.5rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  border: 1px solid var(--border-color);
-  transition: background-color 0.3s, border-color 0.3s;
+  background-color: var(--card-bg-color); /* Dynamic background */
+  border-radius: 12px; /* Rounded corners */
+  padding: 1.5rem; /* Padding inside card */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+  border: 1px solid var(--border-color); /* Border */
+  transition: background-color 0.3s, border-color 0.3s; /* Theme transitions */
 }
 
+/* Header for each section */
 .section-header {
-  margin-bottom: 1.5rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 1.5rem; /* Bottom margin */
+  padding-bottom: 1rem; /* Bottom padding */
+  border-bottom: 1px solid var(--border-color); /* Bottom border */
 }
 
+/* Section header title */
 .section-header h2 {
-  font-size: 1.5rem;
-  margin: 0;
+  font-size: 1.5rem; /* Medium-large font size */
+  margin: 0; /* No margin */
 }
 
+/* Override school name color in light theme */
 body[data-theme='light'] .school-name {
-  color: #4E3629;
+  color: #4E3629; /* Specific color for light theme */
 }
 
+/* Last updated timestamp styling */
 .last-updated {
-  font-size: 0.8rem;
-  color: var(--text-secondary-color);
-  margin-top: 0.25rem;
+  font-size: 0.8rem; /* Small font size */
+  color: var(--text-secondary-color); /* Secondary text color */
+  margin-top: 0.25rem; /* Top margin */
 }
 
 /* --- Ticker Section --- */

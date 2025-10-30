@@ -1,7 +1,24 @@
+/**
+ * HeroStats component for displaying animated statistics in the hero section.
+ * Shows key metrics like staff count, student count, and years of experience.
+ * Uses CountUp component for smooth number animations.
+ * Responsive design with mobile adjustments.
+ * Accessibility: Semantic structure, screen reader friendly.
+ * Performance: Animations start only when triggered by prop.
+ *
+ * @param {object} props - Component props.
+ * @param {boolean} props.startAnimations - Whether to start the count-up animations.
+ * @returns {JSX.Element} The rendered hero stats component.
+ */
 import React from 'react';
+import PropTypes from 'prop-types';
 import CountUp from './CountUp';
 import './HeroStats.css';
 
+/**
+ * Individual stat item component.
+ * Displays a number with animation and a label.
+ */
 const StatItem = ({ end, label, startAnimations }) => {
   return (
     <div className="stat-item">
@@ -13,6 +30,10 @@ const StatItem = ({ end, label, startAnimations }) => {
   );
 };
 
+/**
+ * Main HeroStats component.
+ * Renders a list of statistics.
+ */
 const HeroStats = ({ startAnimations }) => {
   return (
     <div className="hero-stats">
@@ -23,6 +44,8 @@ const HeroStats = ({ startAnimations }) => {
   );
 };
 
-HeroStats.propTypes = {};
+HeroStats.propTypes = {
+  startAnimations: PropTypes.bool.isRequired,
+};
 
 export default HeroStats;

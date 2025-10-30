@@ -2,223 +2,260 @@
 * ===================================================================
 *                            MAIN STYLESHEET
 * ===================================================================
+* Global CSS file for the school website prototype.
+* Contains CSS custom properties, typography, layout, and component styles.
+* Uses modern CSS features like CSS Grid, Flexbox, and custom properties.
+* Responsive design with mobile-first approach.
+* Performance: Optimized with efficient selectors and transitions.
+* Accessibility: High contrast colors, proper focus states.
+* ===================================================================
 */
 
+/* Import Google Fonts for typography - Load external fonts */
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:wght@400;500;600;700&display=swap');
 
+/* CSS Custom Properties for consistent theming - Define global variables */
 :root {
-    --dark-brown: #4A2D23;
-    --gold-accent: #FFD700;
-    --professional-orange: rgba(230, 84, 33); /* The new brand color */
-    --elegant-serif: 'Cormorant Garamond', serif;
-    --school-name-blue: #4A2D23; /* Color for the school name */
-    --light-text: #f0f0f0;
-    --white: #FFFFFF;
+    --dark-brown: #4A2D23; /* Primary dark brown color - Used for backgrounds and text */
+    --gold-accent: #FFD700; /* Gold accent for highlights - For borders and accents */
+    --professional-orange: rgba(230, 84, 33); /* Brand orange color - Main brand color */
+    --elegant-serif: 'Cormorant Garamond', serif; /* Serif font family - For headings */
+    --school-name-blue: #4A2D23; /* School name color (same as dark-brown) - Consistent branding */
+    --light-text: #f0f0f0; /* Light text on dark backgrounds - High contrast */
+    --white: #FFFFFF; /* Pure white - For light backgrounds */
 }
 
+/* CSS Reset - Normalize box model and remove default margins/padding - Universal selector */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+    margin: 0; /* Remove default margins - Reset spacing */
+    padding: 0; /* Remove default padding - Reset spacing */
+    box-sizing: border-box; /* Include padding/border in element dimensions - Consistent sizing */
 }
 
+/* Body styles - Global page styling - Body element */
 body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Poppins', sans-serif;
-    line-height: 1.6;
-    color: var(--light-text);
-    overflow-x: hidden;
-    background-color: var(--dark-brown);
+    margin: 0; /* Remove body margin - No outer spacing */
+    padding: 0; /* Remove body padding - No inner spacing */
+    font-family: 'Poppins', sans-serif; /* Modern sans-serif font - Readable typography */
+    line-height: 1.6; /* Improved readability - Better line spacing */
+    color: var(--light-text); /* Light text color - Contrast on dark background */
+    overflow-x: hidden; /* Prevent horizontal scroll - Clean layout */
+    background-color: var(--dark-brown); /* Dark brown background - Brand color */
 }
 
+/* HTML smooth scrolling for anchor links - Html element */
 html {
-    scroll-behavior: smooth;
+    scroll-behavior: smooth; /* Smooth scroll to anchors - Better UX */
 }
 
+/* Heading typography - Consistent serif font for headings - Heading selectors */
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Playfair Display', serif;
-    font-weight: 700;
+    font-family: 'Playfair Display', serif; /* Elegant serif font - Brand typography */
+    font-weight: 700; /* Bold weight - Emphasize headings */
 }
 
+/* Logo styling - Responsive logo in header - Logo class */
 .logo {
-    height: 60px;
-    margin-right: 20px;
-    margin-bottom: 0;
-    transition: height 1s ease-in-out,
-                margin-right 1s ease-in-out,
-                margin-bottom 1s ease-in-out;
+    height: 60px; /* Default logo height - Standard size */
+    margin-right: 20px; /* Space to the right - Separation */
+    margin-bottom: 0; /* No bottom margin - Align with text */
+    transition: height 1s ease-in-out, /* Smooth height transition - Animation */
+                margin-right 1s ease-in-out, /* Smooth margin transition - Animation */
+                margin-bottom 1s ease-in-out; /* Smooth bottom margin transition - Animation */
 }
 
+/* School name styling - Fluid typography for brand name - School name class */
 .school-name {
     /* Fluid font size: min 1.2rem, preferred 2.5vw, max 2rem */
-    font-size: clamp(1.2rem, 2.5vw, 2rem);
-    text-shadow: none;
+    font-size: clamp(1.2rem, 2.5vw, 2rem); /* Responsive font size - Scales with viewport */
+    text-shadow: none; /* No text shadow - Clean look */
     /* Use a faster transition for smoother resizing */
-    transition: font-size 0.4s ease-in-out;
+    transition: font-size 0.4s ease-in-out; /* Smooth font size transition - Animation */
     /* The base color is now on the h1 wrapper */
-    color: var(--light-text);
-    text-decoration: none;
-    white-space: nowrap; /* Prevent the school name from wrapping to a new line */
-    border-bottom: none;
+    color: var(--light-text); /* Light text color - Contrast */
+    text-decoration: none; /* Remove underline - Clean links */
+    white-space: nowrap; /* Prevent text wrapping - Single line */
+    border-bottom: none; /* No bottom border - No underline */
 }
 
 /* --- 2. Animations --- */
+/* Keyframe animation for rotating backgrounds - Rotate background keyframe */
 @keyframes rotate-background {
     from {
-        transform: rotate(0deg);
+        transform: rotate(0deg); /* Start rotation - Initial state */
     }
     to {
-        transform: rotate(360deg);
+        transform: rotate(360deg); /* Full rotation - End state */
     }
 }
 
 /* --- 3. Page Sections --- */
 
+/* Expanding grid section - Main container for the expanding grid component */
 .expanding-grid-section {
-    padding: 80px 5%;
-    background-color: #EFEFEF;
-    min-height: 80vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Center the content wrapper */
+    padding: 80px 5%; /* Padding top/bottom 80px, left/right 5% - Spacing around section */
+    background-color: #EFEFEF; /* Light gray background - Neutral background color */
+    min-height: 80vh; /* Minimum height 80% of viewport height - Ensure section takes space */
+    display: flex; /* Flexbox layout - Flexible container */
+    flex-direction: column; /* Stack children vertically - Vertical layout */
+    align-items: center; /* Center items horizontally - Center content */
 }
 
+/* Expanding grid content wrapper - Wrapper for grid content */
 .expanding-grid-content-wrapper {
-    width: 100%;
-    max-width: 1600px; /* Limit the max width for very large screens */
+    width: 100%; /* Full width - Take full available width */
+    max-width: 1600px; /* Maximum width 1600px - Limit width on large screens */
 }
 
+/* Expanding grid section title - Title for the expanding grid section */
 .expanding-grid-section .section-title {
-    text-align: center;
-    font-size: 2.8rem;
-    color: black;
-    font-family: 'Playfair Display', serif;
-    margin-bottom: 60px;
+    text-align: center; /* Center text alignment - Center the title */
+    font-size: 2.8rem; /* Font size 2.8rem - Large title size */
+    color: black; /* Black color - Dark text for contrast */
+    font-family: 'Playfair Display', serif; /* Serif font family - Elegant typography */
+    margin-bottom: 60px; /* Bottom margin 60px - Space below title */
 }
 
 /* --- 4.3 Expanding Grid Component --- */
+/* Grid container - Main grid layout for expanding items */
 .grid-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    width: 100%;
-    min-height: 70vh;
-    gap: 15px;
-    transition: grid-template-columns 0.5s cubic-bezier(0.19, 1, 0.22, 1), grid-template-rows 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    display: grid; /* Enable CSS Grid layout */
+    grid-template-columns: 1fr 1fr; /* Two equal columns */
+    grid-template-rows: 1fr 1fr; /* Two equal rows */
+    width: 100%; /* Full width */
+    min-height: 70vh; /* Minimum height 70% of viewport */
+    gap: 15px; /* Gap between grid items */
+    transition: grid-template-columns 0.5s cubic-bezier(0.19, 1, 0.22, 1), grid-template-rows 0.5s cubic-bezier(0.19, 1, 0.22, 1); /* Smooth transition for grid changes */
 }
 
+/* Grid item - Individual item in the grid */
 .grid-item {
-    position: relative;
-    overflow: hidden;
-    border-radius: 12px;
-    cursor: pointer;
+    position: relative; /* Relative positioning for absolute children */
+    overflow: hidden; /* Hide overflow content */
+    border-radius: 12px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
 }
 
-/* Grid resizing classes applied by React based on the active item */
+/* Grid resizing classes applied by React based on the active item - Active item 0 */
 .grid-container.active-item-0 { grid-template-columns: 2fr 1fr; grid-template-rows: 2fr 1fr; }
+/* Grid resizing classes applied by React based on the active item - Active item 1 */
 .grid-container.active-item-1 { grid-template-columns: 1fr 2fr; grid-template-rows: 2fr 1fr; }
+/* Grid resizing classes applied by React based on the active item - Active item 2 */
 .grid-container.active-item-2 { grid-template-columns: 2fr 1fr; grid-template-rows: 1fr 2fr; }
+/* Grid resizing classes applied by React based on the active item - Active item 3 */
 .grid-container.active-item-3 { grid-template-columns: 1fr 2fr; grid-template-rows: 1fr 2fr; }
 
+/* Grid item background - Background image for grid item */
 .grid-item-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    transition: transform 0.6s ease, filter 0.6s ease;
+    position: absolute; /* Absolute positioning */
+    top: 0; /* Top edge */
+    left: 0; /* Left edge */
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    background-size: cover; /* Cover the entire area */
+    background-position: center; /* Center the background */
+    transition: transform 0.6s ease, filter 0.6s ease; /* Smooth transition for transform and filter */
 }
 
+/* Active grid item background - Scale up when active */
 .grid-item.active .grid-item-bg {
-    transform: scale(1.05);
+    transform: scale(1.05); /* Scale up by 5% */
 }
 
+/* Grid item overlay - Dark gradient overlay */
 .grid-item::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
-    transition: background 0.5s ease;
+    content: ''; /* Pseudo-element content */
+    position: absolute; /* Absolute positioning */
+    top: 0; /* Top edge */
+    left: 0; /* Left edge */
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent); /* Dark gradient */
+    transition: background 0.5s ease; /* Smooth background transition */
 }
 
+/* Active grid item overlay - Darker gradient when active */
 .grid-item.active::after {
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.2));
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.2)); /* Darker gradient */
 }
 
+/* Grid item content - Content overlay on grid item */
 .grid-item-content {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 30px;
-    color: var(--white);
-    z-index: 2;
+    position: absolute; /* Absolute positioning */
+    bottom: 0; /* Bottom edge */
+    left: 0; /* Left edge */
+    right: 0; /* Right edge */
+    padding: 30px; /* Padding around content */
+    color: var(--white); /* White text color */
+    z-index: 2; /* Above background and overlay */
 }
 
+/* Item header - Header section of grid item */
 .item-header {
-    display: flex;
-    align-items: center;
-    gap: 15px;
+    display: flex; /* Flexbox layout */
+    align-items: center; /* Center vertically */
+    gap: 15px; /* Gap between elements */
 }
 
+/* Item header icon - FontAwesome icon in header */
 .item-header .fas {
-    font-size: 2.2rem;
-    color: var(--professional-orange);
+    font-size: 2.2rem; /* Large icon size */
+    color: var(--professional-orange); /* Orange color */
 }
 
+/* Item header title - Title in header */
 .item-header h3 {
-    font-size: 1.8rem;
+    font-size: 1.8rem; /* Large title size */
 }
 
+/* Item details - Expandable details section */
 .item-details {
-    max-height: 0;
-    opacity: 0;
-    overflow: hidden;
-    transition: max-height 0.5s ease-out, opacity 0.4s ease-out 0.1s, margin-top 0.5s ease-out;
-    margin-top: 0;
+    max-height: 0; /* Initially collapsed */
+    opacity: 0; /* Initially transparent */
+    overflow: hidden; /* Hide overflow */
+    transition: max-height 0.5s ease-out, opacity 0.4s ease-out 0.1s, margin-top 0.5s ease-out; /* Smooth transitions */
+    margin-top: 0; /* No top margin initially */
 }
 
-/* Visually hide the content, but keep it accessible to screen readers */
+/* Visually hide the content, but keep it accessible to screen readers - Accessibility for collapsed state */
 .item-details:not(.expanded) {
-    clip: rect(0 0 0 0);
-    clip-path: inset(50%);
-    height: 1px;
-    overflow: hidden;
-    position: absolute;
-    white-space: nowrap;
-    width: 1px;
+    clip: rect(0 0 0 0); /* Clip to hide visually */
+    clip-path: inset(50%); /* Clip path to hide */
+    height: 1px; /* Minimal height */
+    overflow: hidden; /* Hide overflow */
+    position: absolute; /* Absolute positioning */
+    white-space: nowrap; /* Prevent wrapping */
+    width: 1px; /* Minimal width */
 }
 
+/* Active grid item details - Expand when active */
 .grid-item.active .item-details {
-    max-height: 300px; /* Adjust as needed for content */
-    opacity: 1;
-    margin-top: 20px;
+    max-height: 300px; /* Adjust as needed for content - Maximum height */
+    opacity: 1; /* Fully opaque */
+    margin-top: 20px; /* Top margin */
 }
 
+/* Item details title - Title in details */
 .item-details h3 {
-    font-size: 2.5rem;
-    color: var(--professional-orange);
-    margin-bottom: 15px;
+    font-size: 2.5rem; /* Very large title */
+    color: var(--professional-orange); /* Orange color */
+    margin-bottom: 15px; /* Bottom margin */
 }
 
+/* Item details text - Paragraphs and blockquotes in details */
 .item-details p, .item-details blockquote {
-    font-size: 1.1rem;
-    line-height: 1.7;
-    color: #e0e0e0;
+    font-size: 1.1rem; /* Medium text size */
+    line-height: 1.7; /* Good line height */
+    color: #e0e0e0; /* Light gray color */
 }
 
+/* Item details citation - Citation in details */
 .item-details cite {
-    display: block;
-    text-align: right;
-    margin-top: 10px;
-    font-style: normal;
-    color: var(--school-name-blue);
+    display: block; /* Block display */
+    text-align: right; /* Right align */
+    margin-top: 10px; /* Top margin */
+    font-style: normal; /* Normal font style */
+    color: var(--school-name-blue); /* Blue color */
 }
 
 /* --- 4.8 Admissions Section Animations --- */
@@ -494,6 +531,12 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* --- 4.5 Contact Form & Info --- */
+.contact-section-container{
+        background-color: #EFEFEF; /* Light gray background */
+      /* Subtle dotted background pattern */
+  background-image: radial-gradient(circle at 1px 1px, #d2b48c 1px, transparent 0);
+  background-size: 20px 20px; /* Size of the dot pattern */
+}
 
 .contact-content {
     display: grid;

@@ -1,20 +1,21 @@
+/* Container for the achievements section */
 .achievements-section-container {
-  background-color: white;
-  /* Subtle dotted background */
+  background-color: white; /* White background */
+  /* Subtle dotted background pattern */
   background-image: radial-gradient(circle at 1px 1px, #d2b48c 1px, transparent 0);
-  background-size: 20px 20px;
-  padding: 4rem 0;
+  background-size: 20px 20px; /* Size of the dot pattern */
+  padding: 4rem 0; /* Vertical padding */
 }
 
-
+/* Wrapper for the achievements content */
 .achievements-wrapper {
-  max-width: 1000px; /* Adjusted max-width to allow more space for the row of 5 */
-  width: 90%; /* Adjusted width */
-  margin: 2rem auto; /* Keep margin for spacing */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transition: opacity 0.5s ease;
+  max-width: 1000px; /* Maximum width for the wrapper */
+  width: 90%; /* Width as percentage */
+  margin: 2rem auto; /* Center horizontally with vertical margin */
+  display: flex; /* Flexbox layout */
+  flex-direction: column; /* Stack children vertically */
+  align-items: center; /* Center items horizontally */
+  transition: opacity 0.5s ease; /* Smooth opacity transition */
 }
 
 /* ===== Wall of Pride Title ===== */

@@ -1,3 +1,12 @@
+/**
+ * MoonIcon component - SVG icon for moon (dark mode).
+ * Used in theme toggle button to represent dark mode.
+ * Icon from Lucide React icons library.
+ * Accessible: Semantic SVG with proper attributes.
+ * Responsive: Scales with font size.
+ *
+ * @returns {JSX.Element} The moon icon SVG.
+ */
 import React from 'react';
 
 export function MoonIcon() {

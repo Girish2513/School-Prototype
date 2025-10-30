@@ -1,14 +1,18 @@
 /* --- 3.4 Contact Section --- */
+/* Container for the contact section with background styling */
 .contact-section-container {
-    background-color: #EFEFEF;
-      /* Subtle dotted background */
+    background-color: #EFEFEF; /* Light gray background */
+      /* Subtle dotted background pattern */
   background-image: radial-gradient(circle at 1px 1px, #d2b48c 1px, transparent 0);
-  background-size: 20px 20px; /* Adjust the spacing of the dots */
+  background-size: 20px 20px; /* Size of the dot pattern */
 }
 
 .contact-page {
     padding: 80px 5%;
     color: var(--dark-brown);
+    background-color: #EFEFEF; /* Light gray background */
+    background-image: radial-gradient(circle at 1px 1px, #d2b48c 1px, transparent 0);
+    background-size: 20px 20px; /* Size of the dot pattern */
 }
 
 .contact-container {

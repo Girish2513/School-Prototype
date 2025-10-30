@@ -1,23 +1,27 @@
+/* Error boundary container styling */
 .error-boundary {
-  padding: 20px;
-  margin: 20px 0;
-  border: 1px solid #ff6b6b;
-  border-radius: 8px;
-  background-color: #ffe6e6;
-  color: #d63031;
-  text-align: center;
+  padding: 20px; /* Padding around the error message */
+  margin: 20px 0; /* Vertical margin */
+  border: 1px solid #ff6b6b; /* Red border for error indication */
+  border-radius: 8px; /* Rounded corners */
+  background-color: #ffe6e6; /* Light red background */
+  color: #d63031; /* Dark red text color */
+  text-align: center; /* Center align text */
 }
 
+/* Heading styling within error boundary */
 .error-boundary h2 {
-  margin-bottom: 10px;
-  font-size: 1.5rem;
+  margin-bottom: 10px; /* Bottom margin */
+  font-size: 1.5rem; /* Font size */
 }
 
+/* Paragraph styling within error boundary */
 .error-boundary p {
-  margin-bottom: 10px;
+  margin-bottom: 10px; /* Bottom margin */
 }
 
+/* Details element styling for error details in development */
 .error-boundary details {
-  margin-top: 20px;
-  text-align: left;
+  margin-top: 20px; /* Top margin */
+  text-align: left; /* Left align text for details */
 }

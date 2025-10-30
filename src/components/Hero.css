@@ -1,20 +1,21 @@
 /* --- 3.1 Hero Section --- */
+/* Main hero section wrapper */
 .hero-section { /* This is now the main section wrapper in Hero.jsx */
-    margin-top: 0;
-    min-height: 100vh;
-    width: 100%;
-    position: relative;
-    /* 
-     * IMPORTANT: overflow: hidden contains the pseudo-element 
+    margin-top: 0; /* No top margin */
+    min-height: 100vh; /* Full viewport height */
+    width: 100%; /* Full width */
+    position: relative; /* Relative positioning for pseudo-elements */
+    /*
+     * IMPORTANT: overflow: hidden contains the pseudo-element
      * used for the rotating background.
     */
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    padding: 0 5%;
-    padding-bottom: 20px;
-    padding-top: 5rem;
-    margin: 0;
+    overflow: hidden; /* Hide overflow for background animation */
+    display: flex; /* Flexbox layout */
+    flex-direction: column; /* Vertical stacking */
+    padding: 0 5%; /* Horizontal padding */
+    padding-bottom: 20px; /* Bottom padding */
+    padding-top: 5rem; /* Top padding */
+    margin: 0; /* No margin */
 }
 
 .hero-section::before {

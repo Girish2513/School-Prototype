@@ -1,7 +1,27 @@
+/**
+ * Header component for the school website navigation.
+ * Displays the school logo, name, navigation menu with dropdowns, hamburger menu for mobile, and news ticker.
+ * Handles scrolling to sections, mobile menu toggle, and theme changes based on scroll position.
+ * Responsive design with mobile-first approach.
+ * Accessibility: ARIA labels, keyboard navigation, semantic HTML.
+ * Performance: Uses React hooks for state management, optimized re-renders.
+ * Extensibility: Props for customization, sub-menu support.
+ *
+ * @param {object} props - Component props.
+ * @param {boolean} props.isScrolled - Whether the user has scrolled past a threshold.
+ * @param {boolean} props.isIntro - Whether the intro animation is playing.
+ * @param {boolean} props.isLightSectionInView - Whether a light background section is in view.
+ * @param {boolean} props.isHomePage - Whether the current page is the home page.
+ * @returns {JSX.Element} The rendered header component.
+ */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './Header.css';
 
+/**
+ * Main Header component function.
+ * Manages state for mobile menu, sub-menus, and handles navigation events.
+ */
 function Header({ isScrolled, isIntro, isLightSectionInView, isHomePage = true }) {
  const [isMenuOpen, setIsMenuOpen] = useState(false);
  const [openSubMenu, setOpenSubMenu] = useState(null); // State to track open sub-menu

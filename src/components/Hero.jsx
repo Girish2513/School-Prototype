@@ -38,7 +38,7 @@ function Hero({ shouldPlay, startAnimations }) {
           className="hero-description"
           text={[
             "Fostering curiosity and creativity, Empowering the leaders of tomorrow.",
-            "A place where potential thrive,. Equipping students for success and responsibility.",
+            "A place where potential thrive, Equipping students for success and responsibility.",
             "Every child is unique and full of promise, We guide them to reach their fullest potential."
           ]}
           typingSpeed={50}

@@ -1,21 +1,22 @@
 /* --- 4.1 Header --- */
+/* Main header container, fixed position at top of page */
 .main-header {
-    position: fixed;
-    z-index: 100;
-    top: 30px;
-    left: 0;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    padding: 10px 40px;
-    border: none;
-    border-radius: 0;
-    background-color: transparent;
-    transition: top 1s ease-in-out,
-                left 1s ease-in-out,
-                width 1s ease-in-out,
-                background-color 0.4s ease,
-                box-shadow 0.4s ease;
+    position: fixed; /* Fixed positioning */
+    z-index: 100; /* High z-index to stay above content */
+    top: 30px; /* Top position */
+    left: 0; /* Left aligned */
+    width: 100%; /* Full width */
+    display: flex; /* Flexbox layout */
+    align-items: center; /* Center vertically */
+    padding: 10px 40px; /* Padding */
+    border: none; /* No border */
+    border-radius: 0; /* No border radius */
+    background-color: transparent; /* Transparent background */
+    transition: top 1s ease-in-out, /* Transition for top position */
+                left 1s ease-in-out, /* Transition for left position */
+                width 1s ease-in-out, /* Transition for width */
+                background-color 0.4s ease, /* Transition for background color */
+                box-shadow 0.4s ease; /* Transition for box shadow */
 }
 
 .main-header.home-page {

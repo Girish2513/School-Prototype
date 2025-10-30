@@ -1,12 +1,13 @@
 /* --- 4.3 Expanding Grid Component --- */
+/* Container for the grid layout */
 .grid-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    width: 100%;
-    min-height: 80vh;
-    gap: 15px;
-    transition: grid-template-columns 0.5s cubic-bezier(0.19, 1, 0.22, 1), grid-template-rows 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    display: grid; /* CSS Grid layout */
+    grid-template-columns: 1fr 1fr; /* Two equal columns */
+    grid-template-rows: 1fr 1fr; /* Two equal rows */
+    width: 100%; /* Full width */
+    min-height: 80vh; /* Minimum height */
+    gap: 15px; /* Gap between grid items */
+    transition: grid-template-columns 0.5s cubic-bezier(0.19, 1, 0.22, 1), grid-template-rows 0.5s cubic-bezier(0.19, 1, 0.22, 1); /* Smooth transition for grid changes */
 }
 
 .grid-item {

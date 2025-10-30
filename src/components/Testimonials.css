@@ -1,69 +1,82 @@
+/* Testimonials section heading styles */
 .testimonials-section h2 {
-  font-size: 2.5rem;
-  margin-bottom: 3rem;
+  font-size: 2.5rem; /* Large heading size */
+  margin-bottom: 3rem; /* Bottom margin for spacing */
   color: #4A2D23; /* Dark brown for better contrast on tan background */
 }
 
+/* Testimonial row container - horizontal scrolling layout */
 .testimonial-row {
-  display: flex;
-  width: max-content;
-  white-space: nowrap;
-  gap: 2rem;
-  position: relative;
+  display: flex; /* Flexbox for horizontal layout */
+  width: max-content; /* Width based on content */
+  white-space: nowrap; /* Prevent text wrapping */
+  gap: 2rem; /* Gap between cards */
+  position: relative; /* For positioning animations */
 }
 
+/* First row animation - scroll right */
 .row-1 {
-  animation: scroll-right 35s linear infinite;
-}
-.row-2 {
-  animation: scroll-left 35s linear infinite;
-}
-.row-3 {
-  animation: scroll-right 35s linear infinite;
+  animation: scroll-right 35s linear infinite; /* Continuous right scroll over 35 seconds */
 }
 
-/* Smooth continuous animations */
+/* Second row animation - scroll left */
+.row-2 {
+  animation: scroll-left 35s linear infinite; /* Continuous left scroll over 35 seconds */
+}
+
+/* Third row animation - scroll right */
+.row-3 {
+  animation: scroll-right 35s linear infinite; /* Continuous right scroll over 35 seconds */
+}
+
+/* Keyframe animation for scrolling right */
 @keyframes scroll-right {
   0% {
-    transform: translateX(-50%);
+    transform: translateX(-50%); /* Start from left (off-screen) */
   }
   100% {
-    transform: translateX(0%);
+    transform: translateX(0%); /* End at original position */
   }
 }
 
+/* Keyframe animation for scrolling left */
 @keyframes scroll-left {
   0% {
-    transform: translateX(0%);
+    transform: translateX(0%); /* Start at original position */
   }
   100% {
-    transform: translateX(-50%);
+    transform: translateX(-50%); /* End to left (off-screen) */
   }
 }
 
+/* Individual testimonial card styles */
 .testimonial-card {
-  flex: 0 0 auto;
-  width: 240px;
-  transition: filter 0.3s ease, opacity 0.3s ease; /* Ensure smooth transitions */
-  text-align: center;
+  flex: 0 0 auto; /* Don't grow or shrink, maintain width */
+  width: 240px; /* Fixed card width */
+  transition: filter 0.3s ease, opacity 0.3s ease; /* Smooth transitions for blur/opacity changes */
+  text-align: center; /* Center text alignment */
 }
 
+/* Quote mark styling */
 .quote {
-  font-size: 3rem;
+  font-size: 3rem; /* Large quote mark */
   color: #00005a; /* Darker navy for better contrast */
-  line-height: 1;
+  line-height: 1; /* Tight line height */
 }
 
+/* Testimonial comment text */
 .testimonial-comment {
   color: #333; /* Dark gray for readability */
-  margin: 0.5rem 0;
+  margin: 0.5rem 0; /* Vertical margins */
 }
 
+/* Testimonial author name */
 .testimonial-name {
   color: #8B4513; /* SaddleBrown for a warmer tone */
-  font-weight: bold;
+  font-weight: bold; /* Bold font weight */
 }
 
+/* Pause animation on hover for better UX */
 .testimonial-row:hover {
-  animation-play-state: paused;
+  animation-play-state: paused; /* Stop animation when hovering */
 }
