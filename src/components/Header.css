@@ -332,7 +332,7 @@
         padding: 10px 20px;
     }
     .news-ticker {
-        top: 85px; /* Position below the header (60px header height + 10px padding + 15px gap) */
+        top: 110px; /* Position below the header (60px header height + 10px padding + 15px gap) */
         width: 90%;
     }
     .ticker-list li {
@@ -347,7 +347,7 @@
 @media (max-width: 480px) {
     .news-ticker {
         width: 90%;
-        top: 80px; /* Adjust for smaller mobile screens */
+        top: 110px; /* Adjust for smaller mobile screens */
     }
     .ticker-list li {
         font-size: 0.75rem;
