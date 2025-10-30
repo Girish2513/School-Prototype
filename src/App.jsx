@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useReducer } from 'react';
 import { useScroll } from './hooks/useScroll';
 import { useSectionInView } from './hooks/useSectionInView';
 
 // 🧩 Components
 import Header from './components/Header';
 import Hero from './components/Hero';
+import { LuSun, LuMoon } from 'react-icons/lu';
 
 
 import Admissions from './components/Admissions';
@@ -69,6 +70,20 @@ const TestimonialsSection = ({ title, description, testimonials, className, id }
   );
 };
 
+// --- Reducer for section visibility ---
+const initialSectionStates = {
+  admissions: false,
+  aboutUs: false,
+  achievements: false,
+  gallery: false,
+  testimonials: false,
+  contact: false,
+};
+
+function sectionStateReducer(state, action) {
+  return { ...state, [action.section]: action.isInView };
+}
+
 function App() {
   // 🕒 Intro & Popup states
   const [isIntro, setIsIntro] = useState(true);
@@ -94,21 +109,21 @@ function App() {
   // 📜 Scroll State
   const { isScrolled } = useScroll(50);
 
-  // 👁️ Section In-View States
-  const [admissionsInViewState, setAdmissionsInView] = useState(false);
-  const [aboutUsInViewState, setAboutUsInView] = useState(false); // Keep this line
-  const [achievementsInViewState, setAchievementsInView] = useState(false);
-  const [galleryInViewState, setGalleryInView] = useState(false); // Keep this line
-  const [testimonialsInViewState, setTestimonialsInView] = useState(false);
-  const [contactInViewState, setContactInView] = useState(false); // Keep this line
+  // 👁️ Section In-View States using a reducer
+  const [sectionsInView, dispatchSectionState] = useReducer(sectionStateReducer, initialSectionStates);
 
   // Section observers
-  const { ref: admissionsSectionRef } = useSectionInView({ threshold: 0.1, onChange: setAdmissionsInView });
-  const { ref: aboutUsSectionRef } = useSectionInView({ threshold: 0.1, onChange: setAboutUsInView }); // Keep this line
-  const { ref: achievementsSectionRef } = useSectionInView({ threshold: 0.1, onChange: setAchievementsInView });
-  const { ref: gallerySectionRef } = useSectionInView({ threshold: 0.1, onChange: setGalleryInView }); // Keep this line
-  const { ref: testimonialsSectionRef } = useSectionInView({ threshold: 0.1, onChange: setTestimonialsInView });
-  const { ref: contactSectionRef } = useSectionInView({ threshold: 0.1, onChange: setContactInView }); // Keep this line
+  const createSectionObserver = (section) =>
+    useSectionInView({
+      threshold: 0.1,
+      onChange: (isInView) => dispatchSectionState({ section, isInView }),
+    });
+  const { ref: admissionsSectionRef } = createSectionObserver('admissions');
+  const { ref: aboutUsSectionRef } = createSectionObserver('aboutUs');
+  const { ref: achievementsSectionRef } = createSectionObserver('achievements');
+  const { ref: gallerySectionRef } = createSectionObserver('gallery');
+  const { ref: testimonialsSectionRef } = createSectionObserver('testimonials');
+  const { ref: contactSectionRef } = createSectionObserver('contact');
 
   // Intro delay
   useEffect(() => {
@@ -159,7 +174,9 @@ function App() {
 
   // Popup timing
   useEffect(() => {
-    setTimeout(() => setShowPopup(true), 3000);
+    if (path === '/') {
+      setTimeout(() => setShowPopup(true), 3000);
+    }
   }, []);
 
   // Lock scroll when popup is open
@@ -178,7 +195,12 @@ function App() {
   }, [showPopup]);
 
   // 🌗 Header theme control
-  const isLightSectionInView = (admissionsInViewState || contactInViewState || aboutUsInViewState || achievementsInViewState) && !testimonialsInViewState;
+  const isLightSectionInView =
+    (sectionsInView.admissions ||
+      sectionsInView.contact ||
+      sectionsInView.aboutUs ||
+      sectionsInView.achievements) &&
+    !sectionsInView.testimonials;
   // A section is considered "light" if any of the sections with a light background
   // (like Contact, Admissions, About Us, or Achievements) are currently in the viewport.
   // Dark sections like Gallery and Testimonials are excluded.
@@ -203,20 +225,27 @@ function App() {
     return () => window.removeEventListener('popstate', onLocationChange);
   }, []);
 
+  // Handle scrolling to a section from another page
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash) {
+      const targetId = hash.substring(1);
+      const targetElement = document.getElementById(targetId);
+      if (targetElement) {
+        // Use a timeout to ensure the element is rendered before scrolling
+        const timer = setTimeout(() => {
+          targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100); // A small delay can help
+        return () => clearTimeout(timer);
+      }
+    }
+  }, [path]); // Re-run when the path changes
+
   // 🖼️ View Gallery Page
   if (path === '/view-gallery') {
     document.body.className = 'view-gallery-body';
     return (
-<<<<<<< HEAD
       <div>
-=======
-      <div style={{
-        backgroundColor: 'white',
-        backgroundImage: 'radial-gradient(circle at 1px 1px, #d2b48c 1px, transparent 0)',
-        backgroundSize: '20px 20px'
-      }}
-      >
->>>>>>> 503c8a655f3711557786f628d1fd8b39b45a5a9d
         <Header
           isScrolled={isScrolled}
           isIntro={false}
@@ -228,7 +257,7 @@ function App() {
           <ViewGallery />
         </main>
         <section className="footer-section-container">
-          <Footer />
+          <Footer isHomePage={false} />
         </section>
       </div>
     );
@@ -337,14 +366,14 @@ function App() {
 
         {/* 🏆 Achievements Section */}
         <section id="achievements" ref={achievementsSectionRef} className="achievements-section-container">
-          <Achievements isInView={achievementsInViewState} />
+          <Achievements isInView={sectionsInView.achievements} />
         </section>
 
         {/* 📖 About Us */}
         <section
           id="about-us"
           ref={aboutUsSectionRef}
-          className={`about-us-section-container ${aboutUsInViewState ? 'is-in-view' : ''}`}
+          className={`about-us-section-container ${sectionsInView.aboutUs ? 'is-in-view' : ''}`}
         >
           <AboutUs />
         </section>
@@ -375,7 +404,7 @@ function App() {
 
         {/* ⚙️ Footer */}
         <section className="footer-section-container">
-          <Footer />
+          <Footer isHomePage={true} />
         </section>
       </main>
 

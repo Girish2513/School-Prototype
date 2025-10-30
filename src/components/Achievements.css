@@ -1,5 +1,8 @@
 .achievements-section-container {
   background-color: white;
+  /* Subtle dotted background */
+  background-image: radial-gradient(circle at 1px 1px, #d2b48c 1px, transparent 0);
+  background-size: 20px 20px;
   padding: 4rem 0;
 }
 
@@ -146,6 +149,7 @@
   font-size: 1rem;
   margin: 0;
   font-weight: 600;
+  text-align: center;
 }
 
 /* Back Side */
@@ -168,7 +172,18 @@
     grid-template-columns: repeat(2, 1fr);
   }
 }
+@media (max-width: 375px) {
+  .achievements-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
 
+  /* Adjust font size and padding on the back of the card for mobile */
+  .achievement-back {
+    padding: 0.5rem; /* Reduce padding */
+  }
+
+  .achievement-back p { font-size: 0.65rem; } /* Smaller font for the description */
+}
 
 /* Full engraved sequential gold border - extra thick lines */
 .achievement-card::before {

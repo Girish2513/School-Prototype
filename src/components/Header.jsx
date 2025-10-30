@@ -33,11 +33,24 @@ function Header({ isScrolled, isIntro, isLightSectionInView, isHomePage = true }
     const targetId = e.currentTarget.getAttribute('href').substring(1);
     const targetElement = document.getElementById(targetId);
  
-    if (targetElement) {
-      // The 'center' block option scrolls the element to the middle of the viewport.
-      targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    if (!isHomePage) {
+      // If not on the home page, navigate to home with the hash
+      // Use pushState to avoid a full page reload.
+      // The App component will listen for this and handle the scroll.
+      const path = `/${targetId ? '#' + targetId : ''}`;
+      window.history.pushState({ targetId }, '', path);
+      const navEvent = new PopStateEvent('popstate');
+      window.dispatchEvent(navEvent);
+    } else {
+      // If on the home page, scroll smoothly
+      if (targetElement) {
+        // The 'center' block option scrolls the element to the middle of the viewport.
+        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     }
   };
+
+
 
   /**
    * Toggles the sub-menu on mobile or prevents default on desktop.
@@ -135,8 +148,10 @@ function Header({ isScrolled, isIntro, isLightSectionInView, isHomePage = true }
                   href={item.href} 
                   onClick={(e) => {
                     // Check window size only when the click happens
-                    if (item.subMenu && window.innerWidth > 768) {
+                    if (item.subMenu && window.innerWidth <= 768) {
                       handleSubMenuToggle(e, item.label);
+                    } else if (item.subMenu && !isHomePage) {
+                      handleScrollToSection(e);
                     } else {
                       handleScrollToSection(e);
                     }

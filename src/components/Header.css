@@ -412,7 +412,7 @@
 .main-nav ul li a {
     /* Fluid font size: min 0.9rem, preferred 1.2vw, max 1rem */
     font-size: clamp(0.9rem, 1.2vw, 1rem);
-    padding: 10px 20px;
+    padding: 10px clamp(10px, 1.5vw, 20px);
     font-weight: 600;
     color: var(--light-text);
     text-decoration: none;
@@ -441,4 +441,12 @@
 
 .main-nav ul li a:hover::after {
     width: 80%;
+}
+
+/* --- For Small Desktops/Large Tablets --- */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .main-nav ul li a {
+        padding: 10px 10px; /* Reduce horizontal padding to prevent wrapping */
+        font-size: 0.85rem; /* Slightly smaller font for this range */
+    }
 }

@@ -82,18 +82,31 @@ const ViewGallery = () => {
         <div className="grid-pages-wrapper">
           {/* Page 1 */}
           <div className="grid-page active">
-            <div className="grid-item img-large"><img src="/images/republic-W1.jpg" alt="Republic Day Celebration" loading="lazy" /></div>
-            <div className="grid-item img-small"><img src="/images/activity.jpeg" alt="Classroom Activity" loading="lazy" /></div>
-            <div className="grid-item img-small"><img src="/images/event.jpg" alt="School Event Performance" loading="lazy" /></div>
-            <div className="grid-item img-wide"><img src="/images/group-pic.jpeg" alt="Student Group Photo" loading="lazy" /></div>
+            <div className="grid-item img-large"><img src="/images/flag-hoisting-1.png" alt="Republic Day Celebration" loading="lazy" /></div>
+            <div className="grid-item img-small"><img src="/images/singing.png" alt="Singing Competition" loading="lazy" /></div>
+            <div className="grid-item img-small"><img src="/images/school-name.png" alt="School Event Performance" loading="lazy" /></div>
+            <div className="grid-item img-wide"><img src="/images/welcome.jpg" alt="Student Group Photo" loading="lazy" /></div>
           </div>
 
           {/* Page 2 */}
           <div className="grid-page">
-            <div className="grid-item img-large"><img src="/images/trip.jpeg" alt="School Trip to Wonderla" loading="lazy" /></div>
-            <div className="grid-item img-small"><img src="/images/class.jpeg" alt="Interactive Classroom" loading="lazy" /></div>
-            <div className="grid-item img-small"><img src="/images/trip1.jpeg" alt="Field Trip" loading="lazy" /></div>
-            <div className="grid-item img-wide"><img src="/images/maxresdefault.jpg" alt="Hyderabad School Trip" loading="lazy" /></div>
+            <div className="grid-item img-wide"><img src="/images/event3.png" alt="Hyderabad School Trip" loading="lazy" /></div>
+            <div className="grid-item img-large"><img src="/images/event.jpg" alt="School Trip to Wonderla" loading="lazy" /></div>
+            <div className="grid-item img-small"><img src="/images/activity.jpeg" alt="Interactive Classroom" loading="lazy" /></div>
+            <div className="grid-item img-small"><img src="/images/lab.png" alt="Field Trip" loading="lazy" /></div>
+          </div>
+          {/* Page 3 */}
+          <div className="grid-page">
+            <div className="grid-item img-large"><img src="/images/flag-hoisting.jpg" alt="School Trip to Wonderla" loading="lazy" /></div>
+            <div className="grid-item img-wide"><img src="/images/marching.png" alt="Hyderabad School Trip" loading="lazy" /></div>
+            <div className="grid-item img-wide"><img src="/images/lab2.png" alt="School Lab" loading="lazy" /></div>
+          </div>
+          {/* Page 4 */}
+          <div className="grid-page">
+            <div className="grid-item img-large"><img src="/images/event2.png" alt="School Trip to Wonderla" loading="lazy" /></div>
+            <div className="grid-item img-small"><img src="/images/primary-block-office.png" alt="Classroom Activity" loading="lazy" /></div>
+            <div className="grid-item img-small"><img src="/images/school-ground-2.png" alt="Field Trip" loading="lazy" /></div>
+            <div className="grid-item img-wide"><img src="/images/bus.png" alt="School Bus" loading="lazy" /></div>
           </div>
         </div>
 

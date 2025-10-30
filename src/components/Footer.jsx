@@ -10,7 +10,29 @@ import { footerData } from './siteData';
  * For scalability, footerData can be extended with more sections or dynamic content.
  * For extensibility, add newsletter signup or privacy policy links.
  */
-function Footer() {
+function Footer({ isHomePage = true }) {
+  const handleFooterLinkClick = (e) => {
+    e.preventDefault();
+    const targetId = e.currentTarget.getAttribute('href').substring(1);
+    const targetElement = document.getElementById(targetId);
+
+    if (!isHomePage) {
+      // If not on the home page, navigate to home with the hash
+      // Use pushState to avoid a full page reload.
+      // The App component will listen for this and handle the scroll.
+      const path = `/${targetId ? '#' + targetId : ''}`;
+      window.history.pushState({ targetId }, '', path);
+      const navEvent = new PopStateEvent('popstate');
+      window.dispatchEvent(navEvent);
+    } else {
+      // If on the home page, scroll smoothly
+      if (targetElement) {
+        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  };
+
+
   return (
     <footer id="footer" className="site-footer" role="contentinfo">
       <div className="footer-container">
@@ -48,7 +70,11 @@ function Footer() {
           <ul>
             {footerData.quickLinks.links.map((link) => (
               <li key={link.href}>
-                <a href={link.href} aria-label={`Navigate to ${link.text}`}>{link.text}</a>
+                <a 
+                  href={link.href} 
+                  onClick={handleFooterLinkClick} 
+                  aria-label={`Navigate to ${link.text}`}
+                >{link.text}</a>
               </li>
             ))}
           </ul>
@@ -81,7 +107,7 @@ function Footer() {
 }
 
 Footer.propTypes = {
-  // No props, but PropTypes for consistency; footerData is imported
+  isHomePage: PropTypes.bool,
 };
 
 export default Footer;

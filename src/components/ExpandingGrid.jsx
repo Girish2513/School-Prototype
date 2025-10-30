@@ -5,7 +5,7 @@ import DOMPurify from 'dompurify';
 /**
  * Interactive expanding grid component displaying a 2x2 grid of cards that expand on hover/click.
  * On mobile, stacks vertically for better usability. Each card shows an icon, title, and expandable HTML content.
- * Sanitizes HTML content using DOMPurify to prevent XSS attacks, enhancing security and reliability.
+ * Sanitizes HTML content using DOM Purify to prevent XSS attacks, enhancing security and reliability.
  * Supports keyboard navigation and ARIA attributes for accessibility.
  * For performance, consider memoizing sections or using React.lazy for large content.
  * For extensibility, add props for grid layout (e.g., columns) or animation duration.
@@ -17,7 +17,7 @@ import DOMPurify from 'dompurify';
  */
 function ExpandingGrid({ title, sections = [] }) {
   // State to track the currently active (expanded) grid item index; null means none active.
-  const [activeIndex, setActiveIndex] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(-1); // Use -1 to indicate no item is active
   // State to detect if the device supports touch, to disable hover effects on mobile/tablet.
   const [isTouchDevice, setIsTouchDevice] = useState(false);
 
@@ -41,12 +41,12 @@ function ExpandingGrid({ title, sections = [] }) {
 
   // Sets the active index on mouse enter for desktop hover effect.
   const handleMouseEnter = (index) => {
-    setActiveIndex(index);
+    if (!isTouchDevice) setActiveIndex(index);
   };
 
   // Clears active index on mouse leave from the grid container (desktop only).
   const handleMouseLeave = () => {
-    setActiveIndex(null);
+    if (!isTouchDevice) setActiveIndex(-1);
   };
 
   /**
@@ -58,14 +58,10 @@ function ExpandingGrid({ title, sections = [] }) {
    * @param {Event} [e] - The click or keydown event.
    */
   const handleClick = (index, e) => {
-    // On non-touch devices, click should not trigger expansion.
-    // The hover effect is sufficient.
-    if (!isTouchDevice) return;
-
     if (e) {
       e.preventDefault(); // Prevent scrolling on space key
     }
-    setActiveIndex(activeIndex === index ? null : index);
+    setActiveIndex(activeIndex === index ? -1 : index);
   };
 
   // Sanitize HTML content using DOMPurify to prevent XSS; done once per render for simplicity.
@@ -80,7 +76,7 @@ function ExpandingGrid({ title, sections = [] }) {
       <div className="expanding-grid-content-wrapper">
         <h2 id="grid-title" className="section-title">{title}</h2>
         <div
-          className={`grid-container ${activeIndex !== null ? `active-item-${activeIndex}` : ''}`}
+          className={`grid-container ${activeIndex !== -1 ? `active-item-${activeIndex}` : ''}`}
           onMouseLeave={!isTouchDevice ? handleMouseLeave : undefined}
           role="grid"
           aria-label={`${title} grid`}

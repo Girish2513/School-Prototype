@@ -1,5 +1,8 @@
 .about-us-section {
   background-color: white;
+  /* Subtle dotted background */
+  background-image: radial-gradient(circle at 1px 1px, #d2b48c 1px, transparent 0);
+  background-size: 20px 20px;
   padding: 40px 20px;
   text-align: center;
   display: flex;
