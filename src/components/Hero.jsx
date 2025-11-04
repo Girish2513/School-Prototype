@@ -32,7 +32,11 @@ function Hero({ shouldPlay, startAnimations }) {
     <section className="hero-content" aria-labelledby="hero-heading">
       {/* Hero text overlay with semantic heading and paragraph for screen readers */}
       <div className="hero-text">
-        <h1 id="hero-heading" className="hero-title">Empowering Minds,<br />Shaping Futures.</h1>
+        <div className="hero-title-wrapper">
+          <h1 id="hero-heading" className="hero-title">Empowering Minds,<br />Shaping Futures.</h1>
+          <span className="establishment-tag">SINCE 1989</span>
+        </div>
+
         <TextType
           as="p"
           className="hero-description"

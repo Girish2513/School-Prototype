@@ -135,7 +135,9 @@ function Header({ isScrolled, isIntro, isLightSectionInView, isHomePage = true }
           <div className="header-left">
             <img src="/images/logo.png" alt="Navodaya High School Logo" className="logo" />
             {((!isScrolled && isHomePage) || !isHomePage) && (
-              <h1 className="school-name">Navodaya High School</h1>
+              <div className="school-title-container">
+                <h1 className="school-name">Navodaya High School</h1>
+              </div>
             )}
           </div>
         </a>

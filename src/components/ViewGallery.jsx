@@ -108,33 +108,33 @@ const ViewGallery = () => {
               <img src="/images/school-name.png" alt="School Event Performance" loading="lazy" />
             </div>
             <div className="grid-item img-wide">
-              <img src="/images/welcome.jpg" alt="Student Group Photo" loading="lazy" />
+              <img src="/images/welcome.jpg" alt="Student-Group-Photo" loading="lazy" />
             </div>
           </div>
 
           {/* Page 2 - Second set of images */}
           <div className="grid-page">
             <div className="grid-item img-wide">
-              <img src="/images/event3.png" alt="Hyderabad School Trip" loading="lazy" />
+              <img src="/images/event3.png" alt="Cultural Event At School" loading="lazy" />
             </div>
             <div className="grid-item img-large">
-              <img src="/images/event.jpg" alt="School Trip to Wonderla" loading="lazy" />
+              <img src="/images/event.jpg" alt="Republic Day Event At School" loading="lazy" />
             </div>
             <div className="grid-item img-small">
               <img src="/images/activity.jpeg" alt="Interactive Classroom" loading="lazy" />
             </div>
             <div className="grid-item img-small">
-              <img src="/images/lab.png" alt="Field Trip" loading="lazy" />
+              <img src="/images/lab.png" alt="Computer-lab-Facility" loading="lazy" />
             </div>
           </div>
 
           {/* Page 3 - Third set of images */}
           <div className="grid-page">
             <div className="grid-item img-large">
-              <img src="/images/flag-hoisting.jpg" alt="School Trip to Wonderla" loading="lazy" />
+              <img src="/images/flag-hoisting.jpg" alt="Flag Hoisting Eventat School" loading="lazy" />
             </div>
             <div className="grid-item img-wide">
-              <img src="/images/marching.png" alt="Hyderabad School Trip" loading="lazy" />
+              <img src="/images/marching.png" alt="Marching Band Performance" loading="lazy" />
             </div>
             <div className="grid-item img-wide">
               <img src="/images/lab2.png" alt="School Lab" loading="lazy" />
@@ -147,15 +147,118 @@ const ViewGallery = () => {
               <img src="/images/event2.png" alt="School Trip to Wonderla" loading="lazy" />
             </div>
             <div className="grid-item img-small">
-              <img src="/images/primary-block-office.png" alt="Classroom Activity" loading="lazy" />
+              <img src="/images/primary-block-office.png" alt="School Primary Block Office" loading="lazy" />
             </div>
             <div className="grid-item img-small">
-              <img src="/images/school-ground-2.png" alt="Field Trip" loading="lazy" />
+              <img src="/images/school-ground-2.png" alt="School Ground" loading="lazy" />
             </div>
             <div className="grid-item img-wide">
-              <img src="/images/bus.png" alt="School Bus" loading="lazy" />
+              <img src="/images/bus.png" alt="School Bus Facility" loading="lazy" />
             </div>
           </div>
+          
+          {/* Page 5 - Fifth set of images */}
+          <div className="grid-page">
+            <div className="grid-item img-large">
+              <img src="/images/school-front-side.jpg" alt="School Front View" loading="lazy" />
+            </div>
+            <div className="grid-item img-small">
+              <img src="/images/school-ground.jpg" alt="School Playground" loading="lazy" />
+            </div>
+            <div className="grid-item img-small">
+              <img src="/images/cultural-event2.png" alt="School Primary Block Office" loading="lazy" />
+            </div>
+            <div className="grid-item img-wide">
+              <img src="/images/cultural-event.png" alt="Cultural Event" loading="lazy" />
+            </div>
+          </div>
+
+          {/* Page 6 - Sixth set of images */}
+          <div className="grid-page">
+            <div className="grid-item img-large">
+              <img src="/images/cultural-event3.png" alt="Cultural Event" loading="lazy" />
+            </div>
+            <div className="grid-item img-wide">
+              <img src="/images/cultural-event4.png" alt="Cultural Event" loading="lazy" />
+            </div>
+            <div className="grid-item img-wide">
+              <img src="/images/school-block2.png" alt="School Block" loading="lazy" />
+            </div>
+          </div>
+
+          {/* Page 7 - Seventh set of images */}
+          <div className="grid-page active">
+            <div className="grid-item img-large">
+              <img src="/images/cultural-event10.png" alt="Cultural Event At School" loading="lazy" />
+            </div>
+            <div className="grid-item img-large">
+              <img src="/images/cultural-event11.png" alt="Cultural Event At School" loading="lazy" />
+            </div>
+          </div>
+          {/* Page 8 - Eighth set of images*/}
+           <div className="grid-page active">
+            <div className="grid-item img-large">
+              <img src="/images/main-droneview.png" alt="School campus drone view" loading="lazy" />
+            </div>
+            <div className="grid-item img-small">
+              <img src="/images/solo-performance.png" alt="Fashion Competition" loading="lazy" />
+            </div>
+            <div className="grid-item img-small">
+              <img src="/images/school-block.png" alt="School Campus" loading="lazy" />
+            </div>
+            <div className="grid-item img-wide">
+              <img src="/images/event4.jpg" alt="Student-Group-Photo" loading="lazy" />
+            </div>
+          </div>
+
+          {/* Page 9 - Nine set of images*/}
+          <div className="grid-page">
+            <div className="grid-item img-wide">
+              <img src="/images/cultural-event5.png" alt="Cultural Event At School" loading="lazy" />
+            </div>
+            <div className="grid-item img-large">
+              <img src="/images/cultural-event6.png" alt="Republic Day Event At School" loading="lazy" />
+            </div>
+            <div className="grid-item img-small">
+              <img src="/images/cultural-event7.png" alt="Cultural Event  " loading="lazy" />
+            </div>
+            <div className="grid-item img-small">
+              <img src="/images/bus2.png" alt="Bus Facility" loading="lazy" />
+            </div>
+          </div>
+          {/* Page 10 - tenth set of images */}
+          <div className="grid-page active">
+           <div className="grid-item img-large">
+              <img src="/images/cultural-event8.png" alt="Cultural Event At School" loading="lazy" />
+            </div>
+           <div className="grid-item img-large">
+              <img src="/images/cultural-event9.png" alt="Cultural Event At School" loading="lazy" />
+            </div>
+          </div>
+           
+          {/* Page 11 - Eleventh set of images */}
+          <div className="grid-page">
+            <div className="grid-item img-large">
+              <img src="/images/cultural-event17.png" alt="Cultural Event At School" loading="lazy" />
+            </div>
+            <div className="grid-item img-wide">
+              <img src="/images/cultural-event15.png" alt="Cultural Event At School" loading="lazy" />
+            </div>
+            <div className="grid-item img-wide">
+              <img src="/images/cultural-event16.png" alt="Cultural Event At School" loading="lazy" />
+            </div>
+          </div>
+
+          {/* Page 12 - Tweleth set of images */}
+          <div className="grid-page active">
+           <div className="grid-item img-large">
+              <img src="/images/cultural-event12.png" alt="Cultural Event At School" loading="lazy" />
+            </div>
+           <div className="grid-item img-large">
+              <img src="/images/cultural-event13.png" alt="Cultural Event At School" loading="lazy" />
+            </div>
+          </div>
+
         </div>
 
         {/* Navigation arrows with accessibility labels */}
