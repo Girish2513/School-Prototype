@@ -15,6 +15,7 @@ const AboutUs = () => {
   // The animation will trigger once when the section is 30% visible
   const { ref: principalRef, inView: principalInView } = useSectionInView({ threshold: 0.3, triggerOnce: true });
   const { ref: vicePrincipalRef, inView: vicePrincipalInView } = useSectionInView({ threshold: 0.3, triggerOnce: true });
+  const { ref: visionMissionRef, inView: visionMissionInView } = useSectionInView({ threshold: 0.3, triggerOnce: true });
 
   // Render the component
   return (
@@ -100,6 +101,29 @@ const AboutUs = () => {
             <p>Sincerely,<br />K. Sravan Kumar</p>
           </div>
         </div>
+
+        {/* Horizontal divider between sections */}
+        <hr className="section-divider" />
+
+        {/* Vision and Mission Section */}
+        <div
+          id="vision-mission"
+          ref={visionMissionRef}
+          className={`vision-mission-container ${visionMissionInView ? 'is-in-view' : ''}`}
+        >
+          <div className="vision-mission-content">
+            <div className="statement-block">
+              <h3 className="statement-heading">Vision</h3>
+              <p>To nurture intellectually curious, emotionally strong, and socially responsible individuals who strive for excellence and contribute positively to society. We envision our school as a place where education empowers every learner to reach their fullest potential through knowledge, creativity, and compassion.</p>
+            </div>
+            <div className="vertical-divider"></div>
+            <div className="statement-block">
+              <h3 className="statement-heading">Mission</h3>
+              <p>Our mission is to provide holistic education through innovative teaching methods, value-based learning, and a supportive environment. We aim to instill integrity, leadership, and lifelong learning skills in our students by engaging parents, teachers, and the community as partners in education.</p>
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
   );

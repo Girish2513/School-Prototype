@@ -283,6 +283,64 @@ h1, h2, h3, h4, h5, h6 {
 .admission-process-container.is-in-view .anim-fade-in { transition-delay: 0.2s; }
 .eligibility-criteria-container.is-in-view .anim-fade-in { transition-delay: 0.2s; }
 
+/* --- 4.9 Vision and Mission Section --- */
+.vision-mission-container {
+    padding: 40px 20px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.vision-mission-container.is-in-view {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.vision-mission-content {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.statement-block {
+    flex: 1;
+    text-align: left; /* Keep text aligned to the left within each block */
+}
+
+.statement-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; /* Match the font size of the principal's heading */
+    color: var(--dark-brown); /* Use dark brown for the heading text */
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    text-align: center; /* Center the heading text */
+}
+
+.statement-block p {
+    font-family: var(--elegant-serif); /* Match the elegant serif font */
+    font-size: 1.2rem; /* Match the paragraph font size */
+    line-height: 1.6; /* Match the line height */
+    color: var(--dark-brown); /* Use dark brown for the paragraph text */
+}
+
+.vertical-divider {
+    width: 1px;
+    background-color: var(--dark-brown); /* Match the color of the hr element */
+    align-self: stretch;
+}
+
+/* Responsive stacking for smaller screens */
+@media (max-width: 768px) {
+    .vision-mission-content {
+        flex-direction: column;
+    }
+    .vertical-divider {
+        display: none; /* Hide vertical line on mobile */
+    }
+}
 
 .scroll-stack-container {
     --stack-offset: 2rem;

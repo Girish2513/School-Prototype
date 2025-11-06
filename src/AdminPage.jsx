@@ -54,15 +54,30 @@ function AdminPage({ tickerItems, setTickerItems, popupImages, setPopupImages, o
     setTickerItems(items => items.filter((_, i) => i !== index)); // Filter out item at index
   };
 
-  // Helper function to process uploaded file and create banner object
-  const processUploadedFile = (file) => {
-    if (file) {
+  // Helper function to read a file as a Base64 Data URL
+  const readFileAsDataURL = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+      reader.readAsDataURL(file);
+    });
+  };
+
+  // Helper function to process an uploaded file and create a banner object
+  const processUploadedFile = async (file) => {
+    if (!file || !file.type.startsWith('image/')) return;
+    try {
+      const dataUrl = await readFileAsDataURL(file);
       const newBanner = {
         id: Date.now(), // Unique ID based on timestamp
         name: file.name, // Original file name
-        preview: URL.createObjectURL(file), // Object URL for preview
+        preview: dataUrl, // Use the permanent Data URL for preview
       };
-      setBanners(b => [...b, newBanner]); // Add new banner to banners array
+      setBanners((b) => [...b, newBanner]); // Add new banner to banners array
+    } catch (error) {
+      console.error('Error reading file:', error);
+      alert('Error processing file. Please try again.');
     }
   };
 
@@ -93,8 +108,10 @@ function AdminPage({ tickerItems, setTickerItems, popupImages, setPopupImages, o
 
   // Handler to remove a banner by ID
   const removeBanner = (id) => {
-    setBanners(b => b.filter(banner => banner.id !== id)); // Remove from banners state
-    setPopupImages(popupImages.filter((_, i) => i !== banners.findIndex(b => b.id === id))); // Remove from parent state
+    const updatedBanners = banners.filter(banner => banner.id !== id);
+    setBanners(updatedBanners); // Remove from local banners state
+    // Immediately update the parent state to reflect the removal
+    setPopupImages(updatedBanners.map(b => b.preview));
   };
 
   // Handler for replace button click (trigger hidden file input)
@@ -106,16 +123,22 @@ function AdminPage({ tickerItems, setTickerItems, popupImages, setPopupImages, o
   };
 
   // Handler for banner replacement via file input
-  const handleBannerReplace = (event) => {
+  const handleBannerReplace = async (event) => {
     const file = event.target.files[0]; // Get selected file
     if (file && replacingBannerId !== null) {
-      setBanners(currentBanners =>
-        currentBanners.map(banner =>
-          banner.id === replacingBannerId
-            ? { ...banner, name: file.name, preview: URL.createObjectURL(file) } // Update banner with new file
-            : banner
-        )
-      );
+      try {
+        const dataUrl = await readFileAsDataURL(file);
+        setBanners((currentBanners) =>
+          currentBanners.map((banner) =>
+            banner.id === replacingBannerId
+              ? { ...banner, name: file.name, preview: dataUrl } // Update banner with new file
+              : banner
+          )
+        );
+      } catch (error) {
+        console.error('Error replacing file:', error);
+        alert('Error replacing file. Please try again.');
+      }
       setReplacingBannerId(null); // Reset replacement state
       event.target.value = null; // Clear input to allow re-selecting same file
     }

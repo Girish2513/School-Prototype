@@ -34,7 +34,7 @@ import './TextType.css'; // Component styles
 const TextType = ({
   text, // Text content to animate (string or array)
   as: Component = 'div', // HTML element type
-  typingSpeed = 50, // MS per character typing
+  typingSpeed = 40, // MS per character typing
   initialDelay = 0, // Initial delay before starting
   pauseDuration = 2000, // Pause between sentences
   deletingSpeed = 30, // MS per character deleting
@@ -45,7 +45,7 @@ const TextType = ({
   cursorCharacter = '|', // Cursor character
   cursorClassName = '', // Cursor CSS class
   cursorBlinkDuration = 0.5, // Cursor blink speed
-  textColors = [], // Color array for cycling
+  textColors = [], // Color array for cycling,
   variableSpeed, // Random speed variation
   onSentenceComplete, // Completion callback
   startOnVisible = false, // Start on intersection

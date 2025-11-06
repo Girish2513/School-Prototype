@@ -48,10 +48,10 @@ import './components/Hero.css';
 // This array holds the default announcement messages for the scrolling ticker in the Header.
 // This content can be updated from the Admin Panel and is persisted in localStorage.
 const DEFAULT_TICKER_ITEMS = [
-  '🎓 Admissions are open for 2026!', // Announcement for admissions opening
-  '🏠 Open House: January 15, 2026', // Event date for open house
-  '🧪 New STEM Lab inaugurated this month', // New facility announcement
-  '☀️ Summer Camp registrations now live', // Summer program registration
+  '🎓 Admissions are open for 2026-2027!', // Announcement for admissions opening
+  '🌿 Clean Campus, Green Campus — Join Our Eco Initiative!', // Eco friendly campus
+  '📞 For Admissions & Queries, Contact: +91-8121153138.', 
+  '🎓 Consistently Achieved 100% Results in Board Examinations!', // Achievement announcement
 ];
 
 // This array holds the default image paths for the promotional popup banner.

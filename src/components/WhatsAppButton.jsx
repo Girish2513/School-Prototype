@@ -15,7 +15,7 @@ import './WhatsAppButton.css'; // Button-specific styles
 
 const WhatsAppButton = ({ visible }) => {
   // WhatsApp configuration - replace with actual school number
-  const phoneNumber = "919876543210"; // Phone number without + (country code included)
+  const phoneNumber = "8121153138"; // Phone number without + (country code included)
   const message = "Hello! I would like to know more about Navodaya High School."; // Default message
 
   // State for controlling greeting popup visibility

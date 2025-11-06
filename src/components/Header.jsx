@@ -22,7 +22,7 @@ import './Header.css';
  * Main Header component function.
  * Manages state for mobile menu, sub-menus, and handles navigation events.
  */
-function Header({ isScrolled, isIntro, isLightSectionInView, isHomePage = true }) {
+function Header({ isScrolled, isIntro, isLightSectionInView, isHomePage = true, tickerItems }) {
  const [isMenuOpen, setIsMenuOpen] = useState(false);
  const [openSubMenu, setOpenSubMenu] = useState(null); // State to track open sub-menu
 
@@ -121,13 +121,6 @@ function Header({ isScrolled, isIntro, isLightSectionInView, isHomePage = true }
     { href: '#contact', label: 'Contact' }
   ];
 
-  const tickerItems = [
-    'Admissions are open for 2026!',
-    'Open House: January 15, 2026',
-    'New STEM Lab inaugurated this month',
-    'Summer Camp registrations now live'
-  ];
-
   return (
     <>
       <header className={headerClasses} role="banner">
@@ -219,6 +212,7 @@ Header.propTypes = {
   isIntro: PropTypes.bool.isRequired,
   isLightSectionInView: PropTypes.bool.isRequired,
   isHomePage: PropTypes.bool,
+  tickerItems: PropTypes.array.isRequired,
 };
 
 export default Header;

@@ -275,15 +275,17 @@
 /* Ticker wrapper for seamless loop */
 .ticker-wrapper {
     display: flex;
+    width: 200%; /* Make the wrapper twice as wide as its container */
     white-space: nowrap;
-    animation: ticker-scroll 14s linear infinite; /* slightly slower */
+    animation: ticker-scroll 30s linear infinite; /* Adjusted duration for slower scroll */
     will-change: transform;
 }
 
 /* Smooth right-to-left scrolling */
 @keyframes ticker-scroll {
     0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+    /* Translate by half the wrapper's width, which is the full width of one list */
+    100% { transform: translateX(-50%); } 
 }
 
 /* List of ticker items - duplicated for seamless loop */
@@ -298,41 +300,11 @@
 .ticker-list li {
     display: inline-flex;
     align-items: center;
-    gap: 8px;                /* reduced spacing between icon and text */
     padding: 0 10px;         /* smaller padding between items */
     font-weight: 500;
     text-transform: none;    /* normal case, more readable */
     letter-spacing: 0.5px;   /* slightly tighter */
     font-size: 0.85rem;      /* smaller font */
-}
-
-/* Add icons before each ticker item */
-.ticker-list li::before {
-    font-family: 'Font Awesome 5 Free';
-    font-weight: 900;
-    font-size: 1rem;          /* smaller icons */
-    color: var(--gold-accent);
-}
-
-/* Icon for "Admissions are open" */
-.ticker-list li:nth-child(1)::before {
-    content: '\f19d'; /* fa-graduation-cap */
-    color: rgba(230, 84, 33);
-}
-
-/* Icon for "Open House" */
-.ticker-list li:nth-child(2)::before {
-    content: '\f015'; /* fa-home */
-}
-
-/* Icon for "New STEM Lab" */
-.ticker-list li:nth-child(3)::before {
-    content: '\f0c3'; /* fa-flask */
-}
-
-/* Icon for "Summer Camp" */
-.ticker-list li:nth-child(4)::before {
-    content: '\f185'; /* fa-sun */
 }
 
 /* Highlight first ticker item in orange */

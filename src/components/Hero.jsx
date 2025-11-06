@@ -68,7 +68,7 @@ function Hero({ shouldPlay, startAnimations }) {
           muted 
           loop 
           playsInline
-          poster="/images/school-campus.png"
+          poster="/images/school-name.png"
           aria-label="Video tour of Navodaya High School campus"
           title="School Tour Video"
         >
