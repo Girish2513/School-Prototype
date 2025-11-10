@@ -38,7 +38,7 @@ const HeroStats = ({ startAnimations }) => {
   return (
     <div className="hero-stats">
       <StatItem end={120} label="Staff" startAnimations={startAnimations} />
-      <StatItem end={2700} label="Students" startAnimations={startAnimations} />
+      <StatItem end={2800} label="Students" startAnimations={startAnimations} />
       <StatItem end={36} label="Years of Experience" startAnimations={startAnimations} />
     </div>
   );
