@@ -1,0 +1,11 @@
+[
+  {
+    "origin": ["*"],
+    "method": ["GET", "POST", "PUT", "DELETE", "HEAD"],
+    "maxAgeSeconds": 3600,
+    "preflightContinue": false,
+    "credentials": true,
+    "responseHeader": ["Content-Type", "Authorization"]
+
+  }
+]

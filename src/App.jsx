@@ -317,7 +317,49 @@ function App() {
     window.addEventListener('popstate', onLocationChange);
     return () => window.removeEventListener('popstate', onLocationChange);
   }, []);
+  // --- Handle Login Redirects and Routing ---
+  // Redirect unauthenticated users trying to access /admin
+  useEffect(() => {
+    if (path === '/admin') {
+      const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+      if (!isLoggedIn) {
+        window.location.href = '/login';
+      }
+    }
+  }, [path]);
 
+
+  // --- Routing Logic ---
+
+  // If the path is '/admin', render Admin page (only if logged in)
+  if (path === '/admin') {
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+
+    if (!isLoggedIn) {
+      return null; // Prevent rendering before redirect
+    }
+
+    // Reset body styles for admin
+    document.body.className = '';
+    document.body.style.overflow = 'auto';
+
+    return (
+      <AdminPage
+        tickerItems={tickerItems}
+        setTickerItems={setTickerItems}
+        popupImages={popupImages}
+        setPopupImages={setPopupImages}
+        onReset={handleResetToDefaults}
+      />
+    );
+  }
+
+  // If the path is '/login', render Login page
+  if (path === '/login') {
+    document.body.className = '';
+    document.body.style.overflow = 'auto';
+    return <LoginPage onLoginSuccess={() => (window.location.href = '/admin')} />;
+  }
   // This effect shows the popup banner after a 3-second delay, but only on the home page.
   useEffect(() => {
     if (path === '/') {

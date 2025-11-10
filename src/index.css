@@ -324,6 +324,7 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 1.2rem; /* Match the paragraph font size */
     line-height: 1.6; /* Match the line height */
     color: var(--dark-brown); /* Use dark brown for the paragraph text */
+    text-align: center; /* Center the paragraph text */
 }
 
 .vertical-divider {

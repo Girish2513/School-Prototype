@@ -1,22 +1,22 @@
 // Import React hooks for state management and side effects
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 // Import CSS styles for the AdminPage component
 import './AdminPage.css';
+// Import Firebase database functions
+// import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "firebase/storage";
+import { db } from "./firebase";
+import { ref, set, onValue } from "firebase/database";
+
 // Import custom icon components for theme toggle
 import { SunIcon } from './components/SunIcon'; // Icon for light mode
 import { MoonIcon } from './components/MoonIcon'; // Icon for dark mode
 
 // Main AdminPage component for managing site content
-// Props: tickerItems (array), setTickerItems (function), popupImages (array), setPopupImages (function), onReset (function)
 function AdminPage({ tickerItems, setTickerItems, popupImages, setPopupImages, onReset }) {
   // State for theme toggle (dark/light mode)
   const [isDarkMode, setDarkMode] = useState(false); // Boolean to track current theme
   // State for save operation loading indicator
   const [isSaving, setSaving] = useState(false); // Shows saving spinner when true
-  // Ref for hidden file input used for banner replacement
-  const fileInputRef = useRef(null); // Reference to file input element
-  // State to track which banner is being replaced
-  const [replacingBannerId, setReplacingBannerId] = useState(null); // ID of banner being replaced
   // State for drag-and-drop visual feedback
   const [isDraggingOver, setIsDraggingOver] = useState(false); // True when dragging over upload zone
 
@@ -26,36 +26,58 @@ function AdminPage({ tickerItems, setTickerItems, popupImages, setPopupImages, o
     popupImages.map((url, i) => ({ id: i, name: url.split('/').pop(), preview: url }))
   );
 
-  // State for tracking last update timestamps for different sections
   const [lastUpdated, setLastUpdated] = useState({
-    ticker: new Date(), // Last time ticker items were updated
-    banners: new Date(), // Last time banner images were updated
+    ticker: new Date(),
+    banners: new Date(),
   });
 
-  // Effect to apply theme to document body when dark mode changes
+  // Apply dark/light mode
   useEffect(() => {
-    document.body.dataset.theme = isDarkMode ? 'dark' : 'light'; // Set data attribute for CSS theming
+    document.body.dataset.theme = isDarkMode ? 'dark' : 'light';
   }, [isDarkMode]);
+
+  // Automatically log out after a period of inactivity when the tab is hidden.
+  useEffect(() => {
+    let logoutTimer; // Timer ID
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'hidden') {
+        // Set a timer to log out after 2 minutes (120,000 ms)
+        logoutTimer = setTimeout(() => {
+          console.log('Logging out due to inactivity.');
+          handleLogout();
+        }, 120000); // 2 minutes
+      } else {
+        // If the tab becomes visible again, clear the timer
+        clearTimeout(logoutTimer);
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    // Cleanup on component unmount
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      clearTimeout(logoutTimer); // Also clear the timer on unmount
+    };
+  }, []);
 
   // --- HANDLERS ---
 
-  // Handler to update a specific ticker item text
-  const handleTickerChange = (index, newText) => {
-    setTickerItems(items => items.map((item, i) => (i === index ? newText : item))); // Update item at index
-  };
+  const handleTickerChange = useCallback((index, newText) => {
+    setTickerItems(items => items.map((item, i) => (i === index ? newText : item)));
+  }, []);
 
-  // Handler to add a new ticker item
-  const addTickerItem = () => {
-    setTickerItems(items => [...items, 'New item...']); // Append default text to ticker items
-  };
+  const addTickerItem = useCallback(() => {
+    setTickerItems(items => [...items, 'New item...']);
+  }, []);
 
-  // Handler to remove a ticker item by index
-  const removeTickerItem = (index) => {
-    setTickerItems(items => items.filter((_, i) => i !== index)); // Filter out item at index
-  };
+  const removeTickerItem = useCallback((index) => {
+    setTickerItems(items => items.filter((_, i) => i !== index));
+  }, []);
 
-  // Helper function to read a file as a Base64 Data URL
-  const readFileAsDataURL = (file) => {
+  // Read file as base64
+  const readFileAsDataURL = (file) => { // Not wrapped in useCallback as it doesn't depend on component state
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = () => resolve(reader.result);
@@ -64,119 +86,100 @@ function AdminPage({ tickerItems, setTickerItems, popupImages, setPopupImages, o
     });
   };
 
-  // Helper function to process an uploaded file and create a banner object
-  const processUploadedFile = async (file) => {
+  const processUploadedFile = useCallback(async (file) => {
     if (!file || !file.type.startsWith('image/')) return;
+
+    const MAX_FILE_SIZE_MB = 2;
+    if (file.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
+      alert(`File size exceeds the maximum limit of ${MAX_FILE_SIZE_MB}MB.`);
+      return;
+    }
     try {
+
       const dataUrl = await readFileAsDataURL(file);
       const newBanner = {
-        id: Date.now(), // Unique ID based on timestamp
-        name: file.name, // Original file name
-        preview: dataUrl, // Use the permanent Data URL for preview
+        id: Date.now(),
+        name: file.name,
+        preview: dataUrl,
       };
-      setBanners((b) => [...b, newBanner]); // Add new banner to banners array
+      setBanners((b) => [...b, newBanner]);
     } catch (error) {
       console.error('Error reading file:', error);
-      alert('Error processing file. Please try again.');
+      alert(`Error processing file: ${error.message || 'Please try again.'}`);
     }
-  };
+  }, []);
 
-  // Handler for file input change (regular upload)
-  const handleBannerUpload = (event) => {
-    const file = event.target.files[0]; // Get first selected file
-    processUploadedFile(file); // Process the file
-  };
+  const handleBannerUpload = useCallback((event) => {
+    const file = event.target.files[0];
+    processUploadedFile(file);
+  }, [processUploadedFile]);
 
-  // Handler for drag over event (prevent default, show visual feedback)
-  const handleDragOver = (event) => {
-    event.preventDefault(); // Prevent default browser behavior
-    setIsDraggingOver(true); // Set dragging state for visual feedback
-  };
+  const handleDragOver = useCallback((event) => {
+    event.preventDefault();
+    setIsDraggingOver(true);
+  }, []);
 
-  // Handler for drag leave event (hide visual feedback)
-  const handleDragLeave = () => {
-    setIsDraggingOver(false); // Reset dragging state
-  };
+  const handleDragLeave = useCallback(() => {
+    setIsDraggingOver(false);
+  }, []);
 
-  // Handler for drop event (process dropped file)
-  const handleDrop = (event) => {
-    event.preventDefault(); // Prevent default browser behavior
-    setIsDraggingOver(false); // Reset dragging state
-    const file = event.dataTransfer.files[0]; // Get first dropped file
-    processUploadedFile(file); // Process the file
-  };
+  const handleDrop = useCallback((event) => {
+    event.preventDefault();
+    setIsDraggingOver(false);
+    const file = event.dataTransfer.files[0];
+    processUploadedFile(file);
+  }, [processUploadedFile]);
 
-  // Handler to remove a banner by ID
-  const removeBanner = (id) => {
+  const removeBanner = useCallback((id) => {
     const updatedBanners = banners.filter(banner => banner.id !== id);
-    setBanners(updatedBanners); // Remove from local banners state
-    // Immediately update the parent state to reflect the removal
+    setBanners(updatedBanners);
     setPopupImages(updatedBanners.map(b => b.preview));
-  };
+  }, [banners, setPopupImages]);
 
-  // Handler for replace button click (trigger hidden file input)
-  const handleReplaceClick = (bannerId) => {
-    setReplacingBannerId(bannerId); // Set which banner is being replaced
-    if (fileInputRef.current) {
-      fileInputRef.current.click(); // Trigger file input click
-    }
-  };
+  // ✅ Save both tickerItems and banners directly to Firebase (no storage)
+  const handleSaveChanges = useCallback(async () => {
+    setSaving(true);
+    try {
+      console.log("Saving data to Firebase (no Storage)...");
 
-  // Handler for banner replacement via file input
-  const handleBannerReplace = async (event) => {
-    const file = event.target.files[0]; // Get selected file
-    if (file && replacingBannerId !== null) {
-      try {
-        const dataUrl = await readFileAsDataURL(file);
-        setBanners((currentBanners) =>
-          currentBanners.map((banner) =>
-            banner.id === replacingBannerId
-              ? { ...banner, name: file.name, preview: dataUrl } // Update banner with new file
-              : banner
-          )
-        );
-      } catch (error) {
-        console.error('Error replacing file:', error);
-        alert('Error replacing file. Please try again.');
-      }
-      setReplacingBannerId(null); // Reset replacement state
-      event.target.value = null; // Clear input to allow re-selecting same file
-    }
-  };
+      // Extract base64 previews from current banners
+      const base64Images = banners.map((b) => b.preview);
 
-  // Handler for saving all changes
-  const handleSaveChanges = () => {
-    setSaving(true); // Show loading state
-    console.log("Saving data...", { tickerItems, banners }); // Debug log
+      // Save ticker items and base64 images directly to Realtime Database
+      await set(ref(db, "ticker/"), { items: tickerItems });
+      await set(ref(db, "popup/"), { images: base64Images });
 
-    setTimeout(() => {
-      // Update the main app's state for popup images
-      setPopupImages(banners.map(b => b.preview)); // Convert banners to URL array
-      setSaving(false); // Hide loading state
-
-      alert('✅ Changes saved successfully!'); // Success notification
+      // Update local state
+      setPopupImages(base64Images);
       const now = new Date();
-      setLastUpdated({ ticker: now, banners: now }); // Update timestamps
-    }, 1000); // Simulate save delay
-  };
+      setLastUpdated({ ticker: now, banners: now });
 
-  // Handler for admin logout
+      alert("✅ Changes saved successfully!");
+    } catch (error) {
+      console.error("Error saving to Firebase:", error);
+      alert(`❌ Failed to save changes. ${error.message || 'Check console for details.'}`);
+    } finally {
+      setSaving(false);
+    }
+  }, [banners, tickerItems, setPopupImages]);
+
+
   const handleLogout = () => {
-    localStorage.removeItem('isLoggedIn'); // Clear login state
-    window.location.href = '/login'; // Redirect to login page
+    localStorage.removeItem('isLoggedIn');
+    window.location.href = '/login';
   };
 
-  // Utility function to format date for display
   const formatDate = (date) => {
     return date.toLocaleDateString('en-US', {
-      year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
-    }); // Format as "Jan 1, 2023, 12:00 PM"
+      year: 'numeric', month: 'short', day: 'numeric',
+      hour: '2-digit', minute: '2-digit'
+    });
   };
 
   // --- RENDER ---
   return (
     <div className="admin-container">
-      {/* Admin panel header with logo, title, theme toggle, and logout */}
+      {/* Admin panel header */}
       <header className="admin-header">
         <div className="header-left">
           <img src="/images/logo.png" alt="School Logo" className="logo" />
@@ -190,18 +193,16 @@ function AdminPage({ tickerItems, setTickerItems, popupImages, setPopupImages, o
         </div>
       </header>
 
-      {/* Main content area of the admin panel */}
       <main className="admin-main">
         <h1 className="admin-main-title">Welcome, Admin!</h1>
 
-        {/* Section for managing news ticker items */}
+        {/* Ticker Items Section */}
         <section className="section-card">
           <div className="section-header">
             <h2>News Ticker Items</h2>
             <p className="last-updated">Last updated on {formatDate(lastUpdated.ticker)}</p>
           </div>
 
-          {/* List of editable ticker items */}
           <div className="item-list">
             {tickerItems.map((item, index) => (
               <div key={index} className="ticker-item">
@@ -218,7 +219,6 @@ function AdminPage({ tickerItems, setTickerItems, popupImages, setPopupImages, o
 
           <button onClick={addTickerItem} className="btn-add">+ Add Ticker Item</button>
 
-          {/* Preview of how ticker will look */}
           <div className="ticker-preview-container">
             <h4>Ticker Preview</h4>
             <div className="ticker-preview">
@@ -230,28 +230,25 @@ function AdminPage({ tickerItems, setTickerItems, popupImages, setPopupImages, o
           </div>
         </section>
 
-        {/* Section for managing popup banner images */}
+        {/* Popup Banner Section */}
         <section className="section-card">
           <div className="section-header">
             <h2>Popup Banner Images</h2>
             <p className="last-updated">Last updated on {formatDate(lastUpdated.banners)}</p>
           </div>
 
-          {/* List of uploaded banner images with actions */}
           <div className="banner-list">
             {banners.map((banner) => (
               <div key={banner.id} className="banner-item">
                 <img src={banner.preview} alt={banner.name} className="banner-thumbnail" />
                 <p className="banner-name">{banner.name}</p>
                 <div className="banner-actions">
-                  <button onClick={() => handleReplaceClick(banner.id)} className="btn-replace">Replace</button>
                   <button onClick={() => removeBanner(banner.id)} className="btn-remove">Remove</button>
                 </div>
               </div>
             ))}
           </div>
 
-          {/* Drag-and-drop upload zone for new banners */}
           <div
             className={`upload-zone ${isDraggingOver ? 'dragging-over' : ''}`}
             onDragOver={handleDragOver}
@@ -266,15 +263,7 @@ function AdminPage({ tickerItems, setTickerItems, popupImages, setPopupImages, o
           </div>
         </section>
 
-        {/* Hidden file input for banner replacement functionality */}
-        <input
-          type="file"
-          ref={fileInputRef}
-          onChange={handleBannerReplace}
-          style={{ display: 'none' }}
-          accept="image/*" />
-
-        {/* Section with save and reset buttons */}
+        {/* Save + Reset Buttons */}
         <div className="save-section">
           <button className="save-button" onClick={handleSaveChanges} disabled={isSaving}>
             {isSaving ? 'Saving...' : 'Save All Changes'}

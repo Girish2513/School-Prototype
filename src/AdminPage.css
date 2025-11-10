@@ -199,7 +199,7 @@ body[data-theme='light'] .school-name {
 .upload-zone small, label.upload-zone small { color: var(--text-secondary-color); }
 
 /* --- Buttons & Save Section --- */
-.btn-remove, .btn-add, .btn-replace, .save-button {
+.btn-remove, .btn-add, .save-button {
   padding: 0.6rem 1.2rem;
   border: none;
   border-radius: 6px;
@@ -208,7 +208,7 @@ body[data-theme='light'] .school-name {
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.btn-remove:hover, .btn-add:hover, .btn-replace:hover, .save-button:hover:not(:disabled) {
+.btn-remove:hover, .btn-add:hover, .save-button:hover:not(:disabled) {
   transform: scale(1.05);
 }
 
@@ -216,16 +216,10 @@ body[data-theme='light'] .school-name {
   background-color: var(--admin-red);
   color: white;
 }
-.add-btn {
+.btn-add {
   background-color: var(--admin-green);
   color: white;
   margin-top: 10px;
-}
-.btn-replace {
-  background-color: var(--admin-primary);
-  color: white;
-  font-size: 0.8rem;
-  padding: 0.4rem 0.8rem;
 }
 
 .save-section {
