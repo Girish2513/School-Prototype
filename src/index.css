@@ -1148,3 +1148,21 @@ body.popup-open .location-icon {
 .btn-5:hover {
   color: #fff;
 }
+
+
+.skip-to-main-content {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #000;
+  color: #fff;
+  padding: 8px;
+  z-index: 1000;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: top 0.3s;
+}
+
+.skip-to-main-content:focus {
+  top: 0;
+}

@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from 'react';
 // Import CSS styles for the AdminPage component
 import './AdminPage.css';
 // Import Firebase database functions
-// import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "firebase/storage";
+import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "firebase/storage";
 import { db } from "./firebase";
 import { ref, set, onValue } from "firebase/database";
 
@@ -136,21 +136,42 @@ function AdminPage({ tickerItems, setTickerItems, popupImages, setPopupImages, o
     setPopupImages(updatedBanners.map(b => b.preview));
   }, [banners, setPopupImages]);
 
-  // ✅ Save both tickerItems and banners directly to Firebase (no storage)
+  // ✅ Save both tickerItems and banners to Firebase Storage + Database
   const handleSaveChanges = useCallback(async () => {
     setSaving(true);
     try {
-      console.log("Saving data to Firebase (no Storage)...");
+      console.log("Saving data to Firebase Storage + Database...");
 
-      // Extract base64 previews from current banners
-      const base64Images = banners.map((b) => b.preview);
+      const storage = getStorage();
 
-      // Save ticker items and base64 images directly to Realtime Database
+      // Upload new images and get download URLs
+      const uploadedImageURLs = await Promise.all(
+        banners.map(async (b, index) => {
+          if (b.preview.startsWith("data:image")) {
+            // Convert Base64 to Blob
+            const response = await fetch(b.preview);
+            const blob = await response.blob();
+
+            // Upload to Storage
+            const imgRef = storageRef(storage, `popup-banners/banner-${Date.now()}-${index}.png`);
+            await uploadBytes(imgRef, blob);
+
+            // Get public download URL
+            const downloadURL = await getDownloadURL(imgRef);
+            return downloadURL;
+          } else {
+            // If it's already a URL, skip re-upload
+            return b.preview;
+          }
+        })
+      );
+
+      // Save ticker items and new banner URLs to Realtime Database
       await set(ref(db, "ticker/"), { items: tickerItems });
-      await set(ref(db, "popup/"), { images: base64Images });
+      await set(ref(db, "popup/"), { images: uploadedImageURLs });
 
-      // Update local state
-      setPopupImages(base64Images);
+      // Update UI states
+      setPopupImages(uploadedImageURLs);
       const now = new Date();
       setLastUpdated({ ticker: now, banners: now });
 
