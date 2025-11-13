@@ -94,18 +94,25 @@ function AdminPage({ tickerItems, setTickerItems, popupImages, setPopupImages, o
       alert(`File size exceeds the maximum limit of ${MAX_FILE_SIZE_MB}MB.`);
       return;
     }
-    try {
 
-      const dataUrl = await readFileAsDataURL(file);
+    try {
+      const storage = getStorage();
+      const filePath = `popup-banners/${Date.now()}-${file.name}`;
+      const fileRef = storageRef(storage, filePath);
+
+      await uploadBytes(fileRef, file);
+      const downloadURL = await getDownloadURL(fileRef);
+
       const newBanner = {
         id: Date.now(),
         name: file.name,
-        preview: dataUrl,
+        preview: downloadURL,  // <-- URL instead of base64
       };
-      setBanners((b) => [...b, newBanner]);
+
+      setBanners(banners => [...banners, newBanner]);
     } catch (error) {
-      console.error('Error reading file:', error);
-      alert(`Error processing file: ${error.message || 'Please try again.'}`);
+      console.error('Error uploading to Firebase Storage:', error);
+      alert('Upload failed! Check console for details.');
     }
   }, []);
 
@@ -136,39 +143,16 @@ function AdminPage({ tickerItems, setTickerItems, popupImages, setPopupImages, o
     setPopupImages(updatedBanners.map(b => b.preview));
   }, [banners, setPopupImages]);
 
-  // ✅ Save both tickerItems and banners to Firebase Storage + Database
+  // ✅ Save both tickerItems and banners to Firebase Realtime Database
   const handleSaveChanges = useCallback(async () => {
     setSaving(true);
     try {
-      console.log("Saving data to Firebase Storage + Database...");
-
-      const storage = getStorage();
-
-      // Upload new images and get download URLs
-      const uploadedImageURLs = await Promise.all(
-        banners.map(async (b, index) => {
-          if (b.preview.startsWith("data:image")) {
-            // Convert Base64 to Blob
-            const response = await fetch(b.preview);
-            const blob = await response.blob();
-
-            // Upload to Storage
-            const imgRef = storageRef(storage, `popup-banners/banner-${Date.now()}-${index}.png`);
-            await uploadBytes(imgRef, blob);
-
-            // Get public download URL
-            const downloadURL = await getDownloadURL(imgRef);
-            return downloadURL;
-          } else {
-            // If it's already a URL, skip re-upload
-            return b.preview;
-          }
-        })
-      );
+      console.log("Saving data to Firebase Realtime Database...");
+      const uploadedImageURLs = banners.map(b => b.preview);
 
       // Save ticker items and new banner URLs to Realtime Database
-      await set(ref(db, "ticker/"), { items: tickerItems });
-      await set(ref(db, "popup/"), { images: uploadedImageURLs });
+      await set(ref(db, "ticker/items"), tickerItems);
+      await set(ref(db, "popup/images"), uploadedImageURLs);
 
       // Update UI states
       setPopupImages(uploadedImageURLs);

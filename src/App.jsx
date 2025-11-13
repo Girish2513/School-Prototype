@@ -5,6 +5,10 @@ import { useScroll } from './hooks/useScroll';
 // Import a custom hook that uses the Intersection Observer API to detect when an element enters the viewport.
 import { useSectionInView } from './hooks/useSectionInView';
 
+import { getDatabase, ref, onValue } from "firebase/database";
+
+
+
 // --- Component Imports ---
 // The Header component, which typically contains the site logo, navigation, and other top-level controls.
 import Header from './components/Header';
@@ -150,31 +154,46 @@ function App() {
   // `path` state holds the current URL pathname.
   const [path, setPath] = useState(window.location.pathname);
 
-  /**
-   * A helper function to load state from `localStorage`.
-   * It tries to parse the stored JSON, but falls back to a `defaultValue` if parsing fails or the key doesn't exist.
-   * @param {string} key - The key to retrieve from localStorage.
-   * @param {*} defaultValue - The default value to use if the key is not found or parsing fails.
-   * @returns {*} The loaded state or the default value.
-   */
-  const loadState = (key, defaultValue) => {
-    try {
-      // Attempt to get the item from localStorage.
-      const saved = localStorage.getItem(key);
-      // If it exists, parse it as JSON; otherwise, return the default value.
-      return saved ? JSON.parse(saved) : defaultValue;
-    } catch (error) {
-      // If there's an error (e.g., invalid JSON), log it and return the default value.
-      console.error(`Error reading from localStorage for key "${key}":`, error);
-      return defaultValue;
-    }
-  };
-
   // `tickerItems`: State for the header announcements. It's initialized from localStorage or with default values.
-  const [tickerItems, setTickerItems] = useState(() => loadState('tickerItems', DEFAULT_TICKER_ITEMS));
+  const [tickerItems, setTickerItems] = useState(() => {
+    const saved = localStorage.getItem('tickerItems');
+    return saved ? JSON.parse(saved) : DEFAULT_TICKER_ITEMS;
+  });
 
   // `popupImages`: State for the popup banner images. Also initialized from localStorage or defaults.
-  const [popupImages, setPopupImages] = useState(() => loadState('popupImages', DEFAULT_POPUP_IMAGES));
+  const [popupImages, setPopupImages] = useState(() => {
+    const saved = localStorage.getItem('popupImages');
+    return saved ? JSON.parse(saved) : DEFAULT_POPUP_IMAGES;
+  });
+
+  // This effect fetches data from Firebase Realtime Database in real-time.
+  useEffect(() => {
+    const db = getDatabase();
+    const tickerRef = ref(db, 'ticker/items');
+    const popupRef = ref(db, 'popup/images');
+
+    const unsubTicker = onValue(tickerRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        setTickerItems(data);
+        localStorage.setItem('tickerItems', JSON.stringify(data)); // Fallback
+      }
+    });
+
+    const unsubPopup = onValue(popupRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        setPopupImages(data);
+        localStorage.setItem('popupImages', JSON.stringify(data)); // Fallback
+      }
+    });
+
+    // Cleanup listeners on unmount
+    return () => {
+      unsubTicker();
+      unsubPopup();
+    };
+  }, []);
 
   // Custom hook `useScroll` to detect if the user has scrolled more than 50 pixels down the page.
   const { isScrolled } = useScroll(50);
@@ -209,17 +228,6 @@ function App() {
     // Cleanup function: clear the timer if the component unmounts before it fires.
     return () => clearTimeout(timer);
   }, []);
-
-  // This effect persists the `tickerItems` state to localStorage whenever it changes.
-  useEffect(() => {
-    localStorage.setItem('tickerItems', JSON.stringify(tickerItems));
-  }, [tickerItems]);
-
-  // This effect persists the `popupImages` state to localStorage whenever it changes.
-  // This state is typically updated via the Admin Panel.
-  useEffect(() => {
-    localStorage.setItem('popupImages', JSON.stringify(popupImages));
-  }, [popupImages]);
 
   /**
    * A handler function for the "Reset to Defaults" button in the Admin Panel.
