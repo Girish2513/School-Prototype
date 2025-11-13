@@ -2,8 +2,6 @@
 import { useState, useEffect, useReducer } from 'react';
 // Import a custom hook to track the window's scroll position.
 import { useScroll } from './hooks/useScroll';
-// Import Helmet for managing document head metadata for SEO.
-import { Helmet } from 'react-helmet-async';
 // Import a custom hook that uses the Intersection Observer API to detect when an element enters the viewport.
 import { useSectionInView } from './hooks/useSectionInView';
 
@@ -111,84 +109,6 @@ const TestimonialsSection = ({ title, description, testimonials, className, id }
         </div>
       </div>
     </section>
-  );
-};
-
-/**
- * A dedicated SEO component to manage all head metadata using React Helmet.
- * This includes title, meta tags, canonical links, Open Graph, Twitter Cards,
- * and a JSON-LD script for rich results.
- */
-const SeoHelmet = () => {
-  const siteUrl = "https://www.navodayahighschool.online";
-  const ogImageUrl = `${siteUrl}/images/og-image.jpg`;
-  const title = "Navodaya High School, Srinivas Nagar, Jagathgirigutta, Hyderabad | Inspiring Minds, Shaping Futures";
-  const description = "Navodaya High School, established in 1989 at Srinivas Nagar, Jagathgirigutta, Hyderabad, provides quality education with 36+ years of excellence, 120+ dedicated faculty, and 2,800+ successful students.";
-
-  // JSON-LD Structured Data for Google Rich Results
-  const schoolSchema = {
-    "@context": "https://schema.org",
-    "@type": "School",
-    "name": "Navodaya High School",
-    "url": siteUrl,
-    "foundingDate": "1989",
-    "slogan": "Inspiring Minds, Shaping Futures.",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "45-97/1, Srinivas Nagar, Jagathgirigutta",
-      "addressLocality": "Hyderabad",
-      "addressRegion": "Telangana",
-      "postalCode": "500037",
-      "addressCountry": "IN"
-    },
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "telephone": "+91-8121153138",
-      "email": "Schoolnavodaya@gmail.com",
-      "contactType": "customer support"
-    },
-    "sameAs": [
-      "https://www.facebook.com/groups/navodayahs",
-      "https://www.youtube.com/@navodayaschool1989"
-    ],
-    "description": "Established in 1989, Navodaya High School in Srinivas Nagar, Jagathgirigutta, Hyderabad is a leading educational institution providing holistic learning with modern facilities, excellent teachers, and strong academic performance."
-  };
-
-  return (
-    <Helmet>
-      {/* --- Primary SEO Meta Tags --- */}
-      <title>{title}</title>
-      <meta name="description" content={description} />
-      <meta name="keywords" content="Navodaya High School Hyderabad, Srinivas Nagar school, Jagathgirigutta education, SSC school admissions Hyderabad, Telangana state board schools, holistic learning Hyderabad, top schools near Kukatpally" />
-      <meta name="robots" content="index, follow" />
-      <link rel="canonical" href={siteUrl} />
-
-      {/* --- Open Graph / Facebook / LinkedIn --- */}
-      <meta property="og:title" content="Navodaya High School | Srinivas Nagar, Jagathgirigutta, Hyderabad" />
-      <meta property="og:description" content="Recognized among Top 10 Emerging Schools (2024), Navodaya High School offers 36+ years of holistic education with 120+ faculty members and 2,800+ successful students." />
-      <meta property="og:image" content={ogImageUrl} />
-      <meta property="og:url" content={siteUrl} />
-      <meta property="og:type" content="website" />
-
-      {/* --- Twitter Card --- */}
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content="Navodaya High School, Srinivas Nagar, Jagathgirigutta, Hyderabad" />
-      <meta name="twitter:description" content="Providing holistic education since 1989 — 120+ teachers, 2,800+ alumni, and 36+ years of academic excellence in Hyderabad." />
-      <meta name="twitter:image" content={ogImageUrl} />
-
-      {/* --- JSON-LD Structured Data for Rich Results --- */}
-      <script type="application/ld+json">
-        {JSON.stringify(schoolSchema)}
-      </script>
-
-      {/* --- Add descriptive ALT text for images --- */}
-      {/* 
-        Note: ALT text should be added directly to <img> tags. 
-        For example, the location icon image should be:
-        <img src="/images/Google_Maps_icon_(2020).svg.png" alt="Navodaya High School Location on Google Maps" />
-      */}
-
-    </Helmet>
   );
 };
 
@@ -580,16 +500,6 @@ function App() {
 
   return (
     <div className={wrapperClassName}>
-      {/* Add SEO Helmet to manage all head metadata */}
-      <a
-        href="#main-content"
-        className="skip-to-main-content"
-        aria-label="Skip to main content"
-      >
-        Skip to main content
-      </a>
-      <SeoHelmet />
-
       {/* Render the PopupBanner if `showPopup` is true. */}
       {showPopup && <PopupBanner imageUrls={popupImages} onClose={() => setShowPopup(false)} />}
 
@@ -605,7 +515,7 @@ function App() {
       />
 
       {/* The main content area of the home page. */}
-      <main id="main-content" role="main" aria-label="Main content">
+      <main role="main" aria-label="Main content">
         {/* The Hero section. The video playback is paused if the popup is showing. */}
         <div className="hero-section relative">
           <Hero shouldPlay={!showPopup} />
@@ -666,7 +576,7 @@ function App() {
         className={`location-icon ${showLocation ? 'visible' : 'hidden'}`}
         aria-label="View school location on Google Maps"
       >
-        <img src="/images/Google_Maps_icon_(2020).svg.png" alt="Navodaya High School Location on Google Maps" />
+        <img src="/images/Google_Maps_icon_(2020).svg.png" alt="Location" />
       </a>
     </div>
   );
