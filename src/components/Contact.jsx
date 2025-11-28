@@ -57,7 +57,7 @@ function Contact() {
 
     setIsSubmitting(true);
     
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbzitlbnOLEo0hyCpVW0ilqMbuXsBGHsXKYXHDRzNgYj28Nl3vnqerFx3AJCAitESSvb/exec';
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbx0Jk0q-9T5edB7-LMCExtICYGGLZnfFiW7x26wWHtm2yZ51v6XBPEA1AHD0GfyDwvC/exec';
     
     try {
       // We use 'no-cors' mode to prevent CORS errors from Google's redirect response.
