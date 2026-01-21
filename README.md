@@ -92,12 +92,9 @@ Example for GitHub Pages:
 
 Please adhere to ESLint rules and add tests where applicable. All contributions are welcome!
 
-## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ## Contact
-For questions or issues, open a GitHub issue or contact the maintainer at [your-email@example.com].
+For questions or issues, open a GitHub issue or contact the maintainer at [girishsaana2513@gmail.com].
 
 ---
 
-Built with ❤️ for Navodaya High School. Last updated: [Current Date].
+Built with ❤️ for Navodaya High School. Last updated: [Jan-21-2026].
