@@ -70,9 +70,9 @@ function Footer({ isHomePage = true }) {
           <ul>
             {footerData.quickLinks.links.map((link) => (
               <li key={link.href}>
-                <a 
-                  href={link.href} 
-                  onClick={handleFooterLinkClick} 
+                <a
+                  href={link.href}
+                  onClick={handleFooterLinkClick}
                   aria-label={`Navigate to ${link.text}`}
                 >{link.text}</a>
               </li>
@@ -81,7 +81,7 @@ function Footer({ isHomePage = true }) {
         </div>
       </div>
       {/* Footer bottom: Copyright notice */}
-      <div 
+      <div
         className="footer-bottom"
         style={{
           display: 'flex',
@@ -93,7 +93,7 @@ function Footer({ isHomePage = true }) {
         <p>
           © Designed by{' '}
           <a
-            href="https://www.webaura.com"
+            href="https://www.instagram.com/itswebaura?igsh=MWxjdWJnYWYxdGdzYg=="
             target="_blank"
             rel="noopener noreferrer"
             style={{ textDecoration: 'none' }}
