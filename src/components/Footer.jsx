@@ -90,17 +90,22 @@ function Footer({ isHomePage = true }) {
           paddingRight: '3rem'
         }}>
         <p>{footerData.copyright}</p>
-        <p>
-          © Designed by{' '}
-          <a
-            href="https://www.instagram.com/itswebaura?igsh=MWxjdWJnYWYxdGdzYg=="
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ textDecoration: 'none' }}
-          >
-            <span style={{ color: 'tomato' }}>WebAura</span>
-          </a>
-        </p>
+        <div style={{ textAlign: 'right' }}>
+          <p>
+            © Designed by{' '}
+            <a
+              href="https://www.instagram.com/itswebaura?igsh=MWxjdWJnYWYxdGdzYg=="
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ textDecoration: 'none' }}
+            >
+              <span style={{ color: 'tomato' }}>WebAura</span>
+            </a>
+          </p>
+          <p style={{ fontSize: '0.8rem', marginTop: '0.2rem', color: '#888' }}>
+            S.Girish • G.Druvath Kumar • R.Venu Kumar
+          </p>
+        </div>
       </div>
     </footer>
   );
