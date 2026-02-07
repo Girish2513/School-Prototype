@@ -103,7 +103,15 @@ function Footer({ isHomePage = true }) {
             </a>
           </p>
           <p style={{ fontSize: '0.8rem', marginTop: '0.2rem', color: '#888' }}>
-            S.Girish • G.Druvath Kumar • R.Venu Kumar
+            <a
+              href="https://girish-saana.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ textDecoration: 'none', color: 'inherit' }}
+            >
+              Girish Saana
+            </a>
+            {' • '}G.Druvath Kumar{' • '}R.Venu Kumar
           </p>
         </div>
       </div>
