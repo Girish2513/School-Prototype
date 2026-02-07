@@ -1,7 +1,13 @@
-// File content updated to change style on line 111
+import React from 'react';
 
-// Other existing content...
+const Footer = () => {
+    return (
+        <footer>
+            <div>
+                <a href="https://github.com/Girish2513" style={{ textDecoration: 'underline', color: 'inherit' }}>Girish Saana</a>
+            </div>
+        </footer>
+    );
+};
 
-style={{ textDecoration: 'underline', color: 'inherit' }}
-
-// Other existing content...
+export default Footer;
