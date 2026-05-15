@@ -1,18 +1,22 @@
 import { initializeApp, getApp, getApps } from "firebase/app";
 import { getDatabase } from "firebase/database";
+import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDlwNgEWhrJJcOIhCzL8Wd5ynsxXCiFx4k",
-  authDomain: "navodaya-admin.firebaseapp.com",
-  databaseURL: "https://navodaya-admin-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "navodaya-admin",
-  storageBucket: "navodaya-admin.firebasestorage.app",
-  messagingSenderId: "8561057767",
-  appId: "1:8561057767:web:52218e79b632c1e1be2742"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
-// ✅ Prevent “Firebase App named '[DEFAULT]' already exists” error
+// Prevent "Firebase App named '[DEFAULT]' already exists" error
 const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
 
-// ✅ Connect Realtime Database properly
+// Connect Realtime Database properly
 export const db = getDatabase(app);
+
+// Firebase Authentication
+export const auth = getAuth(app);

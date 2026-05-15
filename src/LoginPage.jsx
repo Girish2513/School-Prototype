@@ -1,9 +1,8 @@
 /**
  * LoginPage component - Admin authentication page.
  * Provides secure login form for school administrators.
+ * Uses Firebase Authentication for secure email/password sign-in.
  * Features form validation, loading states, and auto-redirect.
- * Security: Hardcoded credentials for prototype (replace with real auth).
- * Performance: Minimal state management, localStorage for session.
  * Accessibility: Proper labels, focus management, error announcements.
  * Responsive: Centered layout adapts to screen size.
  *
@@ -11,40 +10,39 @@
  * @param {function} props.onLoginSuccess - Callback for successful login.
  * @returns {JSX.Element} The login page component.
  */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from './firebase';
 import './LoginPage.css'; // Login page styles
 
 function LoginPage({ onLoginSuccess }) {
   // Form state management
-  const [username, setUsername] = useState(''); // Username input
+  const [email, setEmail] = useState(''); // Email input
   const [password, setPassword] = useState(''); // Password input
   const [error, setError] = useState(''); // Error message
   const [isLoggingIn, setIsLoggingIn] = useState(false); // Loading state
 
-  // Auto-redirect if already logged in
-  useEffect(() => {
-    if (localStorage.getItem('isLoggedIn') === 'true') {
-      window.location.href = '/admin'; // Redirect to admin page
-    }
-  }, []);
-
   // Handle form submission
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault(); // Prevent default form submission
     setError(''); // Clear previous errors
     setIsLoggingIn(true); // Show loading state
 
-    // Simulate network delay for UX
-    setTimeout(() => {
-      // Hardcoded credentials for prototype - replace with real authentication
-      if (username === 'admin' && password === 'password123') {
-        localStorage.setItem('isLoggedIn', 'true'); // Store login state
-        onLoginSuccess(); // Trigger success callback
-      } else {
-        setError('Invalid username or password.'); // Show error
-        setIsLoggingIn(false); // Hide loading state
-      }
-    }, 1000); // 1 second delay
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      onLoginSuccess(); // Trigger success callback
+    } catch (err) {
+      // Map Firebase error codes to user-friendly messages
+      const errorMessages = {
+        'auth/invalid-credential': 'Invalid email or password.',
+        'auth/user-not-found': 'No account found with this email.',
+        'auth/wrong-password': 'Invalid email or password.',
+        'auth/too-many-requests': 'Too many failed attempts. Please try again later.',
+        'auth/network-request-failed': 'Network error. Please check your connection.',
+      };
+      setError(errorMessages[err.code] || 'Login failed. Please try again.');
+      setIsLoggingIn(false); // Hide loading state
+    }
   };
 
   // Render login form
@@ -62,16 +60,17 @@ function LoginPage({ onLoginSuccess }) {
 
         {/* Login form */}
         <form onSubmit={handleLogin}>
-          {/* Username input */}
+          {/* Email input */}
           <div className="input-group">
-            <label htmlFor="username">Username</label>
+            <label htmlFor="email">Email</label>
             <input
-              type="text"
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required // Required field
               autoFocus // Auto-focus on load
+              autoComplete="email"
             />
           </div>
 
@@ -84,6 +83,7 @@ function LoginPage({ onLoginSuccess }) {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required // Required field
+              autoComplete="current-password"
             />
           </div>
 

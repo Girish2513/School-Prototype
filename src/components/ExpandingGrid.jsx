@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import DOMPurify from 'dompurify';
 
@@ -27,9 +27,15 @@ function ExpandingGrid({ title, sections = [] }) {
     setIsTouchDevice(touchSupport);
   }, []);
 
+  // Sanitize HTML content using DOMPurify; memoized to avoid re-sanitizing on every render.
+  const sanitizedSections = useMemo(() => (sections || []).map((section) => ({
+    ...section,
+    sanitizedContent: DOMPurify.sanitize(section.content, { ALLOWED_TAGS: ['p', 'h3', 'blockquote', 'cite', 'strong', 'em'] })
+  })), [sections]);
+
   // Error handling: If no sections, render empty or fallback message for resilience.
   if (!sections || sections.length === 0) {
-    return ( // The class name here was correct, but I'm including it for context.
+    return (
       <section className="expanding-grid-section" aria-live="polite">
         <div className="expanding-grid-content-wrapper">
           <h2 className="section-title">{title}</h2>
@@ -63,13 +69,6 @@ function ExpandingGrid({ title, sections = [] }) {
     }
     setActiveIndex(activeIndex === index ? -1 : index);
   };
-
-  // Sanitize HTML content using DOMPurify to prevent XSS; done once per render for simplicity.
-  // For performance in large lists, memoize sanitized content.
-  const sanitizedSections = sections.map((section) => ({
-    ...section,
-    sanitizedContent: DOMPurify.sanitize(section.content, { ALLOWED_TAGS: ['p', 'h3', 'blockquote', 'cite', 'strong', 'em'] })
-  }));
 
   return (
     <div className="expanding-grid-section" aria-labelledby="grid-title">

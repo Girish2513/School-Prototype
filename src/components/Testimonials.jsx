@@ -26,9 +26,13 @@ export default function Testimonials() {
   ];
 
   // Effect to dynamically update blur and opacity based on card position
+  // Uses IntersectionObserver to only run the animation loop when the section is visible
   useEffect(() => {
+    let rafId = null;
+
     // Function to calculate and apply blur/opacity effects
     const updateBlur = () => {
+      if (!sectionRef.current) return;
       // Get section dimensions
       const sectionRect = sectionRef.current.getBoundingClientRect();
       const sectionWidth = sectionRect.width;
@@ -70,11 +74,30 @@ export default function Testimonials() {
       });
 
       // Continuously update on next frame for smooth animation
-      requestAnimationFrame(updateBlur);
+      rafId = requestAnimationFrame(updateBlur);
     };
 
-    // Start the blur update loop
-    requestAnimationFrame(updateBlur);
+    // Only run the animation loop when the section is visible in the viewport
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          rafId = requestAnimationFrame(updateBlur);
+        } else {
+          cancelAnimationFrame(rafId);
+          rafId = null;
+        }
+      },
+      { threshold: 0 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+      cancelAnimationFrame(rafId);
+    };
   }, []); // Empty dependency array - runs once on mount
 
   // Render the testimonials section

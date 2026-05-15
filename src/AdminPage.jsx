@@ -4,8 +4,9 @@ import { useState, useEffect, useCallback } from 'react';
 import './AdminPage.css';
 // Import Firebase database functions
 import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "firebase/storage";
-import { db } from "./firebase";
-import { ref, set, onValue } from "firebase/database";
+import { db, auth } from "./firebase";
+import { ref, set } from "firebase/database";
+import { signOut } from "firebase/auth";
 
 // Import custom icon components for theme toggle
 import { SunIcon } from './components/SunIcon'; // Icon for light mode
@@ -75,16 +76,6 @@ function AdminPage({ tickerItems, setTickerItems, popupImages, setPopupImages, o
   const removeTickerItem = useCallback((index) => {
     setTickerItems(items => items.filter((_, i) => i !== index));
   }, []);
-
-  // Read file as base64
-  const readFileAsDataURL = (file) => { // Not wrapped in useCallback as it doesn't depend on component state
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (error) => reject(error);
-      reader.readAsDataURL(file);
-    });
-  };
 
   const processUploadedFile = useCallback(async (file) => {
     if (!file || !file.type.startsWith('image/')) return;
@@ -169,8 +160,12 @@ function AdminPage({ tickerItems, setTickerItems, popupImages, setPopupImages, o
   }, [banners, tickerItems, setPopupImages]);
 
 
-  const handleLogout = () => {
-    localStorage.removeItem('isLoggedIn');
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
     window.location.href = '/login';
   };
 

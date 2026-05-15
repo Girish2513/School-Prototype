@@ -1,7 +1,18 @@
 {
-
   "rules": {
-    ".read": true,
-    ".write": true
+    "ticker": {
+      "items": {
+        ".read": true,
+        ".write": "auth != null"
+      }
+    },
+    "popup": {
+      "images": {
+        ".read": true,
+        ".write": "auth != null"
+      }
+    },
+    ".read": false,
+    ".write": false
   }
 }

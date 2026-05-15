@@ -6,6 +6,8 @@ import { useScroll } from './hooks/useScroll';
 import { useSectionInView } from './hooks/useSectionInView';
 
 import { getDatabase, ref, onValue } from "firebase/database";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./firebase";
 
 
 
@@ -154,6 +156,17 @@ function App() {
   // `path` state holds the current URL pathname.
   const [path, setPath] = useState(window.location.pathname);
 
+  // --- Firebase Auth State ---
+  // Tracks whether the admin is authenticated: 'loading' | 'authenticated' | 'unauthenticated'
+  const [authState, setAuthState] = useState('loading');
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setAuthState(user ? 'authenticated' : 'unauthenticated');
+    });
+    return () => unsubscribe();
+  }, []);
+
   // `tickerItems`: State for the header announcements. It's initialized from localStorage or with default values.
   const [tickerItems, setTickerItems] = useState(() => {
     const saved = localStorage.getItem('tickerItems');
@@ -270,7 +283,8 @@ function App() {
   // This effect shows the popup banner after a 3-second delay, but only on the home page.
   useEffect(() => {
     if (path === '/') {
-      setTimeout(() => setShowPopup(true), 3000);
+      const timer = setTimeout(() => setShowPopup(true), 3000);
+      return () => clearTimeout(timer);
     }
   }, [path]); // Reruns when the path changes.
 
@@ -328,23 +342,34 @@ function App() {
   // --- Handle Login Redirects and Routing ---
   // Redirect unauthenticated users trying to access /admin
   useEffect(() => {
-    if (path === '/admin') {
-      const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-      if (!isLoggedIn) {
-        window.location.href = '/login';
+    if (path === '/admin' && authState === 'unauthenticated') {
+      window.location.href = '/login';
+    }
+  }, [path, authState]);
+
+  // This effect handles scrolling to a section identified by a URL hash (e.g., #contact).
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash) {
+      // Get the element with the corresponding ID.
+      const targetId = hash.substring(1);
+      const targetElement = document.getElementById(targetId);
+      if (targetElement) {
+        // Use a timeout to ensure the element is rendered before scrolling.
+        const timer = setTimeout(() => {
+          targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100); // A small delay helps ensure the element is in the DOM.
+        return () => clearTimeout(timer);
       }
     }
-  }, [path]);
-
+  }, [path]); // Re-run when the path changes
 
   // --- Routing Logic ---
 
-  // If the path is '/admin', render Admin page (only if logged in)
+  // If the path is '/admin', render Admin page (only if authenticated via Firebase)
   if (path === '/admin') {
-    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-
-    if (!isLoggedIn) {
-      return null; // Prevent rendering before redirect
+    if (authState !== 'authenticated') {
+      return null; // Show nothing while loading or redirecting
     }
 
     // Reset body styles for admin
@@ -368,29 +393,6 @@ function App() {
     document.body.style.overflow = 'auto';
     return <LoginPage onLoginSuccess={() => (window.location.href = '/admin')} />;
   }
-  // This effect shows the popup banner after a 3-second delay, but only on the home page.
-  useEffect(() => {
-    if (path === '/') {
-      setTimeout(() => setShowPopup(true), 3000);
-    }
-  }, [path]); // Reruns when the path changes.
-
-  // This effect handles scrolling to a section identified by a URL hash (e.g., #contact).
-  useEffect(() => {
-    const hash = window.location.hash;
-    if (hash) {
-      // Get the element with the corresponding ID.
-      const targetId = hash.substring(1);
-      const targetElement = document.getElementById(targetId);
-      if (targetElement) {
-        // Use a timeout to ensure the element is rendered before scrolling.
-        const timer = setTimeout(() => {
-          targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 100); // A small delay helps ensure the element is in the DOM.
-        return () => clearTimeout(timer);
-      }
-    }
-  }, [path]); // Re-run when the path changes
 
   // --- Page Rendering Logic ---
   // If the path is '/view-gallery', render the full gallery page.
@@ -417,45 +419,6 @@ function App() {
         </section>
       </div>
     );
-  }
-
-  // If the path is '/admin', render the Admin page, but only if the user is logged in.
-  if (path === '/admin') {
-    // Check login status from localStorage.
-    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-
-    // Effect to redirect to the login page if not logged in.
-    useEffect(() => {
-      if (!isLoggedIn) {
-        window.location.href = '/login';
-      }
-    }, [isLoggedIn]);
-
-    // While redirecting, render nothing.
-    if (!isLoggedIn) {
-      return null; // Render nothing while redirecting
-    }
-
-    // Reset body styles for the admin page.
-    document.body.className = '';
-    document.body.style.overflow = 'auto';
-    // Render the AdminPage component with necessary props.
-    return <AdminPage
-        tickerItems={tickerItems}
-        setTickerItems={setTickerItems}
-        popupImages={popupImages}
-        setPopupImages={setPopupImages}
-        onReset={handleResetToDefaults}
-      />;
-  }
-
-  // If the path is '/login', render the Login page.
-  if (path === '/login') {
-    // Reset body styles.
-    document.body.className = '';
-    document.body.style.overflow = 'auto';
-    // Render the LoginPage, which will redirect to '/admin' on successful login.
-    return <LoginPage onLoginSuccess={() => (window.location.href = '/admin')} />;
   }
 
   // --- Home Page Rendering (Default) ---
