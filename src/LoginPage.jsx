@@ -64,11 +64,10 @@ function LoginPage({ onLoginSuccess }) {
           <div className="input-group">
             <label htmlFor="email">Email</label>
             <input
-              type="email"
+              type="text"
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              required // Required field
               autoFocus // Auto-focus on load
               autoComplete="email"
             />
